@@ -13,6 +13,7 @@
     "dev": "cross-env NODE_ENV=development webpack --progress --verbose --colors --display-error-details --config webpack.config.js",
     "dev:old": "cross-env NODE_ENV=development webpack --progress --verbose --colors --display-error-details --config webpack.config.js"
   },
+  "proxy": "http://localhost:3080",
   "eslintConfig": {
     "extends": "react-app"
   },

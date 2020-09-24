@@ -1,10 +1,8 @@
 import express from 'express';
-import webpack from 'webpack';
 import initExpress  from './initExpress.js';
 import initRoutes  from './routes';
-const path = require('path');
 
-const port = 3000;
+const port = 3080;
 const app = express();
 
 // connect to MongoDB using mongoose - register mongoose Schema
