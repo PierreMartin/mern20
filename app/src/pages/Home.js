@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { getAllPosts } from "../services/PostService";
 import '../css/main.css';
-import './app.css';
+import './home.css';
 
-function App() {
-    const [post, setPost] = useState('');
+function Home() {
+    const [, setPost] = useState('');
 
     useEffect(() => {
         getAllPosts().then((res) => {
@@ -13,12 +13,10 @@ function App() {
     }, []);
 
     return (
-        <div className="app">
-            <header>
-                test test {post}
-            </header>
+        <div className="home">
+            HOME
         </div>
     );
 }
 
-export default App;
+export default Home;
