@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@babel/polyfill": "^7.11.5",
+    "axios": "^0.20.0",
     "cross-env": "^7.0.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -13,7 +14,6 @@
     "dev": "cross-env NODE_ENV=development webpack-dev-server --mode development --open --hot --progress --colors --display-error-details --config webpack.config.js",
     "build": "cross-env NODE_ENV=production webpack --mode production --config webpack.config.js"
   },
-  "proxy": "http://localhost:3080",
   "eslintConfig": {
     "extends": "react-app"
   },

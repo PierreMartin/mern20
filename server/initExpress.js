@@ -4,6 +4,12 @@ import bodyParser from 'body-parser';
 import path from 'path';
 
 export default (app) => {
+    // Enable Cors:
+    app.use((req, res, next) => {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        next();
+    });
     app.use(bodyParser.json());
     app.use(express.static(path.join(process.cwd(), 'public')));
 
