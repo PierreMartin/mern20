@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { getAllPosts } from "./services/PostService";
-import './App.css';
+import { getAllPosts } from "../services/PostService";
+import '../css/main.css';
+import './app.css';
 
 function App() {
     const [post, setPost] = useState('');
@@ -12,7 +13,7 @@ function App() {
     }, []);
 
     return (
-        <div className="App">
+        <div className="app">
             <header>
                 test test {post}
             </header>
