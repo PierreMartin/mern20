@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route, Link } from "react-router-dom";
+import { Switch, Route, Link, Redirect } from "react-router-dom";
 import Home from './pages/Home';
 import PostAdd from './pages/PostAdd';
 import Login from './pages/Login';
@@ -14,12 +14,14 @@ const routes = [
     {
         path: "/posts", // /posts/:category
         title: 'The posts',
-        component: Login
+        component: Home,
+        requireAuth: true
     },
     {
         path: "/post/create",
         title: 'Add a new post',
-        component: PostAdd
+        component: PostAdd,
+        requireAuth: true
     },
     {
         path: "/login",
@@ -38,10 +40,32 @@ function Routes() {
             <hr />
 
             <Switch>
-                {routes.map((route, index) => <Route key={index} {...route} />)}
+                {routes.map((route, index) => {
+                    if (route.requireAuth) {
+                        const Component = route.component;
+                        return (
+                            <PrivateRoute {...route}>
+                                <Component />
+                            </PrivateRoute>
+                        );
+                    }
+
+                    return <Route key={index} {...route} />;
+                })}
             </Switch>
         </div>
     );
 }
 
 export default Routes;
+
+function PrivateRoute({ children, ...rest }) {
+    const isAuthenticated = false; // TODO localStorage ??
+
+    return (
+        <Route
+            path={rest.path}
+            render={({ location }) => isAuthenticated ? (children) : (<Redirect to={{ pathname: "/login", state: { from: location } }}/>) }
+        />
+    );
+}
