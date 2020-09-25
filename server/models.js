@@ -1,8 +1,7 @@
-/*
 import mongoose from 'mongoose';
 
 const PostSchema = new mongoose.Schema({
-    userId: { type: String, ref: 'User' },
+    // userId: { type: String, ref: 'User' },
     title: { type: String, default: '' },
     description: { type: String, default: '' },
     content: { type: String, default: '' },
@@ -12,7 +11,4 @@ const PostSchema = new mongoose.Schema({
     modifiedAt: { type: Date }
 });
 
-export mongoose.model('Post', PostSchema);
-*/
-
-export {};
+export const Post = mongoose.model('Post', PostSchema);

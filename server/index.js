@@ -1,16 +1,12 @@
 import express from 'express';
-import initExpress  from './initExpress.js';
+import initExpress  from './initExpress';
 import initRoutes  from './routes';
+import connectMongoDb from './connectMongoDb';
 
 const port = 3080;
 const app = express();
 
-// connect to MongoDB using mongoose - register mongoose Schema
-// const MONGO_URI = 'mongodb://localhost/t20';
-// connect(); => mongoose.connect(MONGO_URI);
-// mongoose.connection
-//     .once('open', () => console.log('Connecté à MongoLab'))
-//     .on('error', error => console.log('Erreur de connexion à MongoLab:', error));
+connectMongoDb();
 
 // passport configuration
 // initPassport();

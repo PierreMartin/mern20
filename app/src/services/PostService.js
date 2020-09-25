@@ -3,7 +3,15 @@ import { localClient } from './index';
 export function getAllPosts() {
     return localClient.request({
         method: 'GET',
-        url: 'test/'
+        url: 'getposts/'
+    }).then((res) => res && res.data).catch(err => err)
+}
+
+export function addPost(data) {
+    return localClient.request({
+        method: 'POST',
+        url: 'addpost/',
+        data
     }).then((res) => res && res.data).catch(err => err)
 }
 

@@ -1,7 +1,7 @@
-import { getPosts, getPost } from './controllers';
+import { getPosts, getPost, addPost } from './controllers';
 
 export default (app) => {
-    app.get('/api/test', (req, res) => res.status(200).json({ message: 'posts fetched', data: { posts: 'test' } })); // for test
-    app.post('/api/getposts', getPosts);
-    app.post('/api/getpost', getPost);
+    app.get('/api/getposts', getPosts); // allByField | allBySearch
+    app.post('/api/getpost', getPost); // oneByField
+    app.post('/api/addpost', addPost); // add
 };

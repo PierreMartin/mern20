@@ -1,6 +1,7 @@
 import React from 'react';
 import { Switch, Route, Link } from "react-router-dom";
 import Home from './pages/Home';
+import PostAdd from './pages/PostAdd';
 import Login from './pages/Login';
 
 const routes = [
@@ -18,7 +19,7 @@ const routes = [
     {
         path: "/post/create",
         title: 'Add a new post',
-        component: Login
+        component: PostAdd
     },
     {
         path: "/login",
