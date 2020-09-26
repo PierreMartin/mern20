@@ -8,7 +8,7 @@ export default (passport) => {
             User.findOne({ email }, (err, user) => {
                 if (err) { return done(err); }
                 if (!user) {return done(null, false, { message: 'Incorrect email.' });}
-                if (!user.validPassword(password)) {return done(null, false, { message: 'Incorrect password.' });}
+                if (user.password !== password) {return done(null, false, { message: 'Incorrect password.' });} // TODO crypter le password
                 return done(null, user);
             });
         }

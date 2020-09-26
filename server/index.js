@@ -12,6 +12,16 @@ initPassport();
 initExpress(app);
 initRoutes(app);
 
+// auth test:
+/*
+app.get('*', (req) => {
+    const authenticated = req.isAuthenticated();
+
+    console.log('authenticated ==> ', authenticated);
+    console.log(req.user);
+});
+*/
+
 app.listen(port, () => {
     console.log('--------------------------');
     console.log('===> Starting Server . . .');

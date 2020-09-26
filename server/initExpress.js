@@ -1,5 +1,6 @@
 import express from 'express';
 import session from 'express-session';
+import connectMongo from 'connect-mongo';
 import passport from 'passport';
 import bodyParser from 'body-parser';
 import path from 'path';
@@ -14,15 +15,28 @@ export default (app) => {
     app.use(bodyParser.json());
     app.use(express.static(path.join(process.cwd(), 'public')));
 
-    // auth test:
-    /*app.get('*', (req) => {
-        const authenticated = req.isAuthenticated();
+    const MongoStore = connectMongo(session); // TODO finir ca !!
+    const sess = {
+        resave: false,
+        saveUninitialized: false,
+        secret: process.env.SESSION_SECRET || 'Your Session Secret goes here',
+        proxy: true, // The "X-Forwarded-Proto" header will be used.
+        name: 'sessionId',
+        // Add HTTPOnly, Secure attributes on Session Cookie
+        // If secure is set, and you access your site over HTTP, the cookie will not be set
+        cookie: {
+            httpOnly: true,
+            secure: false
+        },
+        store: new MongoStore(
+            {
+                url: 'mongodb+srv://pierredev:Y3wTUbpu3yS6dck@pierrecluster.rae8r.mongodb.net/t20?retryWrites=true&w=majority',
+                autoReconnect: true
+            }
+        )
+    };
 
-        console.log('authenticated ==> ', authenticated);
-        console.log(req.user);
-    });*/
-
-    app.use(session({ secret: "cats" })); // AuthPassport: A session will be established and maintained via a cookie set in the user's browser
+    app.use(session(sess)); // AuthPassport: A session will be established and maintained via a cookie set in the user's browser
     app.use(passport.initialize());
     app.use(passport.session());
 };
