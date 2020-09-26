@@ -27,10 +27,6 @@ if (isDebug) {
 initExpress(app);
 initRoutes(app);
 
-/*app.get('*', (req, res) => {
-    res.status(200).send(require('../dist/index.html'));
-});*/
-
 app.listen(port, () => {
     console.log('--------------------------');
     console.log('===> Starting Server . . .');

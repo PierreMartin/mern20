@@ -44,7 +44,7 @@ function Routes() {
                     if (route.requireAuth) {
                         const Component = route.component;
                         return (
-                            <PrivateRoute {...route}>
+                            <PrivateRoute {...route} key={index}>
                                 <Component />
                             </PrivateRoute>
                         );

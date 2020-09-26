@@ -7,11 +7,14 @@ module.exports = {
     devtool: 'inline-source-map',
     output: {
         filename: '[name].bundle.js',
-        path: path.resolve(__dirname, 'dist')
+        path: path.resolve(__dirname, 'dist'),
+        publicPath: '/'
     },
     devServer: {
         inline: true,
-        port: 3000
+        port: 3000,
+        hot: true,
+        historyApiFallback: true
     },
     resolve: {
         extensions: ['.ts', '.js', '.jsx', '.tsx']
