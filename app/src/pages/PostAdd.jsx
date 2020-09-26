@@ -1,39 +1,51 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { addPost } from "../services/PostService";
 import '../css/main.css';
-import './home.css';
 
 function PostAdd() {
+    const [fieldsTyping, setFieldsTyping] = useState({});
+
+    function onInputChange(e) {
+        setFieldsTyping({...fieldsTyping, [e.target.name]: e.target.value});
+    }
+
+    function onCheckboxChange(e) {
+        setFieldsTyping({...fieldsTyping, [e.target.name]: e.target.checked});
+    }
+
     function onSubmitAddPost(e) {
         e.preventDefault();
 
-        // TODO finir useState()
-
-        addPost({
-            title: 'title 2',
-            description: 'description 2 ...',
-            content: 'content content content 2 2 2...',
-            isPrivate: false
-        }).then((res) => {
-            console.log(res.data);
-        });
+        if (fieldsTyping.title) {
+            addPost(fieldsTyping).then((res) => {
+               console.log(res && res.data);
+           });
+        }
     }
 
     return (
-        <div>
-            Add a post
-            <form>
-                <div>
-                    <label htmlFor="">field 1</label>
-                    <input type="text" name="name" value={"toto"}/>
+        <div className="post-add-container paddings">
+            <h2>Add a post</h2>
+
+            <form className="form" onSubmit={onSubmitAddPost}>
+                <div className="field">
+                    <label htmlFor="title">Title <span className="required">*</span></label>
+                    <input type="text" name="title" value={fieldsTyping.title} onChange={onInputChange} required />
+                </div>
+                <div className="field">
+                    <label htmlFor="description">Description</label>
+                    <input type="text" name="description" value={fieldsTyping.description} onChange={onInputChange} />
+                </div>
+                <div className="field">
+                    <label htmlFor="content">Content</label>
+                    <textarea name="content" value={fieldsTyping.content} onChange={onInputChange} />
+                </div>
+                <div className="field inline">
+                    <label htmlFor="isPrivate">isPrivate</label>
+                    <input type="checkbox" id="isPrivate" name="isPrivate" checked={fieldsTyping.isPrivate} onChange={onCheckboxChange}  />
                 </div>
 
-                <div>
-                    <label htmlFor="">field 2</label>
-                    <input type="text" name="name" value={"toto2"}/>
-                </div>
-
-                <button onClick={onSubmitAddPost}>Submit</button>
+                <button>Submit</button>
             </form>
         </div>
     );

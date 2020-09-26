@@ -3,6 +3,7 @@ import { Switch, Route, Link, Redirect } from "react-router-dom";
 import Home from './pages/Home';
 import PostAdd from './pages/PostAdd';
 import Login from './pages/Login';
+import PostsList from "./pages/PostsList";
 
 const routes = [
     {
@@ -14,7 +15,7 @@ const routes = [
     {
         path: "/posts", // /posts/:category
         title: 'The posts',
-        component: Home,
+        component: PostsList,
         requireAuth: true
     },
     {
@@ -60,7 +61,7 @@ function Routes() {
 export default Routes;
 
 function PrivateRoute({ children, ...rest }) {
-    const isAuthenticated = false; // TODO localStorage ??
+    const isAuthenticated = true; // TODO localStorage ??
 
     return (
         <Route
