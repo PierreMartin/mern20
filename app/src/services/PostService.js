@@ -6,7 +6,7 @@ export function getAllPosts() {
         url: 'getposts/'
     })
         .then((res) => Promise.resolve(res && res.data))
-        .catch(err => Promise.reject(err));
+        .catch(err => Promise.reject(err.response.data));
 }
 
 export function addPost(data) {
@@ -16,7 +16,7 @@ export function addPost(data) {
         data
     })
         .then((res) => Promise.resolve(res && res.data))
-        .catch(err => Promise.reject(err));
+        .catch(err => Promise.reject(err.response.data));
 }
 
 /*
@@ -27,7 +27,7 @@ export function getPostsByField() {
         data
     })
         .then((res) => Promise.resolve(res && res.data))
-        .catch(err => Promise.reject(err));
+        .catch(err => Promise.reject(err.response.data));
 }
 
 export function getPostByField() {
@@ -37,6 +37,6 @@ export function getPostByField() {
         data
     })
         .then((res) => Promise.resolve(res && res.data))
-        .catch(err => Promise.reject(err));
+        .catch(err => Promise.reject(err.response.data));
 }
 */

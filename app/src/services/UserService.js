@@ -1,12 +1,13 @@
 import { localClient } from './index';
 
-export function login() {
+export function login(data) {
     return localClient.request({
         method: 'POST',
-        url: 'login/'
+        url: 'login/',
+        data
     })
         .then((res) => Promise.resolve(res && res.data))
-        .catch(err => Promise.reject(err));
+        .catch(err => Promise.reject(err.response.data));
 }
 
 export function signup(data) {
@@ -16,7 +17,7 @@ export function signup(data) {
         data
     })
         .then((res) => Promise.resolve(res && res.data))
-        .catch(err => Promise.reject(err));
+        .catch(err => Promise.reject(err.response.data));
 }
 
 export function logout() {
@@ -25,5 +26,5 @@ export function logout() {
         url: 'logout/'
     })
         .then((res) => Promise.resolve(res && res.data))
-        .catch(err => Promise.reject(err));
+        .catch(err => Promise.reject(err.response.data));
 }

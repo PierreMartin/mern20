@@ -22,7 +22,7 @@ function Login() {
                 // if (res) { history.push("/posts"); }
                 if (res) { history.replace((location.state && location.state.from) || '/posts'); }
             }).catch((err) => {
-                console.error(err);
+                console.error(err.message);
             });
         }
     }
@@ -35,7 +35,7 @@ function Login() {
                 // if (res) { history.push("/posts"); }
                 if (res) { history.replace((location.state && location.state.from) || '/posts'); }
             }).catch((err) => {
-                console.error(err);
+                console.error(err.message);
             });
         }
     }
