@@ -5,7 +5,7 @@ import { User } from '../models/user';
  * POST /api/login
  */
 export function login(req, res, next) {
-    // AuthPassport: 'local' define in passport/local.js
+    // AuthPassport: 'local' define in authent/localStrategy.js
     passport.authenticate('local', (authErr, user, info) => {
         if (authErr) { return next(authErr); }
 
