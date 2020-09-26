@@ -45,22 +45,22 @@ function Login() {
                     <>
                         <div className="field">
                             <label htmlFor="firstname">Firstname</label>
-                            <input type="text" name="firstname" value={fieldsTyping.firstname} onChange={onInputChange} />
+                            <input type="text" name="firstname" value={fieldsTyping.firstname || ''} onChange={onInputChange} />
                         </div>
                         <div className="field">
                             <label htmlFor="lastname">Lastname</label>
-                            <input type="text" name="lastname" value={fieldsTyping.lastname} onChange={onInputChange} />
+                            <input type="text" name="lastname" value={fieldsTyping.lastname || ''} onChange={onInputChange} />
                         </div>
                     </>
                 )}
 
                 <div className="field">
                     <label htmlFor="email">Email <span className="required">*</span></label>
-                    <input type="text" name="email" value={fieldsTyping.email} onChange={onInputChange} required />
+                    <input type="text" name="email" value={fieldsTyping.email || ''} onChange={onInputChange} required />
                 </div>
                 <div className="field">
                     <label htmlFor="password">Password <span className="required">*</span></label>
-                    <input type="password" name="password" value={fieldsTyping.password} onChange={onInputChange} required />
+                    <input type="password" name="password" value={fieldsTyping.password || ''} onChange={onInputChange} required />
                 </div>
 
                 <button>{isSignup ? 'Signup' : 'Login'}</button>

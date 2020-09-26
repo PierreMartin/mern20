@@ -30,19 +30,19 @@ function PostAdd() {
             <form className="form" onSubmit={onSubmitAddPost}>
                 <div className="field">
                     <label htmlFor="title">Title <span className="required">*</span></label>
-                    <input type="text" name="title" value={fieldsTyping.title} onChange={onInputChange} required />
+                    <input type="text" name="title" value={fieldsTyping.title || ''} onChange={onInputChange} required />
                 </div>
                 <div className="field">
                     <label htmlFor="description">Description</label>
-                    <input type="text" name="description" value={fieldsTyping.description} onChange={onInputChange} />
+                    <input type="text" name="description" value={fieldsTyping.description || ''} onChange={onInputChange} />
                 </div>
                 <div className="field">
                     <label htmlFor="content">Content</label>
-                    <textarea name="content" value={fieldsTyping.content} onChange={onInputChange} />
+                    <textarea name="content" value={fieldsTyping.content || ''} onChange={onInputChange} />
                 </div>
                 <div className="field inline">
                     <label htmlFor="isPrivate">isPrivate</label>
-                    <input type="checkbox" id="isPrivate" name="isPrivate" checked={fieldsTyping.isPrivate} onChange={onCheckboxChange}  />
+                    <input type="checkbox" id="isPrivate" name="isPrivate" checked={!!fieldsTyping.isPrivate} onChange={onCheckboxChange}  />
                 </div>
 
                 <button>Submit</button>
