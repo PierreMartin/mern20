@@ -4,6 +4,7 @@ export function login(data) {
     return localClient.request({
         method: 'POST',
         url: 'login/',
+        withCredentials: true,
         data
     })
         .then((res) => Promise.resolve(res && res.data))
@@ -14,6 +15,7 @@ export function signup(data) {
     return localClient.request({
         method: 'POST',
         url: 'signup/',
+        withCredentials: true,
         data
     })
         .then((res) => Promise.resolve(res && res.data))
@@ -23,7 +25,8 @@ export function signup(data) {
 export function logout() {
     return localClient.request({
         method: 'POST',
-        url: 'logout/'
+        url: 'logout/',
+        withCredentials: true
     })
         .then((res) => Promise.resolve(res && res.data))
         .catch(err => Promise.reject(err.response.data));
