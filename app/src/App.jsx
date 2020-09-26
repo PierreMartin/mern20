@@ -33,11 +33,14 @@ const routes = [
 
 function Routes() {
     // if (connected)  { routes.filter((route) => route.path !== '/login'); }
+    // const history = useHistory();
     return (
         <div>
             <ul>
                 {routes.map((route, index) => <li key={index}><Link to={route.path}>{route.title}</Link></li>)}
             </ul>
+
+            {/* connected && <button onClick={() => { history.push("/"); }>Sign out</button>*/}
             <hr />
 
             <Switch>

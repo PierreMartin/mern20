@@ -4,8 +4,6 @@ import { User } from '../models/user';
  * POST /api/login
  */
 export function login(req, res, next) {
-    console.log('login');
-
     // AuthPassport: 'local' define in passport/local.js
     /*passport.authenticate('local', (authErr, user, info) => {
         if (authErr) { return next(authErr); }
@@ -30,8 +28,6 @@ export function login(req, res, next) {
 export function signUp(req, res, next) {
     const data = req.body;
     // const user = new User(data);
-
-    console.log(data);
 
     User.findOne({ email: data.email }, (findErr, existingUser) => {
         // conflict errors :

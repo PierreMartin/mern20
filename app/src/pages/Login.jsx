@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { login, signup } from "../services/UserService";
+import { useHistory, useLocation } from "react-router-dom";
 import '../css/main.css';
 import './login.css';
 
 function Login() {
     const [fieldsTyping, setFieldsTyping] = useState({});
     const [isSignup, setIsSignup] = useState(false);
+    const history = useHistory();
+    const location = useLocation();
 
     function onInputChange(e) {
         setFieldsTyping({...fieldsTyping, [e.target.name]: e.target.value});
@@ -16,8 +19,8 @@ function Login() {
 
         if (fieldsTyping.email && fieldsTyping.password) {
             login(fieldsTyping).then((res) => {
-                // TODO do redirection
-                console.log(res && res.data);
+                // if (res) { history.push("/posts"); }
+                if (res) { history.replace(location.state && location.state.from); }
             });
         }
     }
@@ -27,8 +30,8 @@ function Login() {
 
         if (fieldsTyping.email && fieldsTyping.password) {
             signup(fieldsTyping).then((res) => {
-                // TODO do redirection
-                console.log(res && res.data);
+                // if (res) { history.push("/posts"); }
+                if (res) { history.replace(location.state && location.state.from); }
             });
         }
     }
@@ -53,7 +56,7 @@ function Login() {
 
                 <div className="field">
                     <label htmlFor="email">Email <span className="required">*</span></label>
-                    <input type="text" value={fieldsTyping.email} onChange={onInputChange} required />
+                    <input type="text" name="email" value={fieldsTyping.email} onChange={onInputChange} required />
                 </div>
                 <div className="field">
                     <label htmlFor="password">Password <span className="required">*</span></label>
