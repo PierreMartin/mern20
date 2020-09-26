@@ -21,6 +21,8 @@ function Login() {
             login(fieldsTyping).then((res) => {
                 // if (res) { history.push("/posts"); }
                 if (res) { history.replace((location.state && location.state.from) || '/posts'); }
+            }).catch((err) => {
+                console.error(err);
             });
         }
     }
@@ -32,6 +34,8 @@ function Login() {
             signup(fieldsTyping).then((res) => {
                 // if (res) { history.push("/posts"); }
                 if (res) { history.replace((location.state && location.state.from) || '/posts'); }
+            }).catch((err) => {
+                console.error(err);
             });
         }
     }
@@ -56,7 +60,7 @@ function Login() {
 
                 <div className="field">
                     <label htmlFor="email">Email <span className="required">*</span></label>
-                    <input type="text" name="email" value={fieldsTyping.email || ''} onChange={onInputChange} required />
+                    <input type="email" name="email" value={fieldsTyping.email || ''} onChange={onInputChange} required />
                 </div>
                 <div className="field">
                     <label htmlFor="password">Password <span className="required">*</span></label>

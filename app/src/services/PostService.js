@@ -4,7 +4,9 @@ export function getAllPosts() {
     return localClient.request({
         method: 'GET',
         url: 'getposts/'
-    }).then((res) => res && res.data).catch(err => err)
+    })
+        .then((res) => Promise.resolve(res && res.data))
+        .catch(err => Promise.reject(err));
 }
 
 export function addPost(data) {
@@ -12,7 +14,9 @@ export function addPost(data) {
         method: 'POST',
         url: 'addpost/',
         data
-    }).then((res) => res && res.data).catch(err => err)
+    })
+        .then((res) => Promise.resolve(res && res.data))
+        .catch(err => Promise.reject(err));
 }
 
 /*
@@ -21,7 +25,9 @@ export function getPostsByField() {
         method: 'POST',
         url: 'getposts/',
         data
-    }).then((res) => res && res.data).catch(err => err)
+    })
+        .then((res) => Promise.resolve(res && res.data))
+        .catch(err => Promise.reject(err));
 }
 
 export function getPostByField() {
@@ -29,6 +35,8 @@ export function getPostByField() {
         method: 'POST',
         url: 'getpost/',
         data
-    }).then((res) => res && res.data).catch(err => err)
+    })
+        .then((res) => Promise.resolve(res && res.data))
+        .catch(err => Promise.reject(err));
 }
 */

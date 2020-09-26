@@ -4,7 +4,9 @@ export function login() {
     return localClient.request({
         method: 'POST',
         url: 'login/'
-    }).then((res) => res && res.data).catch(err => err)
+    })
+        .then((res) => Promise.resolve(res && res.data))
+        .catch(err => Promise.reject(err));
 }
 
 export function signup(data) {
@@ -12,12 +14,16 @@ export function signup(data) {
         method: 'POST',
         url: 'signup/',
         data
-    }).then((res) => res && res.data).catch(err => err)
+    })
+        .then((res) => Promise.resolve(res && res.data))
+        .catch(err => Promise.reject(err));
 }
 
 export function logout() {
     return localClient.request({
         method: 'POST',
         url: 'logout/'
-    }).then((res) => res && res.data).catch(err => err)
+    })
+        .then((res) => Promise.resolve(res && res.data))
+        .catch(err => Promise.reject(err));
 }

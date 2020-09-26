@@ -1,3 +1,4 @@
+import passport from 'passport';
 import { User } from '../models/user';
 
 /**
@@ -5,21 +6,23 @@ import { User } from '../models/user';
  */
 export function login(req, res, next) {
     // AuthPassport: 'local' define in passport/local.js
-    /*passport.authenticate('local', (authErr, user, info) => {
+    passport.authenticate('local', (authErr, user, info) => {
         if (authErr) { return next(authErr); }
 
-        // unauthorized error (if wrong password or wrong login) :
+        // unauthorized error (if wrong password or wrong login):
         if (!user) {
+            // return res.redirect('/login');
             return res.status(401).json({ message: info.message });
         }
 
         // Establish a session:
         return req.logIn(user, (loginErr) => {
-            if (loginErr) { return res.status(401).json({ message: loginErr }); }
+            if (loginErr) { return next(loginErr); }
 
+            // return res.redirect('/');
             return res.status(200).json({ message: 'You\'re now logged.', data: user });
         });
-    })(req, res, next);*/
+    })(req, res, next);
 }
 
 /**
@@ -27,25 +30,25 @@ export function login(req, res, next) {
  */
 export function signUp(req, res, next) {
     const data = req.body;
-    // const user = new User(data);
+    const user = new User(data);
 
     User.findOne({ email: data.email }, (findErr, existingUser) => {
         // conflict errors :
         if (existingUser) {
-            return res.status(409).json({ message: 'Count already exist!' });
+            return res.status(409).json({ message: 'Account already exist!' });
         }
 
-        // create count :
-        /*return user.save((saveErr) => {
-            if (saveErr) return next(saveErr);
+        // create account :
+        return user.save((saveErr) => {
+            if (saveErr) { return next(saveErr); }
 
             // Establish a session :
             return req.logIn(user, (loginErr) => {
-                if (loginErr) return res.status(401).json({message: loginErr});
+                if (loginErr) { return next(loginErr); }
 
-                return res.status(200).json({message: 'You\'re now logged.', data: user});
+                return res.status(200).json({ message: 'You\'re now logged.', data: user });
             });
-        });*/
+        });
     });
 }
 
