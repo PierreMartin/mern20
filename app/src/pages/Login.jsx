@@ -20,7 +20,7 @@ function Login() {
         if (fieldsTyping.email && fieldsTyping.password) {
             login(fieldsTyping).then((res) => {
                 // if (res) { history.push("/posts"); }
-                if (res) { history.replace(location.state && location.state.from); }
+                if (res) { history.replace((location.state && location.state.from) || '/posts'); }
             });
         }
     }
@@ -31,7 +31,7 @@ function Login() {
         if (fieldsTyping.email && fieldsTyping.password) {
             signup(fieldsTyping).then((res) => {
                 // if (res) { history.push("/posts"); }
-                if (res) { history.replace(location.state && location.state.from); }
+                if (res) { history.replace((location.state && location.state.from) || '/posts'); }
             });
         }
     }
