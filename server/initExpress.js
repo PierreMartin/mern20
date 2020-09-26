@@ -8,7 +8,7 @@ import path from 'path';
 export default (app) => {
     // Enable Cors:
     app.use((req, res, next) => {
-        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Origin", "http://localhost:3000");
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         res.header("Access-Control-Allow-Credentials", true);
         next();
@@ -17,7 +17,6 @@ export default (app) => {
     app.use(express.static(path.join(process.cwd(), 'public')));
 
     const MongoStore = connectMongo(session); // TODO finir ca !!
-    // TODO authent express-session on different react port nodejs
     const sess = {
         resave: false,
         saveUninitialized: false,
