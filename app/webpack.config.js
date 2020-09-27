@@ -14,7 +14,16 @@ module.exports = {
         inline: true,
         port: 3000,
         hot: true,
-        historyApiFallback: true
+        historyApiFallback: true,
+        // Proxy backend requests to Express server
+        /*
+        proxy: {
+            "/api/!*": {
+                target: "http://localhost:3080",
+                secure: false
+            }
+        }
+        */
     },
     resolve: {
         extensions: ['.ts', '.js', '.jsx', '.tsx']

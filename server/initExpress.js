@@ -1,11 +1,11 @@
 import express from 'express';
-import session from 'express-session';
+import expressSession from 'express-session';
 import connectMongo from 'connect-mongo';
 import passport from 'passport';
 import bodyParser from 'body-parser';
 import path from 'path';
 
-export default (app) => {
+export default (app, mongoose) => {
     // Enable Cors:
     app.use((req, res, next) => {
         res.header("Access-Control-Allow-Origin", "http://localhost:3000");
@@ -16,28 +16,35 @@ export default (app) => {
     app.use(bodyParser.json());
     app.use(express.static(path.join(process.cwd(), 'public')));
 
-    const MongoStore = connectMongo(session); // TODO finir ca !!
+    app.set('trust proxy', true);
+    const MongoStore = connectMongo(expressSession);
+
+    // AuthPassport - A session will be established and maintained via a cookie set in the user's browser:
     const sess = {
         resave: false,
         saveUninitialized: false,
+        store: new MongoStore({ mongooseConnection: mongoose.connection }), // store the sessions in the DB:
         secret: process.env.SESSION_SECRET || 'abc54545',
         proxy: true, // The "X-Forwarded-Proto" header will be used.
-        name: 'sessionId',
-        // Add HTTPOnly, Secure attributes on Session Cookie
-        // If secure is set, and you access your site over HTTP, the cookie will not be set
+        name: 'sessionAuth',
         cookie: {
             httpOnly: true,
-            secure: false
+            secure: false, // Not using https
+            maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week
         },
-        store: new MongoStore(
+        /*store: new MongoStore(
             {
                 url: 'mongodb+srv://pierredev:Y3wTUbpu3yS6dck@pierrecluster.rae8r.mongodb.net/t20?retryWrites=true&w=majority',
                 autoReconnect: true
             }
-        )
+        )*/
     };
 
-    app.use(session(sess)); // AuthPassport: A session will be established and maintained via a cookie set in the user's browser
+    if (process.env.NODE_ENV === 'production') {
+        sess.cookie.secure = true; // Serve secure cookies
+    }
+
+    app.use(expressSession(sess));
     app.use(passport.initialize());
     app.use(passport.session());
 };

@@ -59,3 +59,12 @@ export function logout(req, res) {
     req.logout();
     res.redirect('/');
 }
+
+/**
+ * POST /api/checkauthentication
+ */
+export function checkAuthentication(req, res) {
+    const authenticated = req.isAuthenticated();
+
+    return res.status(200).json({ data: { authenticated, user: req.user } });
+}

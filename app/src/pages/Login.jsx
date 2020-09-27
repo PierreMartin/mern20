@@ -20,7 +20,11 @@ function Login() {
         if (fieldsTyping.email && fieldsTyping.password) {
             login(fieldsTyping).then((res) => {
                 // if (res) { history.push("/posts"); }
-                if (res) { history.replace((location.state && location.state.from) || '/posts'); }
+                // TODO faire ca avec Redux
+                if (res) {
+                    console.log('authenticated ==> ', 'true');
+                    history.replace((location.state && location.state.from) || '/posts');
+                }
             }).catch((err) => {
                 console.error(err.message);
             });

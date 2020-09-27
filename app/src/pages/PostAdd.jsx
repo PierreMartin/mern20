@@ -19,6 +19,7 @@ function PostAdd() {
         if (fieldsTyping.title) {
             addPost(fieldsTyping).then((res) => {
                console.log(res && res.data);
+                setFieldsTyping({});
            });
         }
     }

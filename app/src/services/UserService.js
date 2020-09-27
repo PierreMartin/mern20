@@ -31,3 +31,13 @@ export function logout() {
         .then((res) => Promise.resolve(res && res.data))
         .catch(err => Promise.reject(err.response.data));
 }
+
+export function checkAuthentication() {
+    return localClient.request({
+        method: 'POST',
+        url: 'checkauthentication/',
+        withCredentials: true
+    })
+        .then((res) => Promise.resolve(res && res.data))
+        .catch(err => Promise.resolve(err.response.data));
+}

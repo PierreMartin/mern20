@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Switch, Route, Link, Redirect } from "react-router-dom";
+import { checkAuthentication } from "./services/UserService";
 import Home from './pages/Home';
 import PostAdd from './pages/PostAdd';
 import Login from './pages/Login';
@@ -31,9 +32,19 @@ const routes = [
     }
 ];
 
-function Routes() {
-    // if (connected)  { routes.filter((route) => route.path !== '/login'); }
+function App() {
+    // if (authenticated)  { routes.filter((route) => route.path !== '/login'); }
     // const history = useHistory();
+
+    useEffect(() => {
+        checkAuthentication().then((res) => {
+            if (res && res.data) {
+                console.log('authenticated ==> ', res.data.authenticated);
+                // TODO faire ca avec Redux
+            }
+        });
+    }, []);
+
     return (
         <div>
             <ul>
@@ -48,7 +59,7 @@ function Routes() {
                     if (route.requireAuth) {
                         const Component = route.component;
                         return (
-                            <PrivateRoute {...route} key={index}>
+                            <PrivateRoute {...route} key={index} authenticated={true}>
                                 <Component />
                             </PrivateRoute>
                         );
@@ -61,15 +72,15 @@ function Routes() {
     );
 }
 
-export default Routes;
+export default App;
 
-function PrivateRoute({ children, ...rest }) {
-    const isAuthenticated = true; // TODO localStorage ??
+// TODO mettre propTypes
+function PrivateRoute({ children, authenticated, ...rest }) {
 
     return (
         <Route
             path={rest.path}
-            render={({ location }) => isAuthenticated ? (children) : (<Redirect to={{ pathname: "/login", state: { from: location } }}/>) }
+            render={({ location }) => authenticated ? (children) : (<Redirect to={{ pathname: "/login", state: { from: location } }}/>) }
         />
     );
 }

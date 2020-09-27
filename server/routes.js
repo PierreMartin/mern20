@@ -1,5 +1,5 @@
 import { getPosts, getPost, addPost } from './controllers/posts';
-import { login, signUp, logout } from './controllers/users';
+import { login, signUp, logout, checkAuthentication } from './controllers/users';
 
 export default (app) => {
     app.get('/api/getposts', getPosts); // allByField | allBySearch
@@ -9,4 +9,5 @@ export default (app) => {
     app.post('/api/login', login);
     app.post('/api/signup', signUp);
     app.post('/api/logout', logout);
+    app.post('/api/checkauthentication', checkAuthentication);
 };
