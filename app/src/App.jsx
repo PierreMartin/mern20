@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { Switch, Route, Link, Redirect } from "react-router-dom";
 import { checkAuthentication } from "./services/UserService";
 import Home from './pages/Home';
@@ -72,9 +73,12 @@ function App() {
     );
 }
 
+App.propTypes = {
+    // myProp: PropTypes.string
+};
+
 export default App;
 
-// TODO mettre propTypes
 function PrivateRoute({ children, authenticated, ...rest }) {
 
     return (
@@ -84,3 +88,8 @@ function PrivateRoute({ children, authenticated, ...rest }) {
         />
     );
 }
+
+PrivateRoute.propTypes = {
+    authenticated: PropTypes.bool,
+    path: PropTypes.string
+};

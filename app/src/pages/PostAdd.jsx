@@ -52,4 +52,8 @@ function PostAdd() {
     );
 }
 
+PostAdd.propTypes = {
+
+};
+
 export default PostAdd;
