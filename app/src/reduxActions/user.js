@@ -1,8 +1,10 @@
 import {
     SIGNUP_SUCCESS_USER,
-    SIGNUP_ERROR_USER
+    SIGNUP_ERROR_USER,
+    LOGIN_SUCCESS_USER,
+    LOGIN_ERROR_USER
 } from "../reduxActionsTypes/index";
-import { signup } from "../services/UserService";
+import { login, signup } from "../services/UserService";
 
 /*
 export function xxxAction(data) {
@@ -21,6 +23,7 @@ export function signupAction(data) {
                     dispatch({
                         type: SIGNUP_SUCCESS_USER,
                         payload: {
+                            message: res.message,
                             data: res.data
                         }
                     });
@@ -36,6 +39,32 @@ export function signupAction(data) {
                         }
                     }
                 ));
+            });
+    };
+}
+
+// AuthPassport
+export function loginAction(data) {
+    return (dispatch) => {
+        login(data)
+            .then((res) => {
+                if (res.status === 200) {
+                    dispatch({
+                        type: LOGIN_SUCCESS_USER,
+                        payload: {
+                            message: res.message,
+                            data: res.data
+                        }
+                    });
+                }
+            })
+            .catch((err) => {
+                dispatch({
+                    type: LOGIN_ERROR_USER,
+                    payload: {
+                        messageError: err.message
+                    }
+                });
             });
     };
 }
