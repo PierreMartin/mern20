@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { login, signup } from "../services/UserService";
+import { connect } from "react-redux";
+import PropTypes from 'prop-types';
 import { useHistory, useLocation } from "react-router-dom";
+import { loginAction, signupAction } from "../reduxActions/user";
 import '../css/main.css';
 import './login.css';
 
-function Login() {
+function Login(props) {
     const [fieldsTyping, setFieldsTyping] = useState({});
     const [isSignup, setIsSignup] = useState(false);
     const history = useHistory();
@@ -18,15 +20,9 @@ function Login() {
         e.preventDefault();
 
         if (fieldsTyping.email && fieldsTyping.password) {
-            login(fieldsTyping).then((res) => {
+            props.loginAction(fieldsTyping).then((res) => {
                 // if (res) { history.push("/posts"); }
-                // TODO faire ca avec Redux
-                if (res) {
-                    console.log('authenticated ==> ', 'true');
-                    history.replace((location.state && location.state.from) || '/posts');
-                }
-            }).catch((err) => {
-                console.error(err.message);
+                if (res) { history.replace((location.state && location.state.from) || '/posts'); }
             });
         }
     }
@@ -35,11 +31,9 @@ function Login() {
         e.preventDefault();
 
         if (fieldsTyping.email && fieldsTyping.password) {
-            signup(fieldsTyping).then((res) => {
+            props.signupAction(fieldsTyping).then((res) => {
                 // if (res) { history.push("/posts"); }
                 if (res) { history.replace((location.state && location.state.from) || '/posts'); }
-            }).catch((err) => {
-                console.error(err.message);
             });
         }
     }
@@ -82,7 +76,8 @@ function Login() {
 }
 
 Login.propTypes = {
-
+    loginAction: PropTypes.func,
+    signupAction: PropTypes.func
 };
 
-export default Login;
+export default connect(null, { loginAction, signupAction })(Login);

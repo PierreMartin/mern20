@@ -1,13 +1,16 @@
 import React, { useEffect } from 'react';
+import { useHistory } from "react-router-dom";
 import PropTypes from 'prop-types';
+import { connect } from "react-redux";
 import { Switch, Route, Link, Redirect } from "react-router-dom";
-import { checkAuthentication } from "./services/UserService";
+import { checkAuthenticationAction } from "./reduxActions/user";
 import Home from './pages/Home';
 import PostAdd from './pages/PostAdd';
 import Login from './pages/Login';
 import PostsList from "./pages/PostsList";
+import './app.css';
 
-const routes = [
+let routes = [
     {
         path: "/",
         title: 'Home',
@@ -33,26 +36,35 @@ const routes = [
     }
 ];
 
-function App() {
-    // if (authenticated)  { routes.filter((route) => route.path !== '/login'); }
-    // const history = useHistory();
+function App(props) {
+    const history = useHistory();
 
     useEffect(() => {
-        checkAuthentication().then((res) => {
-            if (res && res.data) {
-                console.log('authenticated ==> ', res.data.authenticated);
-                // TODO faire ca avec Redux
-            }
-        });
+        props.checkAuthenticationAction();
     }, []);
+
+    if (props.authenticated)  { routes = routes.filter((route) => route.path !== '/login'); }
 
     return (
         <div>
-            <ul>
-                {routes.map((route, index) => <li key={index}><Link to={route.path}>{route.title}</Link></li>)}
-            </ul>
+            <nav className="main-nav">
+                <div className="left">
+                    <ul>
+                        {routes.map((route, index) => <li key={index}><Link to={route.path}>{route.title}</Link></li>)}
+                    </ul>
+                </div>
 
-            {/* connected && <button onClick={() => { history.push("/"); }>Sign out</button>*/}
+                <div className="right">
+                    {
+                        props.authenticated && (
+                            <div>
+                                Welcome {props.me && props.me.username}
+                                <button onClick={() => { history.push("/"); }}>Logout</button>
+                            </div>
+                        )
+                    }
+                </div>
+            </nav>
             <hr />
 
             <Switch>
@@ -60,7 +72,7 @@ function App() {
                     if (route.requireAuth) {
                         const Component = route.component;
                         return (
-                            <PrivateRoute {...route} key={index} authenticated={true}>
+                            <PrivateRoute {...route} key={index} authenticated={props.authenticated}>
                                 <Component />
                             </PrivateRoute>
                         );
@@ -74,10 +86,19 @@ function App() {
 }
 
 App.propTypes = {
-    // myProp: PropTypes.string
+    authenticated: PropTypes.bool,
+    me: PropTypes.any,
+    checkAuthenticationAction: PropTypes.func
 };
 
-export default App;
+function mapStateToProps(state) {
+    return {
+        authenticated: state.user.authenticated,
+        me: state.user.me
+    };
+}
+
+export default connect(mapStateToProps, { checkAuthenticationAction })(App);
 
 function PrivateRoute({ children, authenticated, ...rest }) {
 
