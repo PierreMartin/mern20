@@ -9,6 +9,7 @@ import './login.css';
 function Login(props) {
     const [fieldsTyping, setFieldsTyping] = useState({});
     const [isSignup, setIsSignup] = useState(false);
+    const [errorCredentials, setErrorCredentials] = useState('');
     const history = useHistory();
     const location = useLocation();
 
@@ -21,8 +22,12 @@ function Login(props) {
 
         if (fieldsTyping.email && fieldsTyping.password) {
             props.loginAction(fieldsTyping).then((res) => {
-                // if (res) { history.push("/posts"); }
-                if (res) { history.replace((location.state && location.state.from) || '/posts'); }
+                if (res && res.payload && res.payload.authenticated) {
+                    // if (res) { history.push("/posts"); }
+                    history.replace((location.state && location.state.from) || '/');
+                } else if (res.payload && res.payload.message) {
+                    setErrorCredentials(res.payload.message);
+                }
             });
         }
     }
@@ -32,8 +37,12 @@ function Login(props) {
 
         if (fieldsTyping.email && fieldsTyping.password) {
             props.signupAction(fieldsTyping).then((res) => {
-                // if (res) { history.push("/posts"); }
-                if (res) { history.replace((location.state && location.state.from) || '/posts'); }
+                if (res && res.payload && res.payload.authenticated) {
+                    // if (res) { history.push("/posts"); }
+                    history.replace((location.state && location.state.from) || '/');
+                } else if (res.payload && res.payload.message) {
+                    setErrorCredentials(res.payload.message);
+                }
             });
         }
     }
@@ -64,6 +73,8 @@ function Login(props) {
                     <label htmlFor="password">Password <span className="required">*</span></label>
                     <input type="password" name="password" value={fieldsTyping.password || ''} onChange={onInputChange} required />
                 </div>
+
+                { errorCredentials && <label className="error-field">{errorCredentials}</label> }
 
                 <button>{isSignup ? 'Signup' : 'Login'}</button>
             </form>

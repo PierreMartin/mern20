@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { Switch, Route, Link, Redirect } from "react-router-dom";
-import { checkAuthenticationAction } from "./reduxActions/user";
+import { checkAuthenticationAction, logoutAction } from "./reduxActions/user";
 import Home from './pages/Home';
 import PostAdd from './pages/PostAdd';
 import Login from './pages/Login';
@@ -43,6 +43,7 @@ function App(props) {
         props.checkAuthenticationAction();
     }, []);
 
+    // TODO pas bon
     if (props.authenticated)  { routes = routes.filter((route) => route.path !== '/login'); }
 
     return (
@@ -58,8 +59,12 @@ function App(props) {
                     {
                         props.authenticated && (
                             <div>
-                                Welcome {props.me && props.me.username}
-                                <button onClick={() => { history.push("/"); }}>Logout</button>
+                                Welcome {props.me && props.me.firstname}
+                                <button onClick={() => {
+                                    props.logoutAction().then((res) => {
+                                        if (res && res.payload && !res.payload.authenticated) { history.push("/"); }
+                                    });
+                                }}>Logout</button>
                             </div>
                         )
                     }
@@ -98,7 +103,7 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps, { checkAuthenticationAction })(App);
+export default connect(mapStateToProps, { checkAuthenticationAction, logoutAction })(App);
 
 function PrivateRoute({ children, authenticated, ...rest }) {
 

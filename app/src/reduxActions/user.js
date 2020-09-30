@@ -4,9 +4,11 @@ import {
     LOGIN_SUCCESS_USER,
     LOGIN_ERROR_USER,
     CHECK_AUTHENTIFICATION_ERROR,
-    CHECK_AUTHENTIFICATION_SUCCESS
+    CHECK_AUTHENTIFICATION_SUCCESS,
+    LOGOUT_SUCCESS_USER,
+    LOGOUT_ERROR_USER
 } from "../reduxActionsTypes/index";
-import { checkAuthentication, login, signup } from "../services/UserService";
+import { checkAuthentication, login, logout, signup } from "../services/UserService";
 
 /*
 export function xxxAction(data) {
@@ -22,25 +24,24 @@ export function signupAction(data) {
         return signup(data)
             .then((res) => {
                 if (res && res.data) {
-                    console.log('authenticated ==> ', 'true');
-                    dispatch({
+                    console.log('authenticated ==> ', true);
+                    return dispatch({
                         type: SIGNUP_SUCCESS_USER,
                         payload: {
                             message: res.message,
-                            data: res.data,
-                            authenticated: res.authenticated
+                            authenticated: res.data.authenticated,
+                            me: res.data.me
                         }
                     });
                 }
             })
             .catch((err) => {
                 console.error('authenticated ==> ', err);
-                dispatch((
+                return dispatch((
                     {
                         type: SIGNUP_ERROR_USER,
                         payload: {
-                            messageError: err.message,
-                            email: data.email,
+                            message: err.message,
                             authenticated: false
                         }
                     }
@@ -54,23 +55,23 @@ export function loginAction(data) {
         return login(data)
             .then((res) => {
                 if (res && res.data) {
-                    console.log('authenticated ==> ', 'true');
-                    dispatch({
+                    console.log('authenticated ==> ', true);
+                    return dispatch({
                         type: LOGIN_SUCCESS_USER,
                         payload: {
                             message: res.message,
-                            data: res.data,
-                            authenticated: res.authenticated
+                            authenticated: res.data.authenticated,
+                            me: res.data.me
                         }
                     });
                 }
             })
             .catch((err) => {
                 console.error('authenticated ==> ', err);
-                dispatch({
+                return dispatch({
                     type: LOGIN_ERROR_USER,
                     payload: {
-                        messageError: err.message,
+                        message: err.message,
                         authenticated: false
                     }
                 });
@@ -87,6 +88,7 @@ export function checkAuthenticationAction() {
                     dispatch({
                         type: CHECK_AUTHENTIFICATION_SUCCESS,
                         payload: {
+                            message: res.message,
                             authenticated: res.data.authenticated,
                             me: res.data.me
                         }
@@ -98,8 +100,37 @@ export function checkAuthenticationAction() {
                 dispatch({
                     type: CHECK_AUTHENTIFICATION_ERROR,
                     payload: {
-                        messageError: err.message,
+                        message: err.message,
                         authenticated: false
+                    }
+                });
+            });
+    };
+}
+
+export function logoutAction() {
+    return (dispatch) => {
+        return logout()
+            .then((res) => {
+                if (res && res.data) {
+                    console.log('authenticated ==> ', false);
+                    return dispatch({
+                        type: LOGOUT_SUCCESS_USER,
+                        payload: {
+                            message: res.message,
+                            authenticated: res.data.authenticated,
+                            me: res.data.me
+                        }
+                    });
+                }
+            })
+            .catch((err) => {
+                console.error('authenticated ==> ', err);
+                return dispatch({
+                    type: LOGOUT_ERROR_USER,
+                    payload: {
+                        message: err.message,
+                        authenticated: true
                     }
                 });
             });
