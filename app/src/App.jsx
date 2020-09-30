@@ -10,40 +10,39 @@ import Login from './pages/Login';
 import PostsList from "./pages/PostsList";
 import './app.css';
 
-let routes = [
-    {
-        path: "/",
-        title: 'Home',
-        exact: true,
-        component: Home
-    },
-    {
-        path: "/posts", // /posts/:category
-        title: 'The posts',
-        component: PostsList,
-        requireAuth: true
-    },
-    {
-        path: "/post/create",
-        title: 'Add a new post',
-        component: PostAdd,
-        requireAuth: true
-    },
-    {
-        path: "/login",
-        title: 'Login',
-        component: Login
-    }
-];
-
 function App(props) {
     const history = useHistory();
+
+    let routes = [
+        {
+            path: "/",
+            title: 'Home',
+            exact: true,
+            component: Home
+        },
+        {
+            path: "/posts", // /posts/:category
+            title: 'The posts',
+            component: PostsList,
+            requireAuth: true
+        },
+        {
+            path: "/post/create",
+            title: 'Add a new post',
+            component: PostAdd,
+            requireAuth: true
+        },
+        {
+            path: "/login",
+            title: 'Login',
+            component: Login
+        }
+    ];
 
     useEffect(() => {
         props.checkAuthenticationAction();
     }, []);
 
-    // TODO pas bon
     if (props.authenticated)  { routes = routes.filter((route) => route.path !== '/login'); }
 
     return (
@@ -60,11 +59,15 @@ function App(props) {
                         props.authenticated && (
                             <div>
                                 Welcome {props.me && props.me.firstname}
-                                <button onClick={() => {
-                                    props.logoutAction().then((res) => {
-                                        if (res && res.payload && !res.payload.authenticated) { history.push("/"); }
-                                    });
-                                }}>Logout</button>
+                                <button
+                                    onClick={() => {
+                                        props.logoutAction().then((res) => {
+                                            if (res && res.payload && !res.payload.authenticated) { history.push("/"); }
+                                        });
+                                    }}
+                                >
+                                    Logout
+                                </button>
                             </div>
                         )
                     }
@@ -107,6 +110,7 @@ export default connect(mapStateToProps, { checkAuthenticationAction, logoutActio
 
 function PrivateRoute({ children, authenticated, ...rest }) {
 
+    // TODO fix pathname: "/login" at refresh
     return (
         <Route
             path={rest.path}
