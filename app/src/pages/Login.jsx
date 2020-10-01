@@ -6,7 +6,7 @@ import { loginAction, signupAction } from "../reduxActions/user";
 import '../css/main.css';
 import './login.css';
 
-function Login(props) {
+function Login({ loginAction, signupAction }) {
     const [fieldsTyping, setFieldsTyping] = useState({});
     const [isSignup, setIsSignup] = useState(false);
     const [errorCredentials, setErrorCredentials] = useState('');
@@ -21,7 +21,7 @@ function Login(props) {
         e.preventDefault();
 
         if (fieldsTyping.email && fieldsTyping.password) {
-            props.loginAction(fieldsTyping).then((res) => {
+            loginAction(fieldsTyping).then((res) => {
                 if (res && res.payload && res.payload.authenticated) {
                     // if (res) { history.push("/posts"); }
                     history.replace((location.state && location.state.from) || '/');
@@ -36,7 +36,7 @@ function Login(props) {
         e.preventDefault();
 
         if (fieldsTyping.email && fieldsTyping.password) {
-            props.signupAction(fieldsTyping).then((res) => {
+            signupAction(fieldsTyping).then((res) => {
                 if (res && res.payload && res.payload.authenticated) {
                     // if (res) { history.push("/posts"); }
                     history.replace((location.state && location.state.from) || '/');

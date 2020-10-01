@@ -10,7 +10,7 @@ import Login from './pages/Login';
 import PostsList from "./pages/PostsList";
 import './app.css';
 
-function App(props) {
+function App({ checkAuthenticationAction, authenticated, me, logoutAction }) {
     const history = useHistory();
     const [isLoading, setIsLoading] = useState(true);
 
@@ -41,12 +41,12 @@ function App(props) {
     ];
 
     useEffect(() => {
-        props.checkAuthenticationAction().then(() => {
+        checkAuthenticationAction().then(() => {
             setIsLoading(false);
         });
     }, []);
 
-    if (props.authenticated)  { routes = routes.filter((route) => route.path !== '/login'); }
+    if (authenticated)  { routes = routes.filter((route) => route.path !== '/login'); }
 
     return (
         <div>
@@ -59,12 +59,12 @@ function App(props) {
 
                 <div className="right">
                     {
-                        props.authenticated && (
+                        authenticated && (
                             <div>
-                                Welcome {props.me && props.me.firstname}
+                                Welcome {me && me.firstname}
                                 <button
                                     onClick={() => {
-                                        props.logoutAction().then((res) => {
+                                        logoutAction().then((res) => {
                                             if (res && res.payload && !res.payload.authenticated) { history.push("/"); }
                                         });
                                     }}
@@ -83,7 +83,7 @@ function App(props) {
                     if (route.requireAuth) {
                         const Component = route.component;
                         return (
-                            <PrivateRoute {...route} key={index} authenticated={props.authenticated} isLoading={isLoading}>
+                            <PrivateRoute {...route} key={index} authenticated={authenticated} isLoading={isLoading}>
                                 <Component />
                             </PrivateRoute>
                         );
