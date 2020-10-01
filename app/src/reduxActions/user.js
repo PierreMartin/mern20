@@ -81,7 +81,7 @@ export function loginAction(data) {
 
 export function checkAuthenticationAction() {
     return (dispatch) => {
-        checkAuthentication()
+        return checkAuthentication()
             .then((res) => {
                 if (res && res.data) {
                     console.log('authenticated ==> ', res.data.authenticated);

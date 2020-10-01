@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from "react-router-dom";
 import PropTypes from 'prop-types';
 import { connect } from "react-redux";
@@ -12,6 +12,7 @@ import './app.css';
 
 function App(props) {
     const history = useHistory();
+    const [isLoading, setIsLoading] = useState(true);
 
     let routes = [
         {
@@ -40,7 +41,9 @@ function App(props) {
     ];
 
     useEffect(() => {
-        props.checkAuthenticationAction();
+        props.checkAuthenticationAction().then(() => {
+            setIsLoading(false);
+        });
     }, []);
 
     if (props.authenticated)  { routes = routes.filter((route) => route.path !== '/login'); }
@@ -80,7 +83,7 @@ function App(props) {
                     if (route.requireAuth) {
                         const Component = route.component;
                         return (
-                            <PrivateRoute {...route} key={index} authenticated={props.authenticated}>
+                            <PrivateRoute {...route} key={index} authenticated={props.authenticated} isLoading={isLoading}>
                                 <Component />
                             </PrivateRoute>
                         );
@@ -108,18 +111,17 @@ function mapStateToProps(state) {
 
 export default connect(mapStateToProps, { checkAuthenticationAction, logoutAction })(App);
 
-function PrivateRoute({ children, authenticated, ...rest }) {
-
-    // TODO fix pathname: "/login" at refresh
+function PrivateRoute({ children, authenticated, isLoading, ...rest }) {
     return (
         <Route
             path={rest.path}
-            render={({ location }) => authenticated ? (children) : (<Redirect to={{ pathname: "/login", state: { from: location } }}/>) }
+            render={({ location }) => authenticated ? (children) : (!isLoading && <Redirect to={{ pathname: "/login", state: { from: location } }}/>) }
         />
     );
 }
 
 PrivateRoute.propTypes = {
     authenticated: PropTypes.bool,
-    path: PropTypes.string
+    path: PropTypes.string,
+    isLoading: PropTypes.bool
 };
