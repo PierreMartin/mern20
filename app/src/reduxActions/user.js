@@ -36,12 +36,12 @@ export function signupAction(data) {
                 }
             })
             .catch((err) => {
-                console.error('authenticated ==> ', err);
+                console.log('authenticated ==> ', err);
                 return dispatch((
                     {
                         type: SIGNUP_ERROR_USER,
                         payload: {
-                            message: err.message,
+                            message: err && err.message,
                             authenticated: false
                         }
                     }
@@ -67,11 +67,11 @@ export function loginAction(data) {
                 }
             })
             .catch((err) => {
-                console.error('authenticated ==> ', err);
+                console.log('authenticated ==> ', err);
                 return dispatch({
                     type: LOGIN_ERROR_USER,
                     payload: {
-                        message: err.message,
+                        message: err && err.message,
                         authenticated: false
                     }
                 });
@@ -96,11 +96,11 @@ export function checkAuthenticationAction() {
                 }
             })
             .catch((err) => {
-                console.error('authenticated ==> ', err);
+                console.log('authenticated ==> ', err);
                 dispatch({
                     type: CHECK_AUTHENTIFICATION_ERROR,
                     payload: {
-                        message: err.message,
+                        message: err && err.message,
                         authenticated: false
                     }
                 });
@@ -125,11 +125,11 @@ export function logoutAction() {
                 }
             })
             .catch((err) => {
-                console.error('authenticated ==> ', err);
+                console.log('authenticated ==> ', err);
                 return dispatch({
                     type: LOGOUT_ERROR_USER,
                     payload: {
-                        message: err.message,
+                        message: err && err.message,
                         authenticated: true
                     }
                 });

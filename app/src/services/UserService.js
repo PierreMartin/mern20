@@ -39,5 +39,5 @@ export function checkAuthentication() {
         withCredentials: true
     })
         .then((res) => Promise.resolve(res && res.data))
-        .catch(err => Promise.resolve(err.response && err.response.data));
+        .catch(err => Promise.reject(err.response && err.response.data));
 }
