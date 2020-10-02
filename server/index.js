@@ -1,5 +1,6 @@
 import express from 'express';
 import initExpress from './initExpress';
+import initGrapgQl from './graphQl/index';
 import mongoose from 'mongoose';
 import initRoutes from './routes';
 import initPassport from './authent/index';
@@ -11,21 +12,8 @@ const app = express();
 connectMongoDb(mongoose);
 initPassport();
 initExpress(app, mongoose);
+initGrapgQl(app);
 initRoutes(app);
-
-// AuthPassport - req.isAuthenticated() returns true on every request even after refreshing the page:
-/*
-app.use('/', (req, res, next) => {
-    const authenticated = req.isAuthenticated();
-    console.log('authenticated ==> ', authenticated);
-    console.log(req.user);
-
-    if (authenticated) {
-        // returns true if a user already logged in.
-    }
-    next();
-});
-*/
 
 app.listen(port, () => {
     console.log('--------------------------');
