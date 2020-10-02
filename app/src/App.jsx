@@ -99,7 +99,8 @@ function App({ checkAuthenticationAction, authenticated, me, logoutAction }) {
 App.propTypes = {
     authenticated: PropTypes.bool,
     me: PropTypes.any,
-    checkAuthenticationAction: PropTypes.func
+    checkAuthenticationAction: PropTypes.func,
+    logoutAction: PropTypes.func
 };
 
 function mapStateToProps(state) {
