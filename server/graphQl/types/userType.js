@@ -8,12 +8,14 @@ export const UserType = new GraphQLObjectType({
         id: { type: GraphQLID },
         firstname: { type: GraphQLString },
         lastname: { type: GraphQLString },
+        email: { type: GraphQLString },
 
-        // entité liée :
+        // Entité liée :
         posts: {
             type: new GraphQLList(PostType),
             resolve(parentValue) {
-                return Post.find({ userId: parentValue.id }); // TODO add 'userId' to request when create new post
+                const userId = parentValue.id;
+                return Post.find({ userId });
             }
         }
     })

@@ -4,9 +4,7 @@ import { schema } from './schemas/index';
 export default (app) => {
     // The root provides a resolver function for each API endpoint
     const root = {
-        hello: () => {
-            return 'Hello world!';
-        }
+        hello: () => 'Hello world!'
     };
 
     app.use('/graphql', graphqlHTTP({
@@ -14,16 +12,4 @@ export default (app) => {
         rootValue: root,
         graphiql: true
     }));
-
-    /*
-    app.post('/graphql', graphqlHTTP({
-        schema,
-        graphiql: false,
-    }));
-
-    app.get('/graphql', graphqlHTTP({
-        schema,
-        graphiql: true,
-    }));
-    */
 };

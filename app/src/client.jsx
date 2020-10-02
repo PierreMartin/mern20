@@ -1,17 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { BrowserRouter as Router } from "react-router-dom";
 import store from './reduxStore';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+const client = new ApolloClient({
+    uri: 'http://localhost:3080/graphql/',
+    cache: new InMemoryCache()
+});
+
 ReactDOM.render(
   <React.StrictMode>
       <Provider store={store}>
-        <Router>
-            <App />
-        </Router>
+          <ApolloProvider client={client}>
+              <Router>
+                  <App />
+              </Router>
+          </ApolloProvider>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

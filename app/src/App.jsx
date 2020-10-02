@@ -8,6 +8,8 @@ import Home from './pages/Home';
 import PostAdd from './pages/PostAdd';
 import Login from './pages/Login';
 import PostsList from "./pages/PostsList";
+import UsersList from "./pages/UsersList";
+import User from "./pages/User";
 import './app.css';
 
 function App({ checkAuthenticationAction, authenticated, me, logoutAction }) {
@@ -22,9 +24,15 @@ function App({ checkAuthenticationAction, authenticated, me, logoutAction }) {
             component: Home
         },
         {
-            path: "/posts", // /posts/:category
+            path: "/posts",
             title: 'The posts',
             component: PostsList,
+            requireAuth: true
+        },
+        {
+            path: "/users",
+            title: 'The users',
+            component: UsersList,
             requireAuth: true
         },
         {
@@ -37,6 +45,14 @@ function App({ checkAuthenticationAction, authenticated, me, logoutAction }) {
             path: "/login",
             title: 'Login',
             component: Login
+        },
+
+        // Output of main menu:
+        {
+            path: "/user/:id",
+            title: 'User',
+            component: User,
+            hideMainMenu: true
         }
     ];
 
@@ -53,7 +69,11 @@ function App({ checkAuthenticationAction, authenticated, me, logoutAction }) {
             <nav className="main-nav">
                 <div className="left">
                     <ul>
-                        {routes.map((route, index) => <li key={index}><Link to={route.path}>{route.title}</Link></li>)}
+                        {routes.map((route, index) => {
+                            if (route.hideMainMenu) { return; }
+
+                            return <li key={index}><Link to={route.path}>{route.title}</Link></li>;
+                        })}
                     </ul>
                 </div>
 

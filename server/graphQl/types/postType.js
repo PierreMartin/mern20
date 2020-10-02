@@ -1,10 +1,12 @@
-import { GraphQLObjectType, GraphQLString, GraphQLID } from "graphql";
+import { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLBoolean } from "graphql";
 
 export const PostType = new GraphQLObjectType({
     name: 'Post',
     fields: () => ({
         id: { type: GraphQLID },
         title: { type: GraphQLString },
-        content: { type: GraphQLString }
+        description: { type: GraphQLString },
+        content: { type: GraphQLString },
+        isPrivate: { type: GraphQLBoolean },
     })
 });

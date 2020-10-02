@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { addPost } from "../services/PostService";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import '../css/main.css';
 
-function PostAdd() {
+function PostAdd({ me }) {
     const [fieldsTyping, setFieldsTyping] = useState({});
 
     function onInputChange(e) {
@@ -17,6 +19,7 @@ function PostAdd() {
         e.preventDefault();
 
         if (fieldsTyping.title) {
+            fieldsTyping.userId = me && me._id; // For entité liée
             addPost(fieldsTyping).then((res) => {
                console.log(res && res.data);
                 setFieldsTyping({});
@@ -53,7 +56,13 @@ function PostAdd() {
 }
 
 PostAdd.propTypes = {
-
+    me: PropTypes.any
 };
 
-export default PostAdd;
+function mapStateToProps(state) {
+    return {
+        me: state.user.me
+    };
+}
+
+export default connect(mapStateToProps, null)(PostAdd);
