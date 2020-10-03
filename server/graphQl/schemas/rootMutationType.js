@@ -17,8 +17,8 @@ export const RootMutationType = new GraphQLObjectType({
             resolve(parentValue, fields) {
                 return new Post(fields).save().then((res) => {
                     return res;
-                }).catch((err) => {
-                    return { message: "A error happen at the creating new post" , err };
+                }).catch(() => {
+                    return new Error("A error happen at the creating new post");
                 });
             }
         },
