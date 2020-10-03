@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { useQuery, gql } from '@apollo/client';
 import '../css/main.css';
@@ -15,8 +15,12 @@ const USERS = gql`
 `;
 
 function UsersList() {
-    const { loading, error, data } = useQuery(USERS);
+    const { loading, error, data, refetch } = useQuery(USERS);
     // OR =>   const [getUsers, { loading, data }] = useLazyQuery(USERS);  <button onClick={ (getUsers()) } />
+
+    useEffect(() => {
+        refetch();
+    }, []);
 
     if (loading) return <div className="paddings">Loading...</div>;
     if (error) return <div className="paddings">Error :(</div>;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useQuery, gql } from '@apollo/client';
 import { useParams } from "react-router-dom";
 import '../css/main.css';
@@ -22,9 +22,13 @@ const USER = gql`
 
 function User() {
     const { id } = useParams(); // get params url
-    const { loading, error, data } = useQuery(USER, {
+    const { loading, error, data, refetch } = useQuery(USER, {
         variables: { id }
     });
+
+    useEffect(() => {
+        refetch();
+    }, []);
 
     if (loading) return <div className="paddings">Loading...</div>;
     if (error) return <div className="paddings">Error :(</div>;

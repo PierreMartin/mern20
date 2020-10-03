@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { gql, useQuery } from "@apollo/client";
 import '../css/main.css';
 import './postslist.css';
@@ -16,8 +16,12 @@ const POSTS = gql`
 `;
 
 function PostsList() {
-    const { loading, error, data } = useQuery(POSTS);
+    const { loading, error, data, refetch } = useQuery(POSTS);
     // OR =>   const [getPosts, { loading, data }] = useLazyQuery(POSTS);  <button onClick={ (getPosts()) } />
+
+    useEffect(() => {
+        refetch();
+    }, []);
 
     if (loading) return <div className="paddings">Loading...</div>;
     if (error) return <div className="paddings">Error :(</div>;
@@ -25,6 +29,8 @@ function PostsList() {
     return (
         <div className="posts-list-container paddings">
             <h2>List of posts</h2>
+
+            <button onClick={() => refetch()}>Refresh datas</button>
 
             {
                 (data && data.posts && data.posts.length > 0 ) && (
