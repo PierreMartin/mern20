@@ -20,6 +20,8 @@ function PostAdd({ me }) {
 
         if (fieldsTyping.title) {
             fieldsTyping.userId = me && me._id; // For entité liée
+
+            // TODO faire mutation:
             addPost(fieldsTyping).then((res) => {
                console.log(res && res.data);
                 setFieldsTyping({});

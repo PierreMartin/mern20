@@ -1,23 +1,33 @@
-import React, { useState, useEffect } from 'react';
-import { getAllPosts } from "../services/PostService";
+import React from 'react';
+import { gql, useQuery } from "@apollo/client";
 import '../css/main.css';
 import './postslist.css';
 
-function PostsList() {
-    const [posts, setPosts] = useState([]);
+const POSTS = gql`
+    query GetPosts {
+        posts {
+            id
+            title
+            description
+            content
+            isPrivate
+        }
+    }
+`;
 
-    useEffect(() => {
-        getAllPosts().then((res) => {
-            setPosts(res.data);
-        });
-    }, []);
+function PostsList() {
+    const { loading, error, data } = useQuery(POSTS);
+    // OR =>   const [getPosts, { loading, data }] = useLazyQuery(POSTS);  <button onClick={ (getPosts()) } />
+
+    if (loading) return <div className="paddings">Loading...</div>;
+    if (error) return <div className="paddings">Error :(</div>;
 
     return (
         <div className="posts-list-container paddings">
             <h2>List of posts</h2>
 
             {
-                (posts.length > 0 ) && (
+                (data && data.posts && data.posts.length > 0 ) && (
                     <table>
                         <thead>
                             <tr>
@@ -30,7 +40,7 @@ function PostsList() {
                         </thead>
                         <tbody>
                             {
-                                posts.map((post, index) => {
+                                data.posts.map((post, index) => {
                                     return (
                                         <tr key={index}>
                                             <td>{index + 1}</td>
