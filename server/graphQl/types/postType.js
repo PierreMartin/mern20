@@ -8,5 +8,6 @@ export const PostType = new GraphQLObjectType({
         description: { type: GraphQLString },
         content: { type: GraphQLString },
         isPrivate: { type: GraphQLBoolean },
+        userId: { type: GraphQLString }
     })
 });
