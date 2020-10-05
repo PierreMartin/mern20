@@ -15,6 +15,7 @@ export const RootMutationType = new GraphQLObjectType({
                 userId: { type: GraphQLString }
             },
             resolve(parentValue, fields) {
+                // or params.fields
                 return new Post(fields).save().then((res) => {
                     return res;
                 }).catch(() => {

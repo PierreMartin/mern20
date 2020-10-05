@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useQuery, gql } from '@apollo/client';
 import { useParams } from "react-router-dom";
-import '../css/main.css';
+import '../css/main.less';
 
 const USER = gql`
     query GetUser($id: ID!) {

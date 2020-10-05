@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 import PropTypes from 'prop-types';
 import { useHistory, useLocation } from "react-router-dom";
 import { loginAction, signupAction } from "../reduxActions/user";
-import '../css/main.css';
-import './login.css';
+import '../css/main.less';
+import './login.less';
 
 function Login({ loginAction, signupAction }) {
     const [fieldsTyping, setFieldsTyping] = useState({});

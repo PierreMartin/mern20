@@ -1,9 +1,0 @@
-.main-nav {
-    display: flex;
-    flex-direction: row;
-    padding: 12px;
-}
-
-.main-nav ul { padding-left: 20px; }
-.main-nav .left { flex: 1; }
-.main-nav .right {}

@@ -10,7 +10,7 @@ import Login from './pages/Login';
 import PostsList from "./pages/PostsList";
 import UsersList from "./pages/UsersList";
 import User from "./pages/User";
-import './app.css';
+import './app.less';
 
 function App({ checkAuthenticationAction, authenticated, me, logoutAction }) {
     const history = useHistory();

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { gql, useQuery } from "@apollo/client";
-import '../css/main.css';
-import './postslist.css';
+import '../css/main.less';
+import './postslist.less';
 
 const POSTS = gql`
     query GetPosts {

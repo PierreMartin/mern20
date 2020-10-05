@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { useQuery, gql } from '@apollo/client';
-import '../css/main.css';
+import '../css/main.less';
 
 const USERS = gql`
     query GetUsers {

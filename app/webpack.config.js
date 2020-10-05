@@ -35,11 +35,50 @@ module.exports = {
                 exclude: /(node_modules|bower_components)/,
                 use: ['babel-loader']
             },
+            /*
             {
                 test: /\.css$/,
                 use: [
                     'style-loader',
                     'css-loader'
+                ]
+            },
+            */
+            {
+                test: [/\.less$/, /\.css$/],
+                use: [
+                    // { loader : MiniCssExtractPlugin.loader},
+                    {
+                        loader: 'style-loader'
+                    },
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            sourceMap: true
+                        }
+                    },
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            sourceMap: true,
+                            postcssOptions: {
+                                plugins: [
+                                    [
+                                        'postcss-preset-env', // autoprefix css + browserslist
+                                        {
+                                            browsers: 'last 2 versions'
+                                        }
+                                    ]
+                                ]
+                            }
+                        }
+                    },
+                    {
+                        loader: 'less-loader',
+                        options: {
+                            sourceMap: true
+                        }
+                    }
                 ]
             }
         ]
