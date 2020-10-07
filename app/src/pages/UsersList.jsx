@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { useQuery, gql } from '@apollo/client';
+import AppPage from "./AppPage";
 import '../css/main.less';
 
 const USERS = gql`
@@ -26,21 +27,22 @@ function UsersList() {
     if (error) return <div className="paddings">Error :(</div>;
 
     return (
-        <div className="users-list-container paddings">
-            <h2>List of users</h2>
+        <AppPage title="List of users" meta={{ name: '', content: '' }}>
+            <div className="users-list-container paddings">
+                <h2>List of users</h2>
 
-            {
-                (data && data.users && data.users.length > 0 ) && (
-                    <table>
-                        <thead>
+                {
+                    (data && data.users && data.users.length > 0 ) && (
+                        <table>
+                            <thead>
                             <tr>
                                 <th>#</th>
                                 <th>Title</th>
                                 <th>Description</th>
                                 <th>Email</th>
                             </tr>
-                        </thead>
-                        <tbody>
+                            </thead>
+                            <tbody>
                             {
                                 data.users.map((user, index) => {
                                     return (
@@ -53,11 +55,12 @@ function UsersList() {
                                     );
                                 })
                             }
-                        </tbody>
-                    </table>
-                )
-            }
-        </div>
+                            </tbody>
+                        </table>
+                    )
+                }
+            </div>
+        </AppPage>
     );
 }
 

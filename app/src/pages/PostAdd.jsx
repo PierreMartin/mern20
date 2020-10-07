@@ -3,6 +3,7 @@ import { gql, useMutation } from '@apollo/client';
 // import { addPost } from "../services/PostService";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import AppPage from "./AppPage";
 import '../css/main.less';
 
 const ADD_POST = gql`
@@ -52,30 +53,32 @@ function PostAdd({ me }) {
     }
 
     return (
-        <div className="post-add-container paddings">
-            <h2>Add a post</h2>
+        <AppPage title="Add a post" meta={{ name: '', content: '' }}>
+            <div className="post-add-container paddings">
+                <h2>Add a post</h2>
 
-            <form className="form" onSubmit={onSubmitAddPost}>
-                <div className="field">
-                    <label htmlFor="title">Title <span className="required">*</span></label>
-                    <input type="text" name="title" value={fieldsTyping.title || ''} onChange={onInputChange} required />
-                </div>
-                <div className="field">
-                    <label htmlFor="description">Description</label>
-                    <input type="text" name="description" value={fieldsTyping.description || ''} onChange={onInputChange} />
-                </div>
-                <div className="field">
-                    <label htmlFor="content">Content</label>
-                    <textarea name="content" value={fieldsTyping.content || ''} onChange={onInputChange} />
-                </div>
-                <div className="field inline">
-                    <label htmlFor="isPrivate">isPrivate</label>
-                    <input type="checkbox" id="isPrivate" name="isPrivate" checked={!!fieldsTyping.isPrivate} onChange={onCheckboxChange}  />
-                </div>
+                <form className="form" onSubmit={onSubmitAddPost}>
+                    <div className="field">
+                        <label htmlFor="title">Title <span className="required">*</span></label>
+                        <input type="text" name="title" value={fieldsTyping.title || ''} onChange={onInputChange} required />
+                    </div>
+                    <div className="field">
+                        <label htmlFor="description">Description</label>
+                        <input type="text" name="description" value={fieldsTyping.description || ''} onChange={onInputChange} />
+                    </div>
+                    <div className="field">
+                        <label htmlFor="content">Content</label>
+                        <textarea name="content" value={fieldsTyping.content || ''} onChange={onInputChange} />
+                    </div>
+                    <div className="field inline">
+                        <label htmlFor="isPrivate">isPrivate</label>
+                        <input type="checkbox" id="isPrivate" name="isPrivate" checked={!!fieldsTyping.isPrivate} onChange={onCheckboxChange}  />
+                    </div>
 
-                <button>Submit</button>
-            </form>
-        </div>
+                    <button>Submit</button>
+                </form>
+            </div>
+        </AppPage>
     );
 }
 

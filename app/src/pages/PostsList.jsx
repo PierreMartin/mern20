@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { gql, useQuery } from "@apollo/client";
+import AppPage from "./AppPage";
 import '../css/main.less';
 import './postslist.less';
 
@@ -27,15 +28,16 @@ function PostsList() {
     if (error) return <div className="paddings">Error :(</div>;
 
     return (
-        <div className="posts-list-container paddings">
-            <h2>List of posts</h2>
+        <AppPage title="List of posts" meta={{ name: '', content: '' }}>
+            <div className="posts-list-container paddings">
+                <h2>List of posts</h2>
 
-            <button onClick={() => refetch()}>Refresh datas</button>
+                <button onClick={() => refetch()}>Refresh datas</button>
 
-            {
-                (data && data.posts && data.posts.length > 0 ) && (
-                    <table>
-                        <thead>
+                {
+                    (data && data.posts && data.posts.length > 0) && (
+                        <table>
+                            <thead>
                             <tr>
                                 <th>#</th>
                                 <th>Title</th>
@@ -43,8 +45,8 @@ function PostsList() {
                                 <th>Content</th>
                                 <th>Is private</th>
                             </tr>
-                        </thead>
-                        <tbody>
+                            </thead>
+                            <tbody>
                             {
                                 data.posts.map((post, index) => {
                                     return (
@@ -58,11 +60,12 @@ function PostsList() {
                                     );
                                 })
                             }
-                        </tbody>
-                    </table>
-                )
-            }
-        </div>
+                            </tbody>
+                        </table>
+                    )
+                }
+            </div>
+        </AppPage>
     );
 }
 
