@@ -66,6 +66,15 @@ function App({ checkAuthenticationAction, authenticated, me, logoutAction }) {
 
     return (
         <div>
+            {/*
+            TODO
+            - mettre NavBarMain dans un composent
+            - mettre react Context (useContext) (juste un exemple)
+            - implem bootstrap react ?
+            - env de prod (npm install --production   npm run build)
+            - SSR
+            - Lint
+            */}
             <nav className="main-nav">
                 <div className="left">
                     <ul>
@@ -98,6 +107,7 @@ function App({ checkAuthenticationAction, authenticated, me, logoutAction }) {
             </nav>
             <hr />
 
+            {/* Body's pages: */}
             <Switch>
                 {routes.map((route, index) => {
                     if (route.requireAuth) {
