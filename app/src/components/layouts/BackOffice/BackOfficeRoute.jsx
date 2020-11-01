@@ -6,8 +6,8 @@ import { BackOfficeWrapper } from "./BackOfficeWrapper";
 export function BackOfficeRoute({ children, authenticated, isLoading, component: Component, ...rest }) {
     const routeComponent = (props) => {
         return authenticated ? (
-            <BackOfficeWrapper key="backOfficeWrapper" routes={props.routes}>
-                {React.createElement(Component, props)}
+            <BackOfficeWrapper key="backOfficeWrapper">
+                <Component {...props} />
             </BackOfficeWrapper>
         ) : (
             (!isLoading && <Redirect to={{ pathname: "/login", state: { from: props.location } }}/>)
@@ -21,5 +21,5 @@ BackOfficeRoute.propTypes = {
     authenticated: PropTypes.bool,
     path: PropTypes.string,
     isLoading: PropTypes.bool,
-    routes: PropTypes.array
+    component: PropTypes.any
 };

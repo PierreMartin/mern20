@@ -1,63 +1,60 @@
 import React, { Suspense, lazy, useEffect, useState } from 'react';
-import { useHistory } from "react-router-dom";
 import PropTypes from 'prop-types';
 import { connect } from "react-redux";
-import { Switch, Route, Link } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import { Spin } from "antd";
 import { checkAuthenticationAction, logoutAction } from "./reduxActions/user";
 import { BackOfficeRoute } from "./components/layouts/BackOffice/BackOfficeRoute";
+import { FrontOfficeRoute } from "./components/layouts/FrontOffice/FrontOfficeRoute";
 import './app.less';
 
 const Home = lazy(() => import('./pages/Home'));
 const PostAdd = lazy(() => import('./pages/PostAdd'));
 const Login = lazy(() => import('./pages/Login'));
-const PostsList = lazy(() => import('./pages/PostsList'));
+const Dashboard = lazy(() => import('./pages/Dashboard'));
 const UsersList = lazy(() => import('./pages/UsersList'));
 const User = lazy(() => import('./pages/User'));
 
-function App({ checkAuthenticationAction, authenticated, me, logoutAction }) {
-    const history = useHistory();
+function App({ checkAuthenticationAction, authenticated }) {
     const [isLoading, setIsLoading] = useState(true);
 
     let routes = [
         {
             path: "/",
-            title: 'Home',
             exact: true,
             component: Home,
             type: 'frontoffice'
         },
         {
-            path: "/posts",
-            title: 'The posts',
-            component: PostsList,
+            path: "/dashboard",
+            exact: true,
+            component: Dashboard,
             type: 'backoffice'
         },
         {
             path: "/users",
-            title: 'The users',
+            exact: true,
             component: UsersList,
             type: 'backoffice'
         },
         {
             path: "/post/create",
-            title: 'Add a new post',
+            exact: true,
             component: PostAdd,
             type: 'backoffice'
         },
         {
             path: "/login",
-            title: 'Login',
+            exact: true,
             component: Login,
             type: 'frontoffice'
         },
 
-        // Output of main menu:
+        // No in main menu:
         {
             path: "/user/:id",
-            title: 'User',
+            exact: true,
             component: User,
-            hideMainMenu: true,
             type: 'backoffice'
         }
     ];
@@ -68,7 +65,7 @@ function App({ checkAuthenticationAction, authenticated, me, logoutAction }) {
         });
     }, []);
 
-    if (authenticated)  { routes = routes.filter((route) => route.path !== '/login'); }
+    // if (authenticated)  { routes = routes.filter((route) => route.path !== '/login'); }
 
     return (
         <Suspense
@@ -81,52 +78,20 @@ function App({ checkAuthenticationAction, authenticated, me, logoutAction }) {
             <div>
                 {/*
                 TODO
-                - mettre NavBarMain dans un composent
                 - mettre react Context (useContext) (juste un exemple)
                 - implem bootstrap react ?
                 - env de prod (npm install --production   npm run build)
                 - SSR
                 - Lint
                 */}
-                <nav className="main-nav">
-                    <div className="left">
-                        <ul>
-                            {routes.map((route, index) => {
-                                if (route.hideMainMenu) { return; }
-
-                                return <li key={index}><Link to={route.path}>{route.title}</Link></li>;
-                            })}
-                        </ul>
-                    </div>
-
-                    <div className="right">
-                        {
-                            authenticated && (
-                                <div>
-                                    Welcome {me && me.firstname}
-                                    <button
-                                        onClick={() => {
-                                            logoutAction().then((res) => {
-                                                if (res && res.payload && !res.payload.authenticated) { history.push("/"); }
-                                            });
-                                        }}
-                                    >
-                                        Logout
-                                    </button>
-                                </div>
-                            )
-                        }
-                    </div>
-                </nav>
-                <hr />
 
                 <Switch>
                     {routes.map((route, index) => {
                         switch (route.type) {
+                            case 'frontoffice':
+                                return <FrontOfficeRoute {...route} key={index} isLoading={isLoading} routes={routes} />;
                             case 'backoffice':
                                 return <BackOfficeRoute {...route} key={index} authenticated={authenticated} isLoading={isLoading} routes={routes} />;
-                            case 'frontoffice':
-                            // return <FrontOfficeRoute {...route} key={index} isLoading={isLoading} routes={routes} />;
                             default:
                                 return <Route key={index} {...route} />;
                         }

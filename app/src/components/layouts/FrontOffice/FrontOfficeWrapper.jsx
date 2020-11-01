@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import NavBarMain from "../../BackOffice/NavBarMain/NavBarMain";
+import NavBarMain from "../../FrontOffice/NavBarMain/NavBarMain";
 
-export function BackOfficeWrapper({ children }) {
+export function FrontOfficeWrapper({ children }) {
     return (
         <div>
             <NavBarMain />
@@ -11,6 +11,6 @@ export function BackOfficeWrapper({ children }) {
     );
 }
 
-BackOfficeWrapper.propTypes = {
+FrontOfficeWrapper.propTypes = {
     children: PropTypes.any
 };

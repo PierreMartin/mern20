@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { gql, useQuery } from "@apollo/client";
 import AppPage from "./AppPage";
 import '../css/main.less';
-import './postslist.less';
+import './dashboard.less';
 
 const POSTS = gql`
     query GetPosts {
@@ -16,7 +16,7 @@ const POSTS = gql`
     }
 `;
 
-function PostsList() {
+function Dashboard() {
     const { loading, error, data, refetch } = useQuery(POSTS);
     // OR =>   const [getPosts, { loading, data }] = useLazyQuery(POSTS);  <button onClick={ (getPosts()) } />
 
@@ -28,9 +28,9 @@ function PostsList() {
     if (error) return <div className="paddings">Error :(</div>;
 
     return (
-        <AppPage title="List of posts" meta={{ name: '', content: '' }}>
-            <div className="posts-list-container paddings">
-                <h2>List of posts</h2>
+        <AppPage title="Dashboard" meta={{ name: '', content: '' }}>
+            <div className="dashboard-container paddings">
+                <h2>Dashboard</h2>
 
                 <button onClick={() => refetch()}>Refresh datas</button>
 
@@ -69,8 +69,8 @@ function PostsList() {
     );
 }
 
-PostsList.propTypes = {
+Dashboard.propTypes = {
 
 };
 
-export default PostsList;
+export default Dashboard;

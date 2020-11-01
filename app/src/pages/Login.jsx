@@ -24,8 +24,8 @@ function Login({ loginAction, signupAction }) {
         if (fieldsTyping.email && fieldsTyping.password) {
             loginAction(fieldsTyping).then((res) => {
                 if (res && res.payload && res.payload.authenticated) {
-                    // if (res) { history.push("/posts"); }
-                    history.replace((location.state && location.state.from) || '/');
+                    // if (res) { history.push("/dashboard"); }
+                    history.replace((location.state && location.state.from) || '/dashboard');
                 } else if (res.payload && res.payload.message) {
                     setErrorCredentials(res.payload.message);
                 }
@@ -39,8 +39,8 @@ function Login({ loginAction, signupAction }) {
         if (fieldsTyping.email && fieldsTyping.password) {
             signupAction(fieldsTyping).then((res) => {
                 if (res && res.payload && res.payload.authenticated) {
-                    // if (res) { history.push("/posts"); }
-                    history.replace((location.state && location.state.from) || '/');
+                    // if (res) { history.push("/dashboard"); }
+                    history.replace((location.state && location.state.from) || '/dashboard');
                 } else if (res.payload && res.payload.message) {
                     setErrorCredentials(res.payload.message);
                 }
