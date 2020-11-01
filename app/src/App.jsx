@@ -1,16 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, lazy, useEffect, useState } from 'react';
 import { useHistory } from "react-router-dom";
 import PropTypes from 'prop-types';
 import { connect } from "react-redux";
-import { Switch, Route, Link, Redirect } from "react-router-dom";
+import { Switch, Route, Link } from "react-router-dom";
+import { Spin } from "antd";
 import { checkAuthenticationAction, logoutAction } from "./reduxActions/user";
-import Home from './pages/Home';
-import PostAdd from './pages/PostAdd';
-import Login from './pages/Login';
-import PostsList from "./pages/PostsList";
-import UsersList from "./pages/UsersList";
-import User from "./pages/User";
+import { BackOfficeRoute } from "./components/layouts/BackOffice/BackOfficeRoute";
 import './app.less';
+
+const Home = lazy(() => import('./pages/Home'));
+const PostAdd = lazy(() => import('./pages/PostAdd'));
+const Login = lazy(() => import('./pages/Login'));
+const PostsList = lazy(() => import('./pages/PostsList'));
+const UsersList = lazy(() => import('./pages/UsersList'));
+const User = lazy(() => import('./pages/User'));
 
 function App({ checkAuthenticationAction, authenticated, me, logoutAction }) {
     const history = useHistory();
@@ -21,30 +24,32 @@ function App({ checkAuthenticationAction, authenticated, me, logoutAction }) {
             path: "/",
             title: 'Home',
             exact: true,
-            component: Home
+            component: Home,
+            type: 'frontoffice'
         },
         {
             path: "/posts",
             title: 'The posts',
             component: PostsList,
-            requireAuth: true
+            type: 'backoffice'
         },
         {
             path: "/users",
             title: 'The users',
             component: UsersList,
-            requireAuth: true
+            type: 'backoffice'
         },
         {
             path: "/post/create",
             title: 'Add a new post',
             component: PostAdd,
-            requireAuth: true
+            type: 'backoffice'
         },
         {
             path: "/login",
             title: 'Login',
-            component: Login
+            component: Login,
+            type: 'frontoffice'
         },
 
         // Output of main menu:
@@ -52,7 +57,8 @@ function App({ checkAuthenticationAction, authenticated, me, logoutAction }) {
             path: "/user/:id",
             title: 'User',
             component: User,
-            hideMainMenu: true
+            hideMainMenu: true,
+            type: 'backoffice'
         }
     ];
 
@@ -65,64 +71,69 @@ function App({ checkAuthenticationAction, authenticated, me, logoutAction }) {
     if (authenticated)  { routes = routes.filter((route) => route.path !== '/login'); }
 
     return (
-        <div>
-            {/*
-            TODO
-            - mettre NavBarMain dans un composent
-            - mettre react Context (useContext) (juste un exemple)
-            - implem bootstrap react ?
-            - env de prod (npm install --production   npm run build)
-            - SSR
-            - Lint
-            */}
-            <nav className="main-nav">
-                <div className="left">
-                    <ul>
-                        {routes.map((route, index) => {
-                            if (route.hideMainMenu) { return; }
-
-                            return <li key={index}><Link to={route.path}>{route.title}</Link></li>;
-                        })}
-                    </ul>
+        <Suspense
+            fallback={
+                <div className="h-screen w-screen flex items-center justify-center">
+                    <Spin size="large" />
                 </div>
+            }
+        >
+            <div>
+                {/*
+                TODO
+                - mettre NavBarMain dans un composent
+                - mettre react Context (useContext) (juste un exemple)
+                - implem bootstrap react ?
+                - env de prod (npm install --production   npm run build)
+                - SSR
+                - Lint
+                */}
+                <nav className="main-nav">
+                    <div className="left">
+                        <ul>
+                            {routes.map((route, index) => {
+                                if (route.hideMainMenu) { return; }
 
-                <div className="right">
-                    {
-                        authenticated && (
-                            <div>
-                                Welcome {me && me.firstname}
-                                <button
-                                    onClick={() => {
-                                        logoutAction().then((res) => {
-                                            if (res && res.payload && !res.payload.authenticated) { history.push("/"); }
-                                        });
-                                    }}
-                                >
-                                    Logout
-                                </button>
-                            </div>
-                        )
-                    }
-                </div>
-            </nav>
-            <hr />
+                                return <li key={index}><Link to={route.path}>{route.title}</Link></li>;
+                            })}
+                        </ul>
+                    </div>
 
-            {/* Body's pages: */}
-            <Switch>
-                {routes.map((route, index) => {
-                    if (route.requireAuth) {
-                        const Component = route.component;
-                        return (
-                            <PrivateRoute {...route} key={index} authenticated={authenticated} isLoading={isLoading}>
-                                <Component />
-                            </PrivateRoute>
-                        );
-                    }
+                    <div className="right">
+                        {
+                            authenticated && (
+                                <div>
+                                    Welcome {me && me.firstname}
+                                    <button
+                                        onClick={() => {
+                                            logoutAction().then((res) => {
+                                                if (res && res.payload && !res.payload.authenticated) { history.push("/"); }
+                                            });
+                                        }}
+                                    >
+                                        Logout
+                                    </button>
+                                </div>
+                            )
+                        }
+                    </div>
+                </nav>
+                <hr />
 
-                    return <Route key={index} {...route} />;
-                })}
-            </Switch>
-        </div>
+                <Switch>
+                    {routes.map((route, index) => {
+                        switch (route.type) {
+                            case 'backoffice':
+                                return <BackOfficeRoute {...route} key={index} authenticated={authenticated} isLoading={isLoading} routes={routes} />;
+                            case 'frontoffice':
+                            // return <FrontOfficeRoute {...route} key={index} isLoading={isLoading} routes={routes} />;
+                            default:
+                                return <Route key={index} {...route} />;
+                        }
+                    })}
+                </Switch>
+            </div>
+        </Suspense>
     );
 }
 
@@ -141,18 +152,3 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, { checkAuthenticationAction, logoutAction })(App);
-
-function PrivateRoute({ children, authenticated, isLoading, ...rest }) {
-    return (
-        <Route
-            path={rest.path}
-            render={({ location }) => authenticated ? (children) : (!isLoading && <Redirect to={{ pathname: "/login", state: { from: location } }}/>) }
-        />
-    );
-}
-
-PrivateRoute.propTypes = {
-    authenticated: PropTypes.bool,
-    path: PropTypes.string,
-    isLoading: PropTypes.bool
-};
