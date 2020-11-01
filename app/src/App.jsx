@@ -94,6 +94,7 @@ function App({ checkAuthenticationAction, authenticated }) {
                                 return (
                                     <Route
                                         key={index}
+                                        exact={route.exact}
                                         path={route.path}
                                         render={(props) => (
                                             <LayoutMainFo>
@@ -113,9 +114,22 @@ function App({ checkAuthenticationAction, authenticated }) {
                                     );
                                 };
 
-                                return <Route key={index} path={route.path} render={routeComponent} />;
+                                return (
+                                    <Route
+                                        key={index}
+                                        exact={route.exact}
+                                        path={route.path}
+                                        render={routeComponent}
+                                    />
+                                );
                             default:
-                                return <Route key={index} {...route} />;
+                                return (
+                                    <Route
+                                        key={index}
+                                        exact={true}
+                                        {...route}
+                                    />
+                                );
                         }
                     })}
                 </Switch>
