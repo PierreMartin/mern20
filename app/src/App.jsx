@@ -1,11 +1,11 @@
 import React, { Suspense, lazy, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from "react-redux";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import { Spin } from "antd";
 import { checkAuthenticationAction, logoutAction } from "./reduxActions/user";
-import { BackOfficeRoute } from "./components/layouts/BackOffice/BackOfficeRoute";
-import { FrontOfficeRoute } from "./components/layouts/FrontOffice/FrontOfficeRoute";
+import { LayoutMainFo } from "./components/FrontOffice/layouts/LayoutMain/LayoutMainFo";
+import { LayoutMainBo } from "./components/BackOffice/layouts/LayoutMain/LayoutMainBo";
 import './app.less';
 
 const Home = lazy(() => import('./pages/Home'));
@@ -78,8 +78,8 @@ function App({ checkAuthenticationAction, authenticated }) {
             <div>
                 {/*
                 TODO
+                - Sources Map
                 - mettre react Context (useContext) (juste un exemple)
-                - implem bootstrap react ?
                 - env de prod (npm install --production   npm run build)
                 - SSR
                 - Lint
@@ -87,11 +87,33 @@ function App({ checkAuthenticationAction, authenticated }) {
 
                 <Switch>
                     {routes.map((route, index) => {
+                        const Component = route.component;
+
                         switch (route.type) {
                             case 'frontoffice':
-                                return <FrontOfficeRoute {...route} key={index} isLoading={isLoading} routes={routes} />;
+                                return (
+                                    <Route
+                                        key={index}
+                                        path={route.path}
+                                        render={(props) => (
+                                            <LayoutMainFo>
+                                                <Component {...props} />
+                                            </LayoutMainFo>
+                                        )}
+                                    />
+                                );
                             case 'backoffice':
-                                return <BackOfficeRoute {...route} key={index} authenticated={authenticated} isLoading={isLoading} routes={routes} />;
+                                const routeComponent = (props) => {
+                                    return authenticated ? (
+                                        <LayoutMainBo>
+                                            <Component {...props} />
+                                        </LayoutMainBo>
+                                    ) : (
+                                        (!isLoading && <Redirect to={{ pathname: "/login", state: { from: props.location } }}/>)
+                                    );
+                                };
+
+                                return <Route key={index} path={route.path} render={routeComponent} />;
                             default:
                                 return <Route key={index} {...route} />;
                         }
