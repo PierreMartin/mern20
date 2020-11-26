@@ -78,7 +78,6 @@ function App({ checkAuthenticationAction, authenticated }) {
             <div>
                 {/*
                 TODO
-                - Sources Map
                 - mettre react Context (useContext) (juste un exemple)
                 - env de prod (npm install --production   npm run build)
                 - SSR
