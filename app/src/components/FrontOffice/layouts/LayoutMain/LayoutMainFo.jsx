@@ -1,10 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import NavBarMain from "../../NavBarMain/NavBarMain";
+import '../../../../css/mainFo.less';
 
 export function LayoutMainFo({ children }) {
     return (
-        <div>
+        <div id="fo">
             <NavBarMain />
             {children}
         </div>

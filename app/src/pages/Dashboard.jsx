@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { gql, useQuery } from "@apollo/client";
 import AppPage from "./AppPage";
-import '../css/main.less';
 import './dashboard.less';
 
 const POSTS = gql`

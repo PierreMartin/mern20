@@ -4,7 +4,6 @@ import { gql, useMutation } from '@apollo/client';
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import AppPage from "./AppPage";
-import '../css/main.less';
 
 const ADD_POST = gql`
     mutation AddPost($title: String, $description: String, $content: String, $isPrivate: Boolean, $userId: String) {

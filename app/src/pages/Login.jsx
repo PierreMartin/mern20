@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { useHistory, useLocation } from "react-router-dom";
 import { loginAction, signupAction } from "../reduxActions/user";
 import AppPage from "./AppPage";
-import '../css/main.less';
+import { Input } from "antd";
 import './login.less';
 
 function Login({ loginAction, signupAction }) {

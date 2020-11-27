@@ -6,7 +6,7 @@ import { Spin } from "antd";
 import { checkAuthenticationAction, logoutAction } from "./reduxActions/user";
 import { LayoutMainFo } from "./components/FrontOffice/layouts/LayoutMain/LayoutMainFo";
 import { LayoutMainBo } from "./components/BackOffice/layouts/LayoutMain/LayoutMainBo";
-import './app.less';
+import './css/main.less';
 
 const Home = lazy(() => import('./pages/Home'));
 const PostAdd = lazy(() => import('./pages/PostAdd'));
@@ -75,7 +75,7 @@ function App({ checkAuthenticationAction, authenticated }) {
                 </div>
             }
         >
-            <div className="app">
+            <div>
                 {/*
                 TODO
                 - mettre react Context (useContext) (juste un exemple)

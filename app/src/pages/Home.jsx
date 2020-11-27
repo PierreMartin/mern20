@@ -1,6 +1,5 @@
 import React from 'react';
 import AppPage from "./AppPage";
-import '../css/main.less';
 import './home.less';
 
 function Home() {
