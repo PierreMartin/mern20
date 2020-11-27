@@ -75,7 +75,7 @@ function App({ checkAuthenticationAction, authenticated }) {
                 </div>
             }
         >
-            <div>
+            <div className="app">
                 {/*
                 TODO
                 - mettre react Context (useContext) (juste un exemple)

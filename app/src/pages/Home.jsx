@@ -7,7 +7,7 @@ function Home() {
     return (
         <AppPage title="Home" meta={{ name: '', content: '' }}>
             <div className="home-container paddings">
-                <h1 className="text-4xl font-bold">Welcome</h1>
+                <h1>Welcome</h1>
             </div>
         </AppPage>
     );

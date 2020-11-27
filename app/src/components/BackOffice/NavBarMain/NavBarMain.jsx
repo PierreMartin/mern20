@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Link, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { logoutAction } from "../../../reduxActions/user";
+import './navBarMain.less';
 
 function NavBarMain({ me, logoutAction }) {
     const history = useHistory();
