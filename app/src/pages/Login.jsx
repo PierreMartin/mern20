@@ -127,7 +127,7 @@ function Login({ loginAction, signupAction }) {
                             }
                         ]}
                     >
-                        <Input prefix={<MailOutlined className="site-form-item-icon" />} placeholder="E-mail" />
+                        <Input prefix={<MailOutlined className="login-icon" />} placeholder="E-mail" />
                     </Form.Item>
 
                     <Form.Item
@@ -145,7 +145,7 @@ function Login({ loginAction, signupAction }) {
                         ]}
                         hasFeedback
                     >
-                        <Input.Password prefix={<LockOutlined className="site-form-item-icon" />} placeholder="Password" />
+                        <Input.Password prefix={<LockOutlined className="login-icon" />} placeholder="Password" />
                     </Form.Item>
 
                     {
@@ -172,7 +172,7 @@ function Login({ loginAction, signupAction }) {
                                         })
                                     ]}
                                 >
-                                    <Input.Password prefix={<LockOutlined className="site-form-item-icon" />} placeholder="Confirm Password" />
+                                    <Input.Password prefix={<LockOutlined className="login-icon" />} placeholder="Confirm Password" />
                                 </Form.Item>
 
                                 <Form.Item
@@ -195,7 +195,7 @@ function Login({ loginAction, signupAction }) {
                                         }
                                     ]}
                                 >
-                                    <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
+                                    <Input prefix={<UserOutlined className="login-icon" />} placeholder="Username" />
                                 </Form.Item>
 
                                 <Form.Item name="age" rules={[{ type: 'number', min: 0, max: 99 }]}>
@@ -254,8 +254,8 @@ function Login({ loginAction, signupAction }) {
                         )
                     }
 
-                    <Form.Item className="login-form-forgot">
-                        <Form.Item name="remember" valuePropName="checked">
+                    <Form.Item className="field-forgot">
+                        <Form.Item name="remember" valuePropName="checked" noStyle>
                             <Checkbox>Remember me</Checkbox>
                         </Form.Item>
 
@@ -263,7 +263,7 @@ function Login({ loginAction, signupAction }) {
                     </Form.Item>
 
                     <Form.Item>
-                        <Button type="primary" htmlType="submit" className="login-form-button">
+                        <Button type="primary" htmlType="submit" className="button-submit">
                             {isSignup ? 'Register' : 'Login'}
                         </Button>
                         Or {!isSignup ? <a href="#" onClick={(e) => { e.preventDefault(); onReset(); setIsSignup(true); }}>register now!</a> : <a href="#" onClick={(e) => { e.preventDefault(); onReset(); setIsSignup(false); }}>Login</a>}
