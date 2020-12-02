@@ -12,7 +12,10 @@ export function login(req, res, next) {
         // unauthorized error (if wrong password or wrong login):
         if (!user) {
             // return res.redirect('/login');
-            return res.status(401).json({ message: info.message });
+            return res.status(401).json({
+                message: info.message,
+                fieldsErrors: [{ name: 'email', errors: [info.message] }]
+            });
         }
 
         // Establish a session:
@@ -41,7 +44,10 @@ export function signUp(req, res, next) {
     User.findOne({ email: data.email }, (findErr, existingUser) => {
         // conflict errors :
         if (existingUser) {
-            return res.status(409).json({ message: 'Account already exist!' });
+            return res.status(409).json({
+                message: 'Account already exist!',
+                fieldsErrors: [{ name: 'email', errors: ['Account already exist!'] }]
+            });
         }
 
         // create account :

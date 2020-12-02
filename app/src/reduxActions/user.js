@@ -42,6 +42,7 @@ export function signupAction(data) {
                         type: SIGNUP_ERROR_USER,
                         payload: {
                             message: err && err.message,
+                            fieldsErrors: err && err.fieldsErrors,
                             authenticated: false
                         }
                     }
@@ -72,6 +73,7 @@ export function loginAction(data) {
                     type: LOGIN_ERROR_USER,
                     payload: {
                         message: err && err.message,
+                        fieldsErrors: err && err.fieldsErrors,
                         authenticated: false
                     }
                 });

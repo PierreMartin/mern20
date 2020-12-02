@@ -7,7 +7,6 @@ import AppPage from "./AppPage";
 import {
     Form,
     Input,
-    Tooltip,
     Select,
     Row,
     Col,
@@ -15,10 +14,15 @@ import {
     Button,
     InputNumber
 } from 'antd';
-import { QuestionCircleOutlined } from '@ant-design/icons';
+import {
+    MailOutlined,
+    UserOutlined,
+    LockOutlined
+} from '@ant-design/icons';
 import './login.less';
 
 const { Option } = Select;
+/*
 const formItemLayout = {
     labelCol: {
         xs: {
@@ -49,12 +53,13 @@ const tailFormItemLayout = {
         },
     },
 };
+*/
 
 function Login({ loginAction, signupAction }) {
     // const [fieldsTyping, setFieldsTyping] = useState({});
+    // const [errorCredentials, setErrorCredentials] = useState('');
     const [form] = Form.useForm();
     const [isSignup, setIsSignup] = useState(false);
-    const [errorCredentials, setErrorCredentials] = useState('');
     const history = useHistory();
     const location = useLocation();
 
@@ -70,8 +75,8 @@ function Login({ loginAction, signupAction }) {
                 if (res && res.payload && res.payload.authenticated) {
                     // if (res) { history.push("/dashboard"); }
                     history.replace((location.state && location.state.from) || '/dashboard');
-                } else if (res.payload && res.payload.message) {
-                    setErrorCredentials(res.payload.message);
+                } else if (res.payload && res.payload.fieldsErrors && res.payload.fieldsErrors.length) {
+                    form.setFields(res.payload.fieldsErrors);
                 }
             });
         }
@@ -83,8 +88,8 @@ function Login({ loginAction, signupAction }) {
                 if (res && res.payload && res.payload.authenticated) {
                     // if (res) { history.push("/dashboard"); }
                     history.replace((location.state && location.state.from) || '/dashboard');
-                } else if (res.payload && res.payload.message) {
-                    setErrorCredentials(res.payload.message);
+                } else if (res.payload && res.payload.fieldsErrors && res.payload.fieldsErrors.length) {
+                    form.setFields(res.payload.fieldsErrors);
                 }
             });
         }
@@ -97,21 +102,20 @@ function Login({ loginAction, signupAction }) {
     return (
         <AppPage title={isSignup ? 'Signup' : 'Login'} meta={{ name: '', content: '' }}>
             <div className="login-container paddings">
-                <h2>{isSignup ? 'Signup' : 'Login'}</h2>
-
                 <Form
-                    {...formItemLayout}
                     form={form}
                     name="login"
                     className="login-form"
                     onFinish={isSignup ? onSubmitSignup : onSubmitLogin}
                     initialValues={{ remember: true }}
-                    size="small"
+                    layout="vertical"
                     scrollToFirstError
                 >
+                    <h2>{isSignup ? 'Signup' : 'Login'}</h2>
+
                     <Form.Item
                         name="email"
-                        label="E-mail"
+                        // label="E-mail"
                         rules={[
                             {
                                 type: 'email',
@@ -123,25 +127,25 @@ function Login({ loginAction, signupAction }) {
                             }
                         ]}
                     >
-                        <Input />
+                        <Input prefix={<MailOutlined className="site-form-item-icon" />} placeholder="E-mail" />
                     </Form.Item>
 
                     <Form.Item
                         name="password"
-                        label="Password"
+                        // label="Password"
                         rules={[
                             {
                                 required: true,
                                 message: 'Please input your password!',
                             },
-                            {
+                            isSignup && {
                                 pattern: new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{6,}$/),
-                                message: 'Password must be minimum 6 characters and contain at least one lowercase letter, uppercase letter, and number'
+                                message: 'Password must be minimum 6 characters and contain at least one lowercase letter, uppercase letter number and no special characters'
                             }
                         ]}
                         hasFeedback
                     >
-                        <Input.Password />
+                        <Input.Password prefix={<LockOutlined className="site-form-item-icon" />} placeholder="Password" />
                     </Form.Item>
 
                     {
@@ -149,7 +153,7 @@ function Login({ loginAction, signupAction }) {
                             <>
                                 <Form.Item
                                     name="confirm"
-                                    label="Confirm Password"
+                                    // label="Confirm Password"
                                     dependencies={['password']}
                                     hasFeedback
                                     rules={[
@@ -168,11 +172,12 @@ function Login({ loginAction, signupAction }) {
                                         })
                                     ]}
                                 >
-                                    <Input.Password />
+                                    <Input.Password prefix={<LockOutlined className="site-form-item-icon" />} placeholder="Confirm Password" />
                                 </Form.Item>
 
                                 <Form.Item
                                     name="username"
+                                    /*
                                     label={
                                         <span>
                                             Username&nbsp;
@@ -181,6 +186,7 @@ function Login({ loginAction, signupAction }) {
                                             </Tooltip>
                                         </span>
                                     }
+                                    */
                                     rules={[
                                         {
                                             required: true,
@@ -189,30 +195,26 @@ function Login({ loginAction, signupAction }) {
                                         }
                                     ]}
                                 >
-                                    <Input />
+                                    <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
                                 </Form.Item>
 
-                                <Form.Item name="age" label="Age" rules={[{ type: 'number', min: 0, max: 99 }]}>
-                                    <InputNumber />
+                                <Form.Item name="age" rules={[{ type: 'number', min: 0, max: 99 }]}>
+                                    <InputNumber placeholder="Age" />
                                 </Form.Item>
 
-                                <Form.Item name="gender" label="Gender" rules={[{ required: true }]}>
-                                    <Select
-                                        placeholder="Select a option and change input text above"
-                                        onChange={null}
-                                        allowClear
-                                    >
+                                <Form.Item name="gender" rules={[{ required: true }]}>
+                                    <Select placeholder="Gender" allowClear>
                                         <Option value="male">male</Option>
                                         <Option value="female">female</Option>
                                         <Option value="other">other</Option>
                                     </Select>
                                 </Form.Item>
 
-                                <Form.Item name="introduction" label="Introduction">
-                                    <Input.TextArea />
+                                <Form.Item name="introduction">
+                                    <Input.TextArea placeholder="Introduction" />
                                 </Form.Item>
 
-                                <Form.Item label="Captcha" extra="We must make sure that your are a human.">
+                                <Form.Item extra="We must make sure that your are a human.">
                                     <Row gutter={8}>
                                         <Col span={12}>
                                             <Form.Item
@@ -225,7 +227,7 @@ function Login({ loginAction, signupAction }) {
                                                     },
                                                 ]}
                                             >
-                                                <Input />
+                                                <Input placeholder="Captcha" />
                                             </Form.Item>
                                         </Col>
                                         <Col span={12}>
@@ -243,7 +245,6 @@ function Login({ loginAction, signupAction }) {
                                                 value ? Promise.resolve() : Promise.reject('Should accept agreement'),
                                         },
                                     ]}
-                                    {...tailFormItemLayout}
                                 >
                                     <Checkbox>
                                         I have read the <Link to="">agreement</Link>
@@ -253,18 +254,19 @@ function Login({ loginAction, signupAction }) {
                         )
                     }
 
-                    <Form.Item {...tailFormItemLayout} name="remember" valuePropName="checked">
-                        <Checkbox>Remember me</Checkbox>
+                    <Form.Item className="login-form-forgot">
+                        <Form.Item name="remember" valuePropName="checked">
+                            <Checkbox>Remember me</Checkbox>
+                        </Form.Item>
+
+                        <a href="">Forgot password</a>
                     </Form.Item>
 
-                    <Form.Item {...tailFormItemLayout}>
-                        { errorCredentials && <label className="error-field">{errorCredentials}</label> }
-                    </Form.Item>
-
-                    <Form.Item {...tailFormItemLayout}>
-                        <Button type="primary" htmlType="submit">
+                    <Form.Item>
+                        <Button type="primary" htmlType="submit" className="login-form-button">
                             {isSignup ? 'Register' : 'Login'}
                         </Button>
+                        Or {!isSignup ? <a href="#" onClick={(e) => { e.preventDefault(); onReset(); setIsSignup(true); }}>register now!</a> : <a href="#" onClick={(e) => { e.preventDefault(); onReset(); setIsSignup(false); }}>Login</a>}
                     </Form.Item>
                 </Form>
 
@@ -284,10 +286,6 @@ function Login({ loginAction, signupAction }) {
                     <button>{isSignup ? 'Signup' : 'Login'}</button>
                 </form>
                 */}
-
-                <div className="field inline signup-field">
-                    {!isSignup ? <a href="#" onClick={(e) => { e.preventDefault(); onReset(); setIsSignup(true); }}>No yet a account? Create a new account</a> : <a href="#" onClick={(e) => { e.preventDefault(); onReset(); setIsSignup(false); }}>Have a account? Go to login</a>}
-                </div>
             </div>
         </AppPage>
     );
