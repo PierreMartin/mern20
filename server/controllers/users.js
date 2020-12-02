@@ -14,7 +14,7 @@ export function login(req, res, next) {
             // return res.redirect('/login');
             return res.status(401).json({
                 message: info.message,
-                fieldsErrors: [{ name: 'email', errors: [info.message] }]
+                fieldsErrors: info.fieldsErrors
             });
         }
 
