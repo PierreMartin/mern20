@@ -9,6 +9,7 @@ import './dashboard.less';
 const POSTS = gql`
     query GetPosts($userId: String!)  {
         postsByUserId (userId: $userId) {
+            id
             title
             description
             content
