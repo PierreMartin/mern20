@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Input, InputNumber, Popconfirm, Form, Tag, Checkbox } from 'antd';
+import { Table, Input, InputNumber, Popconfirm, Form, Tag, Checkbox, Tooltip } from 'antd';
 import { gql, useQuery } from "@apollo/client";
 import AppPage from "./AppPage";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import './dashboard.less';
 
 const POSTS = gql`
-    query GetPosts {
-        posts {
-            id
+    query GetPosts($userId: String!)  {
+        postsByUserId (userId: $userId) {
             title
             description
             content
@@ -17,15 +18,15 @@ const POSTS = gql`
 `;
 
 const EditableCell = ({
-                          editing,
-                          dataIndex,
-                          title,
-                          inputType,
-                          record,
-                          index,
-                          children,
-                          ...restProps
-                      }) => {
+    editing,
+    dataIndex,
+    title,
+    inputType,
+    record,
+    index,
+    children,
+    ...restProps
+}) => {
     const inputNode = inputType === 'number' ? <InputNumber /> : <Input />;
 
     return (
@@ -50,8 +51,9 @@ const EditableCell = ({
     );
 };
 
-function Dashboard() {
-    const { loading, error, data } = useQuery(POSTS);
+function Dashboard({ me }) {
+    const userId = me && me._id;
+    const { loading, error, data, refetch } = useQuery(POSTS, { variables: { userId } });
     // OR =>   const [getPosts, { loading, data }] = useLazyQuery(POSTS);  <button onClick={ (getPosts()) } />
     // const [editPost, { /*data, */loading: mutationLoading, error: mutationError }] = useMutation(EDIT_POST); // TODO
     const [postsData, setPostsData] = useState([]);
@@ -61,8 +63,12 @@ function Dashboard() {
     const isEditing = (record) => record.id === editingId;
 
     useEffect(() => {
-        if (data && data.posts) {
-            const posts = data.posts.map((post) => ({ key: post.id, ...post, tags: ['developer', 'cool'] })); // 'tags' just for tests
+        refetch();
+    }, []);
+
+    useEffect(() => {
+        if (data && data.postsByUserId) {
+            const posts = data.postsByUserId.map((post) => ({ key: post.id, ...post, tags: ['developer', 'cool'] })); // 'tags' just for tests
             setPostsData(posts);
         }
     }, [data]);
@@ -126,6 +132,12 @@ function Dashboard() {
             dataIndex: 'content',
             width: '20%',
             sorter: (a, b) => a.content.length - b.content.length,
+            ellipsis: { showTitle: false },
+            render: content => (
+                <Tooltip placement="topLeft" title={content}>
+                    {content}
+                </Tooltip>
+            ),
             editable: true
         },
         {
@@ -225,7 +237,9 @@ function Dashboard() {
                     />
                 </Form>
 
-                {/*{
+                {/*
+                Old approach:
+                {
                     (data && data.posts && data.posts.length > 0) && (
                         <table>
                             <thead>
@@ -254,14 +268,21 @@ function Dashboard() {
                             </tbody>
                         </table>
                     )
-                }*/}
+                }
+                */}
             </div>
         </AppPage>
     );
 }
 
 Dashboard.propTypes = {
-
+    me: PropTypes.any,
 };
 
-export default Dashboard;
+function mapStateToProps(state) {
+    return {
+        me: state.user.me
+    };
+}
+
+export default connect(mapStateToProps, null)(Dashboard);
