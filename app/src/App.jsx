@@ -82,6 +82,7 @@ function App({ checkAuthenticationAction, authenticated }) {
                 - env de prod (npm install --production   npm run build)
                 - SSR
                 - Lint
+                - Pagination GraphQl
                 */}
 
                 <Switch>
