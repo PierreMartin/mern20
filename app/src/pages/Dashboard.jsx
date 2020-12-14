@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Input, InputNumber, Popconfirm, Form, Tag, Checkbox, Tooltip } from 'antd';
+import { Table, Input, InputNumber, Popconfirm, Form, Tag, Checkbox, Tooltip, Spin, notification } from 'antd';
 import { gql, useQuery, useMutation } from "@apollo/client";
 import AppPage from "./AppPage";
 import { connect } from "react-redux";
@@ -66,7 +66,7 @@ function Dashboard({ me }) {
     const userId = me && me._id;
     const { loading, error, data, refetch } = useQuery(POSTS, { variables: { userId } });
     // OR =>   const [getPosts, { loading, data }] = useLazyQuery(POSTS);  <button onClick={ (getPosts()) } />
-    const [editPost, { /*data, */loading: mutationLoading, error: mutationError }] = useMutation(EDIT_POST); // TODO mettre une notif
+    const [editPostById, { data: editPostData, loading: editPostLoading, error: editPostError }] = useMutation(EDIT_POST);
     const [postsData, setPostsData] = useState([]);
     const [form] = Form.useForm();
     // const [pagination, setPagination] = useState({ current: 1, pageSize: 10 });
@@ -112,7 +112,7 @@ function Dashboard({ me }) {
                 setEditingId('');
 
                 /* TODO tester ca
-                editPost({
+                editPostById({
                     variables: {
                         filter : { _id: id },
                         data: { ...fieldsTyping }
@@ -120,12 +120,19 @@ function Dashboard({ me }) {
                 });
                 */
 
-                editPost({
+                editPostById({
                     variables: {
                         id,
                         ...fieldsTyping
                     }
-                });
+                }).then((res) => {
+                    if (res && res.data) {
+                        notification['success']({
+                            message: 'Success',
+                            description: 'You have updated the post.' // TODO message from server
+                        });
+                    }
+                })
             } else {
                 newData.push(fieldsTyping);
                 setPostsData(newData);
@@ -236,8 +243,19 @@ function Dashboard({ me }) {
         };
     });
 
-    if (loading) return <div className="paddings">Loading...</div>;
-    if (error) return <div className="paddings">Error :(</div>;
+    if (loading) {
+        return (
+            <div className="paddings">
+                <div className="flex items-center justify-center">
+                    <Spin size="large" />
+                </div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return <div className="paddings">Error :(</div>;
+    }
 
     const onChange = (pagination, filters, sorter, extra) => console.log('params', pagination, filters, sorter, extra);
 

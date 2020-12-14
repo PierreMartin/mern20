@@ -42,7 +42,7 @@ export const RootMutationType = new GraphQLObjectType({
                         return new Error("A error happen at the updating post");
                     }
 
-                    return post;
+                    return post; // TODO mettre partout { message: 'You have updated the post', data: post };
                 });
             }
         }
