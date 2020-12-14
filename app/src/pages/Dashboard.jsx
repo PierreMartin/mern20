@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Input, InputNumber, Popconfirm, Form, Tag, Checkbox, Tooltip, Spin, notification } from 'antd';
+import { Table, Input, InputNumber, Popconfirm, Form, Tag, Checkbox, Tooltip, Spin, notification, Button } from 'antd';
 import { gql, useQuery, useMutation } from "@apollo/client";
 import AppPage from "./AppPage";
 import { connect } from "react-redux";
@@ -186,7 +186,7 @@ function Dashboard({ me }) {
                     })}
                 </span>
             ),
-            width: '20%'
+            width: '16%'
         },
         {
             title: 'Is private',
@@ -208,15 +208,17 @@ function Dashboard({ me }) {
 
                 return editable ? (
                     <span>
-                        <a
-                            href="javascript:;"
+                        <Button
+                            type="link"
+                            loading={editPostLoading}
                             onClick={() => save(record.id)}
-                            style={{ marginRight: 8 }}
+                            style={{ padding: 5, display: 'inline-block' }}
                         >
-                          Save
-                        </a>
+                            Save
+                        </Button>
+
                         <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
-                            <a>Cancel</a>
+                            <Button type="link" style={{ padding: 5, display: 'inline-block' }}>Cancel</Button>
                         </Popconfirm>
                     </span>
                 ) : (
