@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Input, InputNumber, Popconfirm, Form, Tag, Checkbox, Tooltip } from 'antd';
-import { gql, useQuery } from "@apollo/client";
+import { gql, useQuery, useMutation } from "@apollo/client";
 import AppPage from "./AppPage";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -14,6 +14,16 @@ const POSTS = gql`
             description
             content
             isPrivate
+        }
+    }
+`;
+
+const EDIT_POST = gql`
+    mutation EditPostById($id: ID!, $title: String, $description: String, $content: String) {
+        editPostById(id: $id, title: $title, description: $description, content: $content) {
+            title
+            description
+            content
         }
     }
 `;
@@ -56,7 +66,7 @@ function Dashboard({ me }) {
     const userId = me && me._id;
     const { loading, error, data, refetch } = useQuery(POSTS, { variables: { userId } });
     // OR =>   const [getPosts, { loading, data }] = useLazyQuery(POSTS);  <button onClick={ (getPosts()) } />
-    // const [editPost, { /*data, */loading: mutationLoading, error: mutationError }] = useMutation(EDIT_POST); // TODO
+    const [editPost, { /*data, */loading: mutationLoading, error: mutationError }] = useMutation(EDIT_POST); // TODO mettre une notif
     const [postsData, setPostsData] = useState([]);
     const [form] = Form.useForm();
     // const [pagination, setPagination] = useState({ current: 1, pageSize: 10 });
@@ -101,7 +111,21 @@ function Dashboard({ me }) {
                 setPostsData(newData);
                 setEditingId('');
 
-                // TODO editPost({ postId: id, data: fieldsTyping });
+                /* TODO tester ca
+                editPost({
+                    variables: {
+                        filter : { _id: id },
+                        data: { ...fieldsTyping }
+                    }
+                });
+                */
+
+                editPost({
+                    variables: {
+                        id,
+                        ...fieldsTyping
+                    }
+                });
             } else {
                 newData.push(fieldsTyping);
                 setPostsData(newData);
