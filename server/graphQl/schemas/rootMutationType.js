@@ -54,12 +54,10 @@ export const RootMutationType = new GraphQLObjectType({
             resolve(parentValue, fields) {
                 const { filter, data } = fields;
 
-                return Post.findOneAndUpdate(filter, data).exec((err, post) => {
-                    if (err) {
-                        return new Error("A error happen at the updating post");
-                    }
-
-                    return post; // TODO mettre partout { message: 'You have updated the post', data: post };
+                return Post.findOneAndUpdate(filter, data).then((res) => {
+                    return res;
+                }).catch(() => {
+                    return new Error("A error happen at the updating post");
                 });
             }
         }

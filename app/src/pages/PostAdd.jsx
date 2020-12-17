@@ -3,6 +3,7 @@ import { gql, useMutation } from '@apollo/client';
 // import { addPost } from "../services/PostService";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { notification } from "antd";
 import AppPage from "./AppPage";
 
 const ADD_POST = gql`
@@ -43,8 +44,16 @@ function PostAdd({ me }) {
                 variables: {
                     data: fieldsTyping
                 }
+            }).then((res) => {
+                if (res && res.data && res.data.addPost) {
+                    notification['success']({
+                        message: 'Success',
+                        description: 'You have created a new post.'
+                    });
+
+                    setFieldsTyping({});
+                }
             });
-            setFieldsTyping({});
 
             /* No Apollo/GraphQl :
             addPost(fieldsTyping).then((res) => {

@@ -117,13 +117,13 @@ function Dashboard({ me }) {
                         data: fieldsTyping
                     }
                 }).then((res) => {
-                    if (res && res.data) {
+                    if (res && res.data && res.data.editPostById) {
                         notification['success']({
                             message: 'Success',
-                            description: 'You have updated the post.' // TODO message from server
+                            description: 'You have updated the post.'
                         });
                     }
-                })
+                });
             } else {
                 newData.push(fieldsTyping);
                 setPostsData(newData);
