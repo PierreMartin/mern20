@@ -6,8 +6,8 @@ import { connect } from "react-redux";
 import AppPage from "./AppPage";
 
 const ADD_POST = gql`
-    mutation AddPost($title: String, $description: String, $content: String, $isPrivate: Boolean, $userId: String) {
-        addPost(title: $title, description: $description, content: $content, isPrivate: $isPrivate, userId: $userId) {
+    mutation AddPost($data: DataInput_addPost) {
+        addPost(data: $data) {
             id
             title
             description
@@ -39,7 +39,11 @@ function PostAdd({ me }) {
         if (fieldsTyping.title) {
             fieldsTyping.userId = me && me._id; // For entité liée
 
-            addPost({ variables: fieldsTyping });
+            addPost({
+                variables: {
+                    data: fieldsTyping
+                }
+            });
             setFieldsTyping({});
 
             /* No Apollo/GraphQl :

@@ -19,7 +19,7 @@ const POSTS = gql`
 `;
 
 const EDIT_POST = gql`
-    mutation EditPostById($filter: FilterInput, $data: DataInput) {
+    mutation EditPostById($filter: FilterInput_editPost, $data: DataInput_editPost) {
         editPostById(filter: $filter, data: $data) {
             title
             description

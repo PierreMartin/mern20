@@ -1,15 +1,15 @@
 import { GraphQLInputObjectType } from "graphql";
 
-export const filterInput = (filters) => {
+export const filterInput = (name, filters) => {
     return new GraphQLInputObjectType({
-        name: 'FilterInput',
+        name,
         fields: () => (filters)
     });
 }
 
-export const dataInput = (data) => {
+export const dataInput = (name, data) => {
     return new GraphQLInputObjectType({
-        name: 'DataInput',
+        name,
         fields: () => (data)
     });
 }

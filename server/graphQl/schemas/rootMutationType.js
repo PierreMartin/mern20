@@ -9,15 +9,19 @@ export const RootMutationType = new GraphQLObjectType({
         addPost: {
             type: PostType,
             args: {
-                title: { type: GraphQLString },
-                description: { type: GraphQLString },
-                content: { type: GraphQLString },
-                isPrivate: { type: GraphQLBoolean },
-                userId: { type: GraphQLString }
+                data: {
+                    type: dataInput('DataInput_addPost', {
+                        title: { type: GraphQLString },
+                        description: { type: GraphQLString },
+                        content: { type: GraphQLString },
+                        isPrivate: { type: GraphQLBoolean },
+                        userId: { type: GraphQLString }
+                    })
+                }
             },
             resolve(parentValue, fields) {
-                // or params.fields
-                return new Post(fields).save().then((res) => {
+                const { data } = fields;
+                return new Post(data).save().then((res) => {
                     return res;
                 }).catch(() => {
                     return new Error("A error happen at the creating new post");
@@ -35,12 +39,12 @@ export const RootMutationType = new GraphQLObjectType({
                 content: { type: GraphQLString }
                 */
                 filter: {
-                    type: filterInput({
+                    type: filterInput('FilterInput_editPost', {
                         _id: { type: GraphQLID }
                     })
                 },
                 data: {
-                    type: dataInput({
+                    type: dataInput('DataInput_editPost', {
                         title: { type: GraphQLString },
                         description: { type: GraphQLString },
                         content: { type: GraphQLString }
