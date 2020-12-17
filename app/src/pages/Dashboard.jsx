@@ -19,8 +19,8 @@ const POSTS = gql`
 `;
 
 const EDIT_POST = gql`
-    mutation EditPostById($id: ID!, $title: String, $description: String, $content: String) {
-        editPostById(id: $id, title: $title, description: $description, content: $content) {
+    mutation EditPostById($filter: FilterInput, $data: DataInput) {
+        editPostById(filter: $filter, data: $data) {
             title
             description
             content
@@ -111,19 +111,10 @@ function Dashboard({ me }) {
                 setPostsData(newData);
                 setEditingId('');
 
-                /* TODO tester ca
                 editPostById({
                     variables: {
-                        filter : { _id: id },
-                        data: { ...fieldsTyping }
-                    }
-                });
-                */
-
-                editPostById({
-                    variables: {
-                        id,
-                        ...fieldsTyping
+                        filter: { _id: id },
+                        data: fieldsTyping
                     }
                 }).then((res) => {
                     if (res && res.data) {
