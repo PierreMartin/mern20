@@ -198,6 +198,14 @@ function Login({ loginAction, signupAction }) {
                                     <Input prefix={<UserOutlined className="login-icon" />} placeholder="Username" />
                                 </Form.Item>
 
+                                <Form.Item name="firstname">
+                                    <Input prefix={<UserOutlined className="login-icon" />} placeholder="Firstname" />
+                                </Form.Item>
+
+                                <Form.Item name="lastname">
+                                    <Input prefix={<UserOutlined className="login-icon" />} placeholder="Lastname" />
+                                </Form.Item>
+
                                 <Form.Item name="age" rules={[{ type: 'number', min: 0, max: 99 }]}>
                                     <InputNumber placeholder="Age" />
                                 </Form.Item>

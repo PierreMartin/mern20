@@ -83,6 +83,7 @@ function App({ checkAuthenticationAction, authenticated }) {
                 - SSR
                 - Lint
                 - Pagination GraphQl
+                - Oauth (autorisations)
                 */}
 
                 <Switch>

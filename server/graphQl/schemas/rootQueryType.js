@@ -14,8 +14,7 @@ export const RootQueryType = new GraphQLObjectType({
             }
         },
 
-        // TODO rename userById
-        user: {
+        userById: {
             type: UserType,
             args: { id: { type: new GraphQLNonNull(GraphQLID) } },
             resolve(parentValue, { id }) {
@@ -31,8 +30,7 @@ export const RootQueryType = new GraphQLObjectType({
             }
         },
 
-        // TODO rename postById
-        post: {
+        postById: {
             type: PostType,
             args: { id: { type: GraphQLString } },
             resolve(parentValue, { id }) {

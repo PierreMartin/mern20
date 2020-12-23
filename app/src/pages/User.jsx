@@ -5,7 +5,7 @@ import AppPage from "./AppPage";
 
 const USER = gql`
     query GetUser($id: ID!) {
-        user (id: $id) {
+        userById (id: $id) {
             firstname
             lastname
             email
@@ -33,25 +33,27 @@ function User() {
     if (loading) return <div className="paddings">Loading...</div>;
     if (error) return <div className="paddings">Error :(</div>;
 
+    const user = data && data.userById;
+
     return (
-        <AppPage title={(data.user && data.user.firstname) || 'User'} meta={{ name: '', content: '' }}>
+        <AppPage title={(user && user.firstname) || 'User'} meta={{ name: '', content: '' }}>
             <div className="user-container paddings">
                 <h2>User</h2>
 
                 {
-                    (data && data.user) && (
+                    (user) && (
                         <div className="form">
                             <div className="field inline">
                                 <label>firstname</label>
-                                <input type="text" readOnly value={data.user.firstname}  />
+                                <input type="text" readOnly value={user.firstname}  />
                             </div>
                             <div className="field inline">
                                 <label>lastname</label>
-                                <input type="text" readOnly value={data.user.lastname}  />
+                                <input type="text" readOnly value={user.lastname}  />
                             </div>
                             <div className="field inline">
                                 <label>email</label>
-                                <input type="text" readOnly value={data.user.email}  />
+                                <input type="text" readOnly value={user.email}  />
                             </div>
                         </div>
                     )
@@ -59,7 +61,7 @@ function User() {
 
                 <h2>Associate posts</h2>
                 {
-                    (data && data.user && data.user.posts.length > 0 ) && (
+                    (user && user.posts.length > 0 ) && (
                         <table>
                             <thead>
                             <tr>
@@ -72,7 +74,7 @@ function User() {
                             </thead>
                             <tbody>
                             {
-                                data.user.posts.map((post, index) => {
+                                user.posts.map((post, index) => {
                                     return (
                                         <tr key={index}>
                                             <td>{index + 1} {/*<Link to={`/post/${post.id}`}>See detail</Link>*/}</td>

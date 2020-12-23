@@ -24,7 +24,7 @@
     "tailwindcss": "^2.0.1"
   },
   "scripts": {
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --mode development --open --progress --colors --display-error-details --config webpack.config.js",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --mode development --progress --colors --display-error-details --config webpack.config.js",
     "build": "cross-env NODE_ENV=production webpack --mode production --config webpack.config.js"
   },
   "eslintConfig": {
