@@ -1,7 +1,12 @@
 import React, { useEffect } from 'react';
 import { useQuery, gql } from '@apollo/client';
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { LikeOutlined, MessageOutlined, StarOutlined, LockOutlined, UnlockOutlined } from "@ant-design/icons";
+import { Avatar, Card, List, Space, Tag, Tooltip } from "antd";
 import AppPage from "./AppPage";
+import './user.less';
+
+const { Meta } = Card;
 
 const USER = gql`
     query GetUser($id: ID!) {
@@ -20,6 +25,13 @@ const USER = gql`
     }
 `;
 
+const IconText = ({ icon, text }) => (
+    <Space>
+        {React.createElement(icon)}
+        {text}
+    </Space>
+);
+
 function User() {
     const { id } = useParams(); // get params url
     const { loading, error, data, refetch } = useQuery(USER, {
@@ -37,9 +49,86 @@ function User() {
 
     return (
         <AppPage title={(user && user.firstname) || 'User'} meta={{ name: '', content: '' }}>
-            <div className="user-container paddings">
-                <h2>User</h2>
+            <div className="paddings" id="user-container">
+                {
+                    (user) && (
+                        <Card
+                            className="card-header-container"
+                            actions={[
+                                <IconText icon={StarOutlined} text="156" key="list-vertical-star-o" />,
+                                <IconText icon={LikeOutlined} text="156" key="list-vertical-like-o" />,
+                                <IconText icon={MessageOutlined} text="2" key="list-vertical-message" />
+                            ]}
+                        >
+                            <Meta
+                                avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+                                title={`${user.firstname} ${user.lastname}`}
+                                description={user.email}
+                            />
+                            {user.content ? user.content : ''}
+                        </Card>
+                    )
+                }
 
+                <h2>Associate posts</h2>
+                {
+                    (user && user.posts.length > 0 ) && (
+                        <List
+                            grid={{
+                                gutter: 16
+                            }}
+                            pagination={{
+                                onChange: page => {
+                                    console.log(page);
+                                },
+                                pageSize: 10
+                            }}
+                            dataSource={data && user.posts}
+                            renderItem={(post) => (
+                                <List.Item>
+                                    {
+                                        (post /* (&& !post.isPrivate || me && me._id === user._id) */) && (
+                                            <Link to={`/post/${post.id}`}>
+                                                <Card
+                                                    className="card-userpost-container"
+                                                    style={{ width: 300 }}
+                                                    hoverable
+                                                    cover={
+                                                        <img
+                                                            alt="example"
+                                                            src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+                                                        />
+                                                    }
+                                                    actions={[
+                                                        <IconText icon={StarOutlined} text="156" key="list-vertical-star-o" />,
+                                                        <IconText icon={LikeOutlined} text="156" key="list-vertical-like-o" />,
+                                                        <IconText icon={MessageOutlined} text="2" key="list-vertical-message" />,
+                                                        post.isPrivate ? (
+                                                            <Tooltip title="This post is private">
+                                                                <Tag icon={<LockOutlined />} color="default" />
+                                                            </Tooltip>) : (
+                                                            <Tooltip title="This post is public">
+                                                                <Tag icon={<UnlockOutlined />} color="default" />
+                                                            </Tooltip>
+                                                        )
+                                                    ]}
+                                                >
+                                                    <Meta
+                                                        title={`${post.title}`}
+                                                        description={post.description}
+                                                    />
+                                                    {post.content} {/* TODO do ellipsis */}
+                                                </Card>
+                                            </Link>
+                                        )
+                                    }
+                                </List.Item>
+                            )}
+                        />
+                    )
+                }
+
+                {/* Old approach:
                 {
                     (user) && (
                         <div className="form">
@@ -59,7 +148,6 @@ function User() {
                     )
                 }
 
-                <h2>Associate posts</h2>
                 {
                     (user && user.posts.length > 0 ) && (
                         <table>
@@ -77,7 +165,7 @@ function User() {
                                 user.posts.map((post, index) => {
                                     return (
                                         <tr key={index}>
-                                            <td>{index + 1} {/*<Link to={`/post/${post.id}`}>See detail</Link>*/}</td>
+                                            <td>{index + 1} {<Link to={`/post/${post.id}`}>See detail</Link>}</td>
                                             <td>{post.title}</td>
                                             <td>{post.description}</td>
                                             <td>{post.content}</td>
@@ -90,6 +178,7 @@ function User() {
                         </table>
                     )
                 }
+                */}
             </div>
         </AppPage>
     );
