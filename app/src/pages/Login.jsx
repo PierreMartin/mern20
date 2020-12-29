@@ -262,7 +262,7 @@ function Login({ loginAction, signupAction }) {
                         )
                     }
 
-                    <Form.Item className="field-forgot">
+                    <Form.Item className="field-checkbox">
                         <Form.Item name="remember" valuePropName="checked" noStyle>
                             <Checkbox>Remember me</Checkbox>
                         </Form.Item>

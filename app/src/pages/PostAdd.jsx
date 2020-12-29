@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { gql, useMutation } from '@apollo/client';
 // import { addPost } from "../services/PostService";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { notification } from "antd";
+import { Button, Form, Input, notification, Switch } from "antd";
 import AppPage from "./AppPage";
+import './postAdd.less';
 
 const ADD_POST = gql`
     mutation AddPost($data: DataInput_addPost) {
@@ -20,29 +21,31 @@ const ADD_POST = gql`
 `;
 
 function PostAdd({ me }) {
-    const [fieldsTyping, setFieldsTyping] = useState({});
+    // const [fieldsTyping, setFieldsTyping] = useState({});
     const [addPost, { /*data, */loading: mutationLoading, error: mutationError }] = useMutation(ADD_POST);
 
     if (mutationLoading) return <div className="paddings">Creating...</div>;
     if (mutationError) return <div className="paddings">Error at creating : {mutationError.message}</div>;
 
-    function onInputChange(e) {
+    /* Old approach:
+    const onInputChange = (e) => {
         setFieldsTyping({...fieldsTyping, [e.target.name]: e.target.value});
     }
 
-    function onCheckboxChange(e) {
+    const onCheckboxChange = (e) => {
         setFieldsTyping({...fieldsTyping, [e.target.name]: e.target.checked});
     }
+    */
 
-    function onSubmitAddPost(e) {
-        e.preventDefault();
+    const onSubmitAddPost = (values) => {
+        const data = values;
 
-        if (fieldsTyping.title) {
-            fieldsTyping.userId = me && me._id; // For entité liée
+        if (values && values.title) {
+            data.userId = me && me._id; // For entité liée
 
             addPost({
                 variables: {
-                    data: fieldsTyping
+                    data
                 }
             }).then((res) => {
                 if (res && res.data && res.data.addPost) {
@@ -50,8 +53,6 @@ function PostAdd({ me }) {
                         message: 'Success',
                         description: 'You have created a new post.'
                     });
-
-                    setFieldsTyping({});
                 }
             });
 
@@ -66,9 +67,53 @@ function PostAdd({ me }) {
 
     return (
         <AppPage title="Add a post" meta={{ name: '', content: '' }}>
-            <div className="post-add-container paddings">
-                <h2>Add a post</h2>
+            <div className="paddings" id="post-add-container">
+                <Form
+                    name="add-post"
+                    className="add-post-form"
+                    onFinish={onSubmitAddPost}
+                    size="small"
+                    layout="vertical"
+                    scrollToFirstError
+                >
+                    <h2>Add a post</h2>
 
+                    <Form.Item
+                        name="title"
+                        label="Title"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please input a title!'
+                            }
+                        ]}
+                    >
+                        <Input />
+                    </Form.Item>
+
+                    <Form.Item name="description" label="Description">
+                        <Input.TextArea />
+                    </Form.Item>
+
+                    <Form.Item name="content" label="Content">
+                        <Input.TextArea />
+                    </Form.Item>
+
+                    <Form.Item className="field-switch">
+                        <Form.Item name="isPrivate" valuePropName="checked">
+                            <Switch />
+                        </Form.Item>
+                        <label htmlFor="add-post_isPrivate">Private</label>
+                    </Form.Item>
+
+                    <Form.Item>
+                        <Button type="submit" htmlType="submit" className="button-submit">
+                            Save
+                        </Button>
+                    </Form.Item>
+                </Form>
+
+                {/* Old approach:
                 <form className="form" onSubmit={onSubmitAddPost}>
                     <div className="field">
                         <label htmlFor="title">Title <span className="required">*</span></label>
@@ -89,6 +134,7 @@ function PostAdd({ me }) {
 
                     <button>Submit</button>
                 </form>
+                */}
             </div>
         </AppPage>
     );
