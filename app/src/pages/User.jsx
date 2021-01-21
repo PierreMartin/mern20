@@ -49,7 +49,7 @@ function User() {
 
     return (
         <AppPage title={(user && user.firstname) || 'User'} meta={{ name: '', content: '' }}>
-            <div className="paddings" id="user-container">
+            <div className="container paddings" id="user-container">
                 {
                     (user) && (
                         <Card

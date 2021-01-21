@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Menu } from 'antd';
 import { Link, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { logoutAction } from "../../../reduxActions/user";
@@ -9,8 +10,15 @@ function NavBarMain({ me, logoutAction }) {
     const history = useHistory();
 
     return (
-        <div>
-            <nav className="main-nav">
+        <div id="bo-nav-bar-main">
+            <Menu mode="horizontal" defaultSelectedKeys={['2']}>
+                <Menu.Item key="1">nav 1</Menu.Item>
+                <Menu.Item key="2">nav 2</Menu.Item>
+                <Menu.Item key="3">nav 3</Menu.Item>
+            </Menu>
+
+            {/* Old approach:
+            <nav className="bo-nav-bar-main">
                 <div className="left">
                     <ul>
                         <li key="podashboardsts"><Link to="/dashboard">Dashboard</Link></li>
@@ -35,8 +43,7 @@ function NavBarMain({ me, logoutAction }) {
                     </div>
                 </div>
             </nav>
-
-            <hr />
+            */}
         </div>
     );
 }

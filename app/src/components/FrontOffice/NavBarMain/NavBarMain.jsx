@@ -7,7 +7,7 @@ import './navBarMain.less';
 function NavBarMain({ authenticated }) {
     return (
         <div>
-            <nav className="main-nav">
+            <nav id="fo-nav-bar-main">
                 <div className="left">
                     <ul>
                         <li key="home"><Link to="/">Home</Link></li>

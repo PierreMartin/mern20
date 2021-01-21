@@ -67,7 +67,7 @@ function PostAdd({ me }) {
 
     return (
         <AppPage title="Add a post" meta={{ name: '', content: '' }}>
-            <div className="paddings" id="post-add-container">
+            <div className="container paddings" id="post-add-container">
                 <Form
                     name="add-post"
                     className="add-post-form"

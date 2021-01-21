@@ -101,7 +101,7 @@ function Login({ loginAction, signupAction }) {
 
     return (
         <AppPage title={isSignup ? 'Signup' : 'Login'} meta={{ name: '', content: '' }}>
-            <div className="login-container paddings">
+            <div className="container paddings login-container">
                 <Form
                     form={form}
                     name="login"

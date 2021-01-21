@@ -38,7 +38,7 @@ function UsersList() {
 
     return (
         <AppPage title="List of users" meta={{ name: '', content: '' }}>
-            <div className="users-list-container paddings">
+            <div className="container paddings users-list-container">
                 <h2>List of users</h2>
 
                 {
