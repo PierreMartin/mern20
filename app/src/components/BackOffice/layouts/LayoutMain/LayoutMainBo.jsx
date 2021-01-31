@@ -17,7 +17,7 @@ export function LayoutMainBo({ children }) {
                 </Sider>
 
                 <Layout>
-                    <Header className="layout">
+                    <Header className="layout" style={{ height: 'inherit' }}>
                         <NavBarMain />
                     </Header>
 
