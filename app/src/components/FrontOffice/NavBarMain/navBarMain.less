@@ -1,4 +1,32 @@
+@import "../../../css/colors.less";
+
 #fo-nav-bar-main {
+  display: flex;
+
+  .logo {
+    padding: 0 10px;
+    text-align: center;
+    background: @primaryColor;
+    color: white;
+    font-weight: bold;
+
+    a { color: white; }
+  }
+
+  .main-menu {
+    flex: 1;
+    a { text-decoration: none; }
+
+    .ant-menu-item {
+      &.login {
+        float: right;
+        color: #fff;
+        border-bottom: none;
+      }
+    }
+  }
+
+  /* Old approach:
   display: flex;
   flex-direction: row;
   padding: 12px;
@@ -6,4 +34,5 @@
   ul { padding-left: 20px; }
   .left { flex: 1; }
   .right {}
+  */
 }

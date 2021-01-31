@@ -15,6 +15,7 @@ function NavBarSide() {
             <div className="logo" title="Logo Here">
                 <Link to="/dashboard">Logo Here</Link>
             </div>
+
             <Menu
                 className="side-menu"
                 selectedKeys={[location.pathname]}
