@@ -21,7 +21,7 @@ export function LayoutMainBo({ children }) {
                         <NavBarMain />
                     </Header>
 
-                    <Content className="layout">
+                    <Content className="layout content">
                         {children}
                     </Content>
 

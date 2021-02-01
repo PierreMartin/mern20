@@ -3,15 +3,19 @@
 #fo {
   .layout {
     background-color: #fff;
-  }
 
-  .header-fixed {
-    position: fixed;
-    z-index: 999;
-    width: 100%;
-  }
+    &.header-fixed {
+      position: fixed;
+      z-index: 999;
+      width: 100%;
+    }
 
-  .header-fixed-offset {
-    padding-top: @main-nav-height;
+    &.header-fixed-offset {
+      padding-top: @main-nav-height;
+    }
+
+    &.content {
+      min-height: calc(100vh - 140px);
+    }
   }
 }

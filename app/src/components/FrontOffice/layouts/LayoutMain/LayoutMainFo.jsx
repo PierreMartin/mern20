@@ -15,7 +15,7 @@ export function LayoutMainFo({ children }) {
                     <NavBarMain />
                 </Header>
 
-                <Content className="layout header-fixed-offset">
+                <Content className="layout content header-fixed-offset">
                     {children}
                 </Content>
 
