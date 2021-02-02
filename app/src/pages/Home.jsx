@@ -5,7 +5,7 @@ import './home.less';
 function Home() {
     return (
         <AppPage title="Home" meta={{ name: '', content: '' }}>
-            <div className="container paddings home-container">
+            <div id="home-container" className="container paddings">
                 <h1>Welcome</h1>
             </div>
         </AppPage>

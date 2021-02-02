@@ -254,7 +254,7 @@ function Dashboard({ me }) {
 
     return (
         <AppPage title="Dashboard" meta={{ name: '', content: '' }}>
-            <div className="paddings dashboard-container">
+            <div id="dashboard-container" className="paddings">
                 <h2>Dashboard</h2>
 
                 <Form form={form} component={false}>

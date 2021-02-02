@@ -11,7 +11,7 @@ function NavBarSide() {
     const location = useLocation();
 
     return (
-        <div id="nav-bar-side">
+        <div id="bo-nav-bar-side">
             <div className="logo" title="Logo Here">
                 <Link to="/dashboard">Logo Here</Link>
             </div>

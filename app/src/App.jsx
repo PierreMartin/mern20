@@ -78,7 +78,6 @@ function App({ checkAuthenticationAction, authenticated }) {
             <div>
                 {/*
                 TODO
-                - mettre des id au niveau des "container" sur pages
                 - PageHeader ( <- )
                 - mettre react Context (useContext) (juste un exemple)
                 - env de prod (npm install --production   npm run build)
