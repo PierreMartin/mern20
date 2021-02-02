@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useQuery, gql } from '@apollo/client';
-import { Link, useParams } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import { LikeOutlined, MessageOutlined, StarOutlined, LockOutlined, UnlockOutlined } from "@ant-design/icons";
-import { Avatar, Card, List, Space, Tag, Tooltip } from "antd";
+import { Avatar, Card, List, PageHeader, Space, Tag, Tooltip } from "antd";
 import AppPage from "./AppPage";
 import './user.less';
 
@@ -33,6 +33,7 @@ const IconText = ({ icon, text }) => (
 );
 
 function User() {
+    const history = useHistory();
     const { id } = useParams(); // get params url
     const { loading, error, data, refetch } = useQuery(USER, {
         variables: { id }
@@ -49,6 +50,13 @@ function User() {
 
     return (
         <AppPage title={(user && user.firstname) || 'User'} meta={{ name: '', content: '' }}>
+            <PageHeader
+                className="site-page-header"
+                onBack={history.goBack}
+                title="User profil"
+                tags={<Tag color="blue">Public</Tag>}
+            />
+
             <div className="container paddings" id="user-container">
                 {
                     (user) && (
