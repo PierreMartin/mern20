@@ -51,8 +51,7 @@ function User() {
     return (
         <AppPage title={(user && user.firstname) || 'User'} meta={{ name: '', content: '' }}>
             <PageHeader
-                className="site-page-header"
-                onBack={history.goBack}
+                onBack={() => history.push('/users')}
                 title="User profil"
                 tags={<Tag color="blue">Public</Tag>}
             />
