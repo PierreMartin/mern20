@@ -26,21 +26,21 @@ function NavBarMain({ authenticated, onChangeTheme }) {
                     <Link to="/dashboard">Dashboard</Link>
                 </Menu.Item>
 
-                {
-                    !authenticated && (
-                        <Menu.Item key="buttons" className="right button">
-                            <div>
+                <Menu.Item key="buttons" className="right button">
+                    <div>
+                        {
+                            !authenticated && (
                                 <Button type="primary">
                                     <Link to="/login">Login / signup</Link>
                                 </Button>
+                            )
+                        }
 
-                                <Button className="with-icon" onClick={() => { onChangeTheme(theme === 'dark' ? 'light' : 'dark'); }}>
-                                    {theme === 'dark' ? <HighlightOutlined /> : <HighlightFilled />}
-                                </Button>
-                            </div>
-                        </Menu.Item>
-                    )
-                }
+                        <Button className="with-icon" onClick={() => { onChangeTheme(theme === 'dark' ? 'light' : 'dark'); }}>
+                            {theme === 'dark' ? <HighlightOutlined /> : <HighlightFilled />}
+                        </Button>
+                    </div>
+                </Menu.Item>
             </Menu>
 
             {/*
