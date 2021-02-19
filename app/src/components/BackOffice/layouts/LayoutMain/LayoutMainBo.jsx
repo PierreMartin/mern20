@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { Layout } from "antd";
 import NavBarMain from "../../NavBarMain/NavBarMain";
@@ -9,6 +9,10 @@ import './layoutMainBo.less';
 const { Header, Footer, Sider, Content } = Layout;
 
 export function LayoutMainBo({ children }) {
+    useEffect(() => {
+        if (typeof document !== 'undefined') { document.body.className = 'light'; }
+    }, []);
+
     return (
         <div id="bo">
             <Layout>

@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { Link, useLocation } from "react-router-dom";
 import { connect } from "react-redux";
 import { Button, Menu } from "antd";
+import { HighlightOutlined, HighlightFilled } from '@ant-design/icons';
+import { ThemeContext } from "../Theme/ThemeContext";
 import './navBarMain.less';
 
-function NavBarMain({ authenticated }) {
+function NavBarMain({ authenticated, onChangeTheme }) {
     const location = useLocation();
+    const theme = useContext(ThemeContext);
 
     return (
         <div id="fo-nav-bar-main">
@@ -25,10 +28,16 @@ function NavBarMain({ authenticated }) {
 
                 {
                     !authenticated && (
-                        <Menu.Item key="/login" title="Login" className="login">
-                            <Button type="primary">
-                                <Link to="/login">Login / signup</Link>
-                            </Button>
+                        <Menu.Item key="buttons" className="right button">
+                            <div>
+                                <Button type="primary">
+                                    <Link to="/login">Login / signup</Link>
+                                </Button>
+
+                                <Button className="with-icon" onClick={() => { onChangeTheme(theme === 'dark' ? 'light' : 'dark'); }}>
+                                    {theme === 'dark' ? <HighlightOutlined /> : <HighlightFilled />}
+                                </Button>
+                            </div>
                         </Menu.Item>
                     )
                 }
@@ -50,7 +59,8 @@ function NavBarMain({ authenticated }) {
 }
 
 NavBarMain.propTypes = {
-    authenticated: PropTypes.bool
+    authenticated: PropTypes.bool,
+    onChangeTheme: PropTypes.func
 };
 
 function mapStateToProps(state) {
