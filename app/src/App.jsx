@@ -78,7 +78,6 @@ function App({ checkAuthenticationAction, authenticated }) {
             <div>
                 {/*
                 TODO
-                - env de prod (npm install --production   npm run build)
                 - SSR
                 - Lint
                 - Pagination GraphQl

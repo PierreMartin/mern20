@@ -1,10 +1,12 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+const isDev = process.env.NODE_ENV === 'development';
+
 module.exports = {
-    mode: 'development',
+    mode: isDev ? 'development' : 'production',
     entry: './src/client.jsx',
-    devtool: 'inline-source-map',
+    // devtool: 'inline-source-map',
     output: {
         filename: '[name].bundle.js',
         path: path.resolve(__dirname, 'dist'),
@@ -93,3 +95,7 @@ module.exports = {
         })
     ]
 };
+
+if (isDev) {
+    module.exports.devtool = 'inline-source-map';
+}

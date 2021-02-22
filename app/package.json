@@ -7,7 +7,6 @@
     "@apollo/client": "^3.2.2",
     "@babel/polyfill": "^7.11.5",
     "antd": "^4.7.3",
-    "autoprefixer": "^10.0.2",
     "axios": "^0.20.0",
     "cross-env": "^7.0.2",
     "graphql": "^15.3.0",
@@ -25,7 +24,7 @@
   },
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --mode development --progress --colors --display-error-details --config webpack.config.js",
-    "build": "cross-env NODE_ENV=production webpack --mode production --config webpack.config.js"
+    "build": "rm -rf dist && cross-env NODE_ENV=production webpack --mode production --config webpack.config.js"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -48,6 +47,7 @@
     "@babel/node": "^7.10.5",
     "@babel/preset-env": "^7.11.5",
     "@babel/preset-react": "^7.10.4",
+    "autoprefixer": "^10.0.2",
     "css-loader": "^4.3.0",
     "html-webpack-plugin": "^4.5.0",
     "less": "^3.12.2",
