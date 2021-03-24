@@ -13,3 +13,10 @@ Then, in another terminal:
     $ cd app
     $ npm i
     $ npm run dev
+
+Finally, test react production build locally:
+
+    npm i -g serve
+    cd app
+    npm run build
+    serve dist -p 3000

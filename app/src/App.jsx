@@ -78,7 +78,7 @@ function App({ checkAuthenticationAction, authenticated }) {
             <div>
                 {/*
                 TODO
-                - SSR
+                - SSR Isomorphic
                 - Lint
                 - Pagination GraphQl
                 - Oauth (autorisations)
