@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { Switch, Route, Redirect } from "react-router-dom";
@@ -6,58 +6,11 @@ import { Spin } from "antd";
 import { checkAuthenticationAction, logoutAction } from "./reduxActions/user";
 import { LayoutMainFo } from "./components/FrontOffice/layouts/LayoutMain/LayoutMainFo";
 import { LayoutMainBo } from "./components/BackOffice/layouts/LayoutMain/LayoutMainBo";
+import routes from "./routes";
 import './css/main.less';
-
-const Home = lazy(() => import('./pages/Home'));
-const PostAdd = lazy(() => import('./pages/PostAdd'));
-const Login = lazy(() => import('./pages/Login'));
-const Dashboard = lazy(() => import('./pages/Dashboard'));
-const UsersList = lazy(() => import('./pages/UsersList'));
-const User = lazy(() => import('./pages/User'));
 
 function App({ checkAuthenticationAction, authenticated }) {
     const [isLoading, setIsLoading] = useState(true);
-
-    let routes = [
-        {
-            path: "/",
-            exact: true,
-            component: Home,
-            type: 'frontoffice'
-        },
-        {
-            path: "/dashboard",
-            exact: true,
-            component: Dashboard,
-            type: 'backoffice'
-        },
-        {
-            path: "/users",
-            exact: true,
-            component: UsersList,
-            type: 'backoffice'
-        },
-        {
-            path: "/post/create",
-            exact: true,
-            component: PostAdd,
-            type: 'backoffice'
-        },
-        {
-            path: "/login",
-            exact: true,
-            component: Login,
-            type: 'frontoffice'
-        },
-
-        // No in main menu:
-        {
-            path: "/user/:id",
-            exact: true,
-            component: User,
-            type: 'backoffice'
-        }
-    ];
 
     useEffect(() => {
         checkAuthenticationAction().then(() => {
