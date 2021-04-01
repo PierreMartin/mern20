@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CURRENT_WORKING_DIR = process.cwd();
 
 module.exports = (env = {}) => {
     const isClientSide = env.client;
@@ -11,7 +12,7 @@ module.exports = (env = {}) => {
         devtool: 'inline-source-map',
         output: {
             filename: '[name].bundle.js',
-            path: path.resolve(__dirname, 'dist'),
+            path: path.resolve(CURRENT_WORKING_DIR, 'dist'),
             publicPath: '/'
         },
         resolve: {

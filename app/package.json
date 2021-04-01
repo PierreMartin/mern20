@@ -24,11 +24,12 @@
     "rimraf": "^3.0.2"
   },
   "scripts": {
-    "build": "npm run clean && cross-env NODE_ENV=production webpack --progress --config configs/webpack.prod.config.js",
-    "dev": "npm run client -- --env.client",
-    "dev:server": "npm-run-all --parallel server client -- --env.server",
+    "build": "npm run clean && npm-run-all --parallel server client:prod -- --env.server",
+    "dev": "npm run client:dev -- --env.client",
+    "dev:server": "npm-run-all --parallel server client:dev -- --env.server",
     "server": "nodemon index.js",
-    "client": "cross-env NODE_ENV=development webpack-dev-server --mode development --progress --colors --display-error-details --config configs/webpack.dev.config.js",
+    "client:dev": "cross-env NODE_ENV=development webpack-dev-server --mode development --progress --colors --display-error-details --config configs/webpack.dev.config.js",
+    "client:prod": "cross-env NODE_ENV=production webpack --progress --config configs/webpack.prod.config.js",
     "clean": "rimraf dist"
   },
   "eslintConfig": {

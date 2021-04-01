@@ -1,16 +1,16 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CURRENT_WORKING_DIR = process.cwd();
 
 module.exports = (env = {}) => {
     const isServerSide = env.server;
-    console.log('isServerSideTT >>> ', isServerSide);
 
     const configuration = {
         mode: 'production',
         entry: './src/client.jsx',
         output: {
             filename: '[name].bundle.js',
-            path: path.resolve(__dirname, 'dist'),
+            path: path.resolve(CURRENT_WORKING_DIR, 'dist'),
             publicPath: '/'
         },
         resolve: {
