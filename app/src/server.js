@@ -26,6 +26,7 @@ app.get( "/*", (req, res) => {
             .map(comp => store.dispatch(comp.serverFetch())); // dispatch data requirement
 
     Promise.all(dataRequirements).then(() => {
+        // TODO ajouter provider de GraphQl
         const jsx = (
             <ReduxProvider store={store}>
                 <StaticRouter context={ context } location={ req.url }>
@@ -52,12 +53,12 @@ function htmlTemplate(reactDom, reduxState, helmetData) {
             <meta charset="utf-8">
             ${ helmetData.title.toString() }
             ${ helmetData.meta.toString() }
-            <title>React SSR</title>
+            <title>${ helmetData.title.toString() }</title>
             <link rel="stylesheet" type="text/css" href="./app.css" />
         </head>
         
         <body>
-            <div id="app">${ reactDom }</div>
+            <div id="root">${reactDom}</div>
             <script>
                 window.REDUX_DATA = ${ serialize(reduxState, { isJSON: true }) }
             </script>
