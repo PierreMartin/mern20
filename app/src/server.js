@@ -53,8 +53,7 @@ function htmlTemplate(reactDom, reduxState, helmetData) {
             <meta charset="utf-8">
             ${ helmetData.title.toString() }
             ${ helmetData.meta.toString() }
-            <title>${ helmetData.title.toString() }</title>
-            <link rel="stylesheet" type="text/css" href="./app.css" />
+            <link rel="stylesheet" type="text/css" href="/app.css" />
         </head>
         
         <body>
@@ -62,7 +61,7 @@ function htmlTemplate(reactDom, reduxState, helmetData) {
             <script>
                 window.REDUX_DATA = ${ serialize(reduxState, { isJSON: true }) }
             </script>
-            <script src="./app.bundle.js"></script>
+            <script src="/app.bundle.js"></script>
         </body>
         </html>
     `;
