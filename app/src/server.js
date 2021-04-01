@@ -14,7 +14,7 @@ const app = express();
 
 app.use(express.static(path.resolve( __dirname, '../dist')));
 
-app.get( "/*", ( req, res ) => {
+app.get( "/*", (req, res) => {
     const context = {};
     store.dispatch(initializeSession());
 
@@ -23,9 +23,9 @@ app.get( "/*", ( req, res ) => {
             .filter(route => matchPath(req.url, route) ) // filter matching paths
             .map(route => route.component) // map to components
             .filter(comp => comp.serverFetch) // check if components have data requirement
-            .map(comp => store.dispatch( comp.serverFetch())); // dispatch data requirement
+            .map(comp => store.dispatch(comp.serverFetch())); // dispatch data requirement
 
-    Promise.all( dataRequirements ).then(() => {
+    Promise.all(dataRequirements).then(() => {
         const jsx = (
             <ReduxProvider store={store}>
                 <StaticRouter context={ context } location={ req.url }>
@@ -53,7 +53,7 @@ function htmlTemplate(reactDom, reduxState, helmetData) {
             ${ helmetData.title.toString() }
             ${ helmetData.meta.toString() }
             <title>React SSR</title>
-            <link rel="stylesheet" type="text/css" href="./styles.css" />
+            <link rel="stylesheet" type="text/css" href="./app.css" />
         </head>
         
         <body>

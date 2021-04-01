@@ -1,5 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CURRENT_WORKING_DIR = process.cwd();
 
 module.exports = (env = {}) => {
@@ -7,7 +9,9 @@ module.exports = (env = {}) => {
 
     const configuration = {
         mode: 'production',
-        entry: './src/client.jsx',
+        entry: {
+            app: './src/client.jsx',
+        },
         output: {
             filename: '[name].bundle.js',
             path: path.resolve(CURRENT_WORKING_DIR, 'dist'),
@@ -32,45 +36,24 @@ module.exports = (env = {}) => {
                     ]
                 },
                 */
+
+                // Css minify:
                 {
                     test: [/\.less$/, /\.css$/],
-                    use: [
-                        // { loader : MiniCssExtractPlugin.loader},
-                        {
-                            loader: 'style-loader'
-                        },
-                        {
-                            loader: 'css-loader',
-                            options: {
-                                sourceMap: true
-                            }
-                        },
-                        {
-                            loader: 'postcss-loader',
-                            options: {
-                                sourceMap: true,
-                                postcssOptions: {
-                                    plugins: [
-                                        [
-                                            'postcss-preset-env', // autoprefix css + browserslist
-                                            {
-                                                browsers: 'last 2 versions'
-                                            }
-                                        ],
-                                        require('tailwindcss'),
-                                        require('autoprefixer')
-                                    ]
-                                }
-                            }
-                        },
-                        {
-                            loader: 'less-loader'
-                        }
-                    ]
+                    use: [MiniCssExtractPlugin.loader, 'css-loader', 'less-loader']
                 }
             ]
         },
+
+        // Css minify:
+        optimization: {
+            minimize: true,
+            minimizer: [
+                new CssMinimizerPlugin()
+            ]
+        },
         plugins: [
+            new MiniCssExtractPlugin(),
             new HtmlWebpackPlugin({
                 template: __dirname + './../public/index.html',
                 filename: './index.html',

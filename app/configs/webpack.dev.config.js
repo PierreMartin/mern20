@@ -8,7 +8,9 @@ module.exports = (env = {}) => {
 
     const configuration = {
         mode: 'development',
-        entry: './src/client.jsx',
+        entry: {
+            app: './src/client.jsx',
+        },
         devtool: 'inline-source-map',
         output: {
             filename: '[name].bundle.js',

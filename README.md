@@ -19,4 +19,4 @@ Finally, test react production build locally:
     npm i -g serve
     cd app
     npm run build
-    (if not SSR => serve dist -p 3000)
+    (if not runned with SSR => serve dist -p 3000)
