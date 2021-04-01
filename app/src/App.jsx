@@ -7,6 +7,7 @@ import { checkAuthenticationAction, logoutAction } from "./reduxActions/user";
 import { LayoutMainFo } from "./components/FrontOffice/layouts/LayoutMain/LayoutMainFo";
 import { LayoutMainBo } from "./components/BackOffice/layouts/LayoutMain/LayoutMainBo";
 import routes from "./routes";
+import { __SERVERSIDE__ } from "./config/appconfig";
 import './css/main.less';
 
 function App({ checkAuthenticationAction, authenticated }) {
@@ -18,10 +19,15 @@ function App({ checkAuthenticationAction, authenticated }) {
         });
     }, []);
 
+    let Wrapper = Suspense;
+    if (__SERVERSIDE__) {
+        Wrapper = 'div'; // TODO remove it   => if (loading) { return (<div>loading...</div>) }
+    }
+
     // if (authenticated)  { routes = routes.filter((route) => route.path !== '/login'); }
 
     return (
-        <Suspense
+        <Wrapper
             fallback={
                 <div className="h-screen w-screen flex items-center justify-center">
                     <Spin size="large" />
@@ -31,7 +37,6 @@ function App({ checkAuthenticationAction, authenticated }) {
             <div>
                 {/*
                 TODO
-                - SSR Isomorphic
                 - Lint
                 - Pagination GraphQl
                 - Oauth (autorisations)
@@ -86,7 +91,7 @@ function App({ checkAuthenticationAction, authenticated }) {
                     })}
                 </Switch>
             </div>
-        </Suspense>
+        </Wrapper>
     );
 }
 

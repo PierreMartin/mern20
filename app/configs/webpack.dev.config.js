@@ -1,31 +1,16 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
-const isDev = process.env.NODE_ENV === 'development';
+const isServerSide = process.env.NODE_RENDERING === 'server';
+const isClientSide = process.env.NODE_RENDERING !== 'server';
 
 module.exports = {
-    mode: isDev ? 'development' : 'production',
+    mode: 'development',
     entry: './src/client.jsx',
-    // devtool: 'inline-source-map',
+    devtool: 'inline-source-map',
     output: {
         filename: '[name].bundle.js',
         path: path.resolve(__dirname, 'dist'),
         publicPath: '/'
-    },
-    devServer: {
-        inline: true,
-        port: 3000,
-        hot: true,
-        historyApiFallback: true,
-        // Proxy backend requests to Express server
-        /*
-        proxy: {
-            "/api/!*": {
-                target: "http://localhost:3080",
-                secure: false
-            }
-        }
-        */
     },
     resolve: {
         extensions: ['.ts', '.js', '.jsx', '.tsx']
@@ -96,6 +81,20 @@ module.exports = {
     ]
 };
 
-if (isDev) {
-    module.exports.devtool = 'inline-source-map';
+if (isClientSide) {
+    module.exports.devServer = {
+        inline: true,
+            port: 3000,
+            hot: true,
+            historyApiFallback: true
+            // Proxy backend requests to Express server
+            /*
+            proxy: {
+                "/api/!*": {
+                    target: "http://localhost:3080",
+                        secure: false
+                }
+            }
+            */
+    };
 }

@@ -12,18 +12,20 @@ const client = new ApolloClient({
     cache: new InMemoryCache()
 });
 
-ReactDOM.render(
-  <React.StrictMode>
-      <Provider store={store}>
-          <ApolloProvider client={client}>
-              <Router>
-                  <App />
-              </Router>
-          </ApolloProvider>
-    </Provider>
-  </React.StrictMode>,
-  document.getElementById('root')
+const jsx = (
+    <React.StrictMode>
+        <Provider store={store}>
+            <ApolloProvider client={client}>
+                <Router>
+                    <App />
+                </Router>
+            </ApolloProvider>
+        </Provider>
+    </React.StrictMode>
 );
+
+const app = document.getElementById('root');
+ReactDOM.hydrate(jsx, app);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

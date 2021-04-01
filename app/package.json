@@ -23,10 +23,11 @@
     "tailwindcss": "^2.0.1"
   },
   "scripts": {
-    "build": "NODE_ENV=production webpack --progress configs/webpack.config.js",
-    "dev": "npm-run-all --parallel server client",
+    "build": "cross-env NODE_ENV=production cross-env NODE_RENDERING=server webpack --progress --config configs/webpack.prod.config.js",
+    "dev": "npm run client",
+    "dev:server": "cross-env NODE_RENDERING=server npm-run-all --parallel server client",
     "server": "nodemon index.js",
-    "client": "webpack --watch --progress configs/webpack.config.js"
+    "client": "cross-env NODE_ENV=development webpack-dev-server --mode development --progress --colors --display-error-details --config configs/webpack.dev.config.js"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -51,6 +52,7 @@
     "@babel/preset-react": "^7.10.4",
     "@babel/register": "^7.13.14",
     "autoprefixer": "^10.0.2",
+    "babel-loader": "^8.2.2",
     "babel-plugin-css-modules-transform": "^1.6.2",
     "babel-plugin-dynamic-import-node": "^2.3.3",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",

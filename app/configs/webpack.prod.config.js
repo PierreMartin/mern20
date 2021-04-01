@@ -1,31 +1,13 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const isDev = process.env.NODE_ENV === 'development';
-
 module.exports = {
-    mode: isDev ? 'development' : 'production',
+    mode: 'production',
     entry: './src/client.jsx',
-    // devtool: 'inline-source-map',
     output: {
         filename: '[name].bundle.js',
         path: path.resolve(__dirname, 'dist'),
         publicPath: '/'
-    },
-    devServer: {
-        inline: true,
-        port: 3000,
-        hot: true,
-        historyApiFallback: true,
-        // Proxy backend requests to Express server
-        /*
-        proxy: {
-            "/api/!*": {
-                target: "http://localhost:3080",
-                secure: false
-            }
-        }
-        */
     },
     resolve: {
         extensions: ['.ts', '.js', '.jsx', '.tsx']
@@ -95,7 +77,3 @@ module.exports = {
         })
     ]
 };
-
-if (isDev) {
-    module.exports.devtool = 'inline-source-map';
-}

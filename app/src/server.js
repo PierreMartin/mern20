@@ -7,7 +7,7 @@ import { StaticRouter, matchPath } from "react-router-dom";
 import { Provider as ReduxProvider } from "react-redux";
 import Helmet from "react-helmet";
 import routes from "./routes";
-import createStore, { initializeSession } from "./reduxStore";
+import store, { initializeSession } from './reduxStore';
 import App from "./App";
 
 const app = express();
@@ -16,8 +16,6 @@ app.use(express.static(path.resolve( __dirname, '../dist')));
 
 app.get( "/*", ( req, res ) => {
     const context = {};
-    const store = createStore();
-
     store.dispatch(initializeSession());
 
     const dataRequirements =
@@ -44,7 +42,7 @@ app.get( "/*", ( req, res ) => {
     });
 });
 
-app.listen(2048);
+app.listen(3000);
 
 function htmlTemplate(reactDom, reduxState, helmetData) {
     return `

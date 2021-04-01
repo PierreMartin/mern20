@@ -1,11 +1,19 @@
-import React, { lazy } from 'react';
+import React from 'react';
+import Home from './pages/Home';
+import PostAdd from './pages/PostAdd';
+import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
+import UsersList from './pages/UsersList';
+import User from './pages/User';
 
+/* lazy no compatible SSR:
 const Home = lazy(() => import('./pages/Home'));
 const PostAdd = lazy(() => import('./pages/PostAdd'));
 const Login = lazy(() => import('./pages/Login'));
 const Dashboard = lazy(() => import('./pages/Dashboard'));
 const UsersList = lazy(() => import('./pages/UsersList'));
 const User = lazy(() => import('./pages/User'));
+*/
 
 export default [
     {
