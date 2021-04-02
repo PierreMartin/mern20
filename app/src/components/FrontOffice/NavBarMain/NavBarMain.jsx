@@ -29,7 +29,7 @@ function NavBarMain({ authenticated, onChangeTheme }) {
                 <Menu.Item key="buttons" className="right button">
                     <div>
                         {
-                            !authenticated && (
+                            !authenticated /* && TODO !isLoading (from redux) */ && (
                                 <Button type="primary">
                                     <Link to="/login">Login / signup</Link>
                                 </Button>

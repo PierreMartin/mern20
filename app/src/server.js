@@ -12,15 +12,15 @@ import App from "./App";
 
 const app = express();
 
-app.use(express.static(path.resolve( __dirname, '../dist')));
+app.use(express.static(path.resolve(__dirname, '../dist')));
 
-app.get( "/*", (req, res) => {
+app.get("*", (req, res) => {
     const context = {};
 
     const dataRequirements =
         routes
-            .filter(route => matchPath(req.url, route) )
-            .map(route => route.component)
+            .filter(route => matchPath(req.url, route))
+            .map(route => route.component);
             /*
             SSR - Need 'isomorphic-fetch':
             .filter(comp => comp.serverFetch) // check if components have data requirement
