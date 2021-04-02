@@ -7,7 +7,7 @@ import { StaticRouter, matchPath } from "react-router-dom";
 import { Provider as ReduxProvider } from "react-redux";
 import Helmet from "react-helmet";
 import routes from "./routes";
-import store, { initializeSession } from './reduxStore';
+import store from './reduxStore';
 import App from "./App";
 
 const app = express();
@@ -16,20 +16,22 @@ app.use(express.static(path.resolve( __dirname, '../dist')));
 
 app.get( "/*", (req, res) => {
     const context = {};
-    store.dispatch(initializeSession());
 
     const dataRequirements =
         routes
-            .filter(route => matchPath(req.url, route) ) // filter matching paths
-            .map(route => route.component) // map to components
+            .filter(route => matchPath(req.url, route) )
+            .map(route => route.component)
+            /*
+            SSR - Need 'isomorphic-fetch':
             .filter(comp => comp.serverFetch) // check if components have data requirement
             .map(comp => store.dispatch(comp.serverFetch())); // dispatch data requirement
+            */
 
     Promise.all(dataRequirements).then(() => {
         // TODO ajouter provider de GraphQl
         const jsx = (
             <ReduxProvider store={store}>
-                <StaticRouter context={ context } location={ req.url }>
+                <StaticRouter context={context} location={req.url}>
                     <App />
                 </StaticRouter>
             </ReduxProvider>

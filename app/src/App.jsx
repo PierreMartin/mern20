@@ -95,6 +95,8 @@ function App({ checkAuthenticationAction, authenticated }) {
     );
 }
 
+App.serverFetch = checkAuthenticationAction; // SSR - Data requirements for isomorphic fetch
+
 App.propTypes = {
     authenticated: PropTypes.bool,
     me: PropTypes.any,
