@@ -59,7 +59,7 @@ function NavBarMain({ authenticated, onChangeTheme }) {
 }
 
 NavBarMain.propTypes = {
-    authenticated: PropTypes.string,
+    authenticated: PropTypes.string, // 'loading' | 'true' | 'false'
     onChangeTheme: PropTypes.func
 };
 

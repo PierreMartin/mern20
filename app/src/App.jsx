@@ -89,7 +89,7 @@ App.serverFetch = checkAuthenticationAction; // SSR - Data requirements for isom
 
 App.propTypes = {
     location: PropTypes.any,
-    authenticated: PropTypes.string.isRequired,
+    authenticated: PropTypes.string.isRequired, // 'loading' | 'true' | 'false'
     checkAuthenticationAction: PropTypes.func.isRequired,
     logoutAction: PropTypes.func.isRequired
 };
