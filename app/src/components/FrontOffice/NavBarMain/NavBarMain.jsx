@@ -29,7 +29,7 @@ function NavBarMain({ authenticated, onChangeTheme }) {
                 <Menu.Item key="buttons" className="right button">
                     <div>
                         {
-                            !authenticated /* && TODO !isLoading (from redux) */ && (
+                            authenticated === 'false' && (
                                 <Button type="primary">
                                     <Link to="/login">Login / signup</Link>
                                 </Button>
@@ -59,7 +59,7 @@ function NavBarMain({ authenticated, onChangeTheme }) {
 }
 
 NavBarMain.propTypes = {
-    authenticated: PropTypes.bool,
+    authenticated: PropTypes.string,
     onChangeTheme: PropTypes.func
 };
 

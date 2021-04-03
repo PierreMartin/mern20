@@ -30,7 +30,7 @@ const me = (state = null, action) => {
     }
 };
 
-const authenticated = (state = false, action) => {
+const authenticated = (state = 'loading', action) => {
     switch (action.type) {
         case LOGIN_SUCCESS_USER:
         case SIGNUP_SUCCESS_USER:

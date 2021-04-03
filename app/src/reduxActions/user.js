@@ -24,12 +24,12 @@ export function signupAction(data) {
         return signup(data)
             .then((res) => {
                 if (res && res.data) {
-                    console.log('authenticated ==> ', true);
+                    console.log('authenticated ==> ', res.data.authenticated);
                     return dispatch({
                         type: SIGNUP_SUCCESS_USER,
                         payload: {
                             message: res.message,
-                            authenticated: res.data.authenticated,
+                            authenticated: res.data.authenticated ? 'true' : 'false',
                             me: res.data.me
                         }
                     });
@@ -43,7 +43,7 @@ export function signupAction(data) {
                         payload: {
                             message: err && err.message,
                             fieldsErrors: err && err.fieldsErrors,
-                            authenticated: false
+                            authenticated: 'false'
                         }
                     }
                 ));
@@ -56,12 +56,12 @@ export function loginAction(data) {
         return login(data)
             .then((res) => {
                 if (res && res.data) {
-                    console.log('authenticated ==> ', true);
+                    console.log('authenticated ==> ', res.data.authenticated);
                     return dispatch({
                         type: LOGIN_SUCCESS_USER,
                         payload: {
                             message: res.message,
-                            authenticated: res.data.authenticated,
+                            authenticated: res.data.authenticated ? 'true' : 'false',
                             me: res.data.me
                         }
                     });
@@ -74,7 +74,7 @@ export function loginAction(data) {
                     payload: {
                         message: err && err.message,
                         fieldsErrors: err && err.fieldsErrors,
-                        authenticated: false
+                        authenticated: 'false'
                     }
                 });
             });
@@ -91,7 +91,7 @@ export function checkAuthenticationAction() {
                         type: CHECK_AUTHENTIFICATION_SUCCESS,
                         payload: {
                             message: res.message,
-                            authenticated: res.data.authenticated,
+                            authenticated: res.data.authenticated ? 'true' : 'false',
                             me: res.data.me
                         }
                     });
@@ -103,7 +103,7 @@ export function checkAuthenticationAction() {
                     type: CHECK_AUTHENTIFICATION_ERROR,
                     payload: {
                         message: err && err.message,
-                        authenticated: false
+                        authenticated: 'false'
                     }
                 });
             });
@@ -115,12 +115,12 @@ export function logoutAction() {
         return logout()
             .then((res) => {
                 if (res && res.data) {
-                    console.log('authenticated ==> ', false);
+                    console.log('authenticated ==> ', res.data.authenticated);
                     return dispatch({
                         type: LOGOUT_SUCCESS_USER,
                         payload: {
                             message: res.message,
-                            authenticated: res.data.authenticated,
+                            authenticated: res.data.authenticated ? 'true' : 'false',
                             me: res.data.me
                         }
                     });
@@ -132,7 +132,7 @@ export function logoutAction() {
                     type: LOGOUT_ERROR_USER,
                     payload: {
                         message: err && err.message,
-                        authenticated: true
+                        authenticated: 'true'
                     }
                 });
             });

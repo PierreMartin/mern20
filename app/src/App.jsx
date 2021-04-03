@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { Switch, Route, Redirect } from "react-router-dom";
@@ -9,12 +9,8 @@ import routes from "./routes";
 import './css/main.less';
 
 function App({ checkAuthenticationAction, authenticated }) {
-    const [isLoading, setIsLoading] = useState(true);
-
     useEffect(() => {
-        checkAuthenticationAction().then(() => {
-            setIsLoading(false);
-        });
+        checkAuthenticationAction();
     }, []);
 
     return (
@@ -31,7 +27,7 @@ function App({ checkAuthenticationAction, authenticated }) {
                     const Component = route.component;
 
                     // Do redirections:
-                    if ((isLoading && route.path === '/login') || (authenticated && route.path === '/login')) {
+                    if (authenticated === 'true' && route.path === '/login') {
                         return (
                             <Route
                                 key={index}
@@ -60,12 +56,12 @@ function App({ checkAuthenticationAction, authenticated }) {
                             );
                         case 'backoffice':
                             const routeComponent = (props) => {
-                                return authenticated ? (
+                                return authenticated === 'true' ? (
                                     <LayoutMainBo>
                                         <Component {...props} />
                                     </LayoutMainBo>
                                 ) : (
-                                    (!isLoading && <Redirect to={{ pathname: "/login", state: { from: props.location } }}/>)
+                                    (authenticated === 'false' && <Redirect to={{ pathname: "/login", state: { from: props.location } }}/>)
                                 );
                             };
 
@@ -95,7 +91,7 @@ function App({ checkAuthenticationAction, authenticated }) {
 App.serverFetch = checkAuthenticationAction; // SSR - Data requirements for isomorphic fetch
 
 App.propTypes = {
-    authenticated: PropTypes.bool,
+    authenticated: PropTypes.string,
     me: PropTypes.any,
     checkAuthenticationAction: PropTypes.func,
     logoutAction: PropTypes.func
