@@ -29,7 +29,7 @@ function NavBarMain({ authenticated, onChangeTheme }) {
                 <Menu.Item key="buttons" className="right button">
                     <div>
                         {
-                            authenticated === 'false' && (
+                            (authenticated === 'false' && location.pathname !== '/login') && (
                                 <Button type="primary">
                                     <Link to="/login">Login / signup</Link>
                                 </Button>
