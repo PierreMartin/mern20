@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from "react-redux";
-import { Switch, Route, Redirect } from "react-router-dom";
-import { checkAuthenticationAction, logoutAction } from "./reduxActions/user";
-import { LayoutMainFo } from "./components/FrontOffice/layouts/LayoutMain/LayoutMainFo";
-import { LayoutMainBo } from "./components/BackOffice/layouts/LayoutMain/LayoutMainBo";
-import routes from "./routes";
+import { connect } from 'react-redux';
+import { Switch, Route, Redirect } from 'react-router-dom';
+import { checkAuthenticationAction, logoutAction } from './reduxActions/user';
+import { LayoutMainFo } from './components/FrontOffice/layouts/LayoutMain/LayoutMainFo';
+import { LayoutMainBo } from './components/BackOffice/layouts/LayoutMain/LayoutMainBo';
+import routes from './routes';
 import './css/main.less';
 
 function App({ checkAuthenticationAction, authenticated }) {
@@ -17,7 +17,6 @@ function App({ checkAuthenticationAction, authenticated }) {
         <div>
             {/*
             TODO
-            - Lint + ES7
             - Pagination GraphQl
             - Oauth (autorisations)
             */}
@@ -34,7 +33,7 @@ function App({ checkAuthenticationAction, authenticated }) {
                                 exact={route.exact}
                                 path={route.path}
                                 render={(props) => (
-                                    <Redirect to={{ pathname: '/', state: { from: props.location } }}/>
+                                    <Redirect to={{ pathname: '/', state: { from: props.location } }} />
                                 )}
                             />
                         );
@@ -55,29 +54,27 @@ function App({ checkAuthenticationAction, authenticated }) {
                                 />
                             );
                         case 'backoffice':
-                            const routeComponent = (props) => {
-                                return authenticated === 'true' ? (
-                                    <LayoutMainBo>
-                                        <Component {...props} />
-                                    </LayoutMainBo>
-                                ) : (
-                                    (authenticated === 'false' && <Redirect to={{ pathname: "/login", state: { from: props.location } }}/>)
-                                );
-                            };
-
                             return (
                                 <Route
                                     key={index}
                                     exact={route.exact}
                                     path={route.path}
-                                    render={routeComponent}
+                                    render={(props) => {
+                                        return authenticated === 'true' ? (
+                                            <LayoutMainBo>
+                                                <Component {...props} />
+                                            </LayoutMainBo>
+                                        ) : (
+                                            (authenticated === 'false' && <Redirect to={{ pathname: '/login', state: { from: props.location } }} />)
+                                        );
+                                    }}
                                 />
                             );
                         default:
                             return (
                                 <Route
                                     key={index}
-                                    exact={true}
+                                    exact
                                     {...route}
                                 />
                             );
@@ -91,16 +88,15 @@ function App({ checkAuthenticationAction, authenticated }) {
 App.serverFetch = checkAuthenticationAction; // SSR - Data requirements for isomorphic fetch
 
 App.propTypes = {
-    authenticated: PropTypes.string,
-    me: PropTypes.any,
-    checkAuthenticationAction: PropTypes.func,
-    logoutAction: PropTypes.func
+    location: PropTypes.any,
+    authenticated: PropTypes.string.isRequired,
+    checkAuthenticationAction: PropTypes.func.isRequired,
+    logoutAction: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
     return {
-        authenticated: state.user.authenticated,
-        me: state.user.me
+        authenticated: state.user.authenticated
     };
 }
 

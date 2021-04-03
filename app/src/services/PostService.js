@@ -6,7 +6,7 @@ export function getAllPosts() {
         url: 'getposts/'
     })
         .then((res) => Promise.resolve(res && res.data))
-        .catch(err => Promise.reject(err.response && err.response.data));
+        .catch((err) => Promise.reject(err.response && err.response.data));
 }
 
 export function addPost(data) {
@@ -16,7 +16,7 @@ export function addPost(data) {
         data
     })
         .then((res) => Promise.resolve(res && res.data))
-        .catch(err => Promise.reject(err.response && err.response.data));
+        .catch((err) => Promise.reject(err.response && err.response.data));
 }
 
 /*

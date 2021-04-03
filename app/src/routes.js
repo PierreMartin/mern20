@@ -18,31 +18,31 @@ const User = lazy(() => import('./pages/User'));
 
 export default [
     {
-        path: "/",
+        path: '/',
         exact: true,
         component: Home,
         type: 'frontoffice'
     },
     {
-        path: "/dashboard",
+        path: '/dashboard',
         exact: true,
         component: Dashboard,
         type: 'backoffice'
     },
     {
-        path: "/users",
+        path: '/users',
         exact: true,
         component: UsersList,
         type: 'backoffice'
     },
     {
-        path: "/post/create",
+        path: '/post/create',
         exact: true,
         component: PostAdd,
         type: 'backoffice'
     },
     {
-        path: "/login",
+        path: '/login',
         exact: true,
         component: Login,
         type: 'frontoffice'
@@ -50,7 +50,7 @@ export default [
 
     // No in main menu:
     {
-        path: "/user/:id",
+        path: '/user/:id',
         exact: true,
         component: User,
         type: 'backoffice'

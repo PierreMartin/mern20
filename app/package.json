@@ -40,18 +40,9 @@
   "eslintConfig": {
     "extends": "react-app"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
+  "browserslist": [
+    "defaults"
+  ],
   "devDependencies": {
     "@babel/cli": "^7.11.6",
     "@babel/core": "^7.13.14",
@@ -66,6 +57,12 @@
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
     "babel-register": "^6.26.0",
     "css-loader": "^4.3.0",
+    "eslint": "^7.23.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.23.1",
+    "eslint-plugin-react-hooks": "^1.7.0",
     "friendly-errors-webpack-plugin": "^1.7.0",
     "html-webpack-plugin": "^4.5.0",
     "less": "^3.12.2",

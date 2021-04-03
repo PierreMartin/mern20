@@ -1,4 +1,5 @@
 const path = require('path');
+
 const CURRENT_WORKING_DIR = process.cwd();
 
 exports.commonConfig = {

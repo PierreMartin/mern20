@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Input, InputNumber, Popconfirm, Form, Tag, Checkbox, Tooltip, Spin, notification, Button } from 'antd';
-import { gql, useQuery, useMutation } from "@apollo/client";
-import AppPage from "./AppPage";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
+import { gql, useQuery, useMutation } from '@apollo/client';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import AppPage from './AppPage';
 import './dashboard.less';
 
 const POSTS = gql`
@@ -63,10 +63,10 @@ const EditableCell = ({
 };
 
 function Dashboard({ me }) {
-    const userId = me && me._id;
+    const userId = me?._id;
     const { loading, error, data, refetch } = useQuery(POSTS, { variables: { userId } });
     // OR =>   const [getPosts, { loading, data }] = useLazyQuery(POSTS);  <button onClick={ (getPosts()) } />
-    const [editPostById, { data: editPostData, loading: editPostLoading, error: editPostError }] = useMutation(EDIT_POST);
+    const [editPostById, { /* data: editPostData, */ loading: editPostLoading }] = useMutation(EDIT_POST);
     const [postsData, setPostsData] = useState([]);
     const [form] = Form.useForm();
     // const [pagination, setPagination] = useState({ current: 1, pageSize: 10 });
@@ -117,8 +117,8 @@ function Dashboard({ me }) {
                         data: fieldsTyping
                     }
                 }).then((res) => {
-                    if (res && res.data && res.data.editPostById) {
-                        notification['success']({
+                    if (res?.data?.editPostById) {
+                        notification.success({
                             message: 'Success',
                             description: 'You have updated the post.'
                         });
@@ -130,7 +130,7 @@ function Dashboard({ me }) {
                 setEditingId('');
             }
         } catch (errInfo) {
-            console.log('Validate Failed:', errInfo);
+            console.error('Validate Failed:', errInfo);
         }
     };
 
@@ -138,7 +138,7 @@ function Dashboard({ me }) {
         {
             title: 'Title',
             dataIndex: 'title',
-            render: title => <a>{title}</a>,
+            render: (title) => <a>{title}</a>,
             width: '20%',
             sorter: (a, b) => a.title.length - b.title.length,
             editable: true
@@ -156,7 +156,7 @@ function Dashboard({ me }) {
             width: '20%',
             sorter: (a, b) => a.content.length - b.content.length,
             ellipsis: { showTitle: false },
-            render: content => (
+            render: (content) => (
                 <Tooltip placement="topLeft" title={content}>
                     {content}
                 </Tooltip>
@@ -167,9 +167,9 @@ function Dashboard({ me }) {
             title: 'Tags',
             key: 'tags',
             dataIndex: 'tags',
-            render: tags => (
+            render: (tags) => (
                 <span>
-                    {tags.map(tag => {
+                    {tags.map((tag) => {
                         let color = tag.length > 5 ? 'geekblue' : 'green';
                         if (tag === 'developer') { color = 'volcano'; }
 
@@ -182,7 +182,7 @@ function Dashboard({ me }) {
         {
             title: 'Is private',
             dataIndex: 'isPrivate',
-            render: isPrivate => <Checkbox checked={isPrivate} disabled />,
+            render: (isPrivate) => <Checkbox checked={isPrivate} disabled />,
             width: '10%',
             onFilter: (value, record) => record.isPrivate === value,
             filters: [
@@ -312,7 +312,7 @@ function Dashboard({ me }) {
 }
 
 Dashboard.propTypes = {
-    me: PropTypes.any,
+    me: PropTypes.any
 };
 
 function mapStateToProps(state) {

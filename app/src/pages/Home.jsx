@@ -1,5 +1,5 @@
 import React from 'react';
-import AppPage from "./AppPage";
+import AppPage from './AppPage';
 import './home.less';
 
 function Home() {

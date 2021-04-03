@@ -7,8 +7,8 @@ import {
     CHECK_AUTHENTIFICATION_SUCCESS,
     LOGOUT_SUCCESS_USER,
     LOGOUT_ERROR_USER
-} from "../reduxActionsTypes/index";
-import { checkAuthentication, login, logout, signup } from "../services/UserService";
+} from '../reduxActionsTypes/index';
+import { checkAuthentication, login, logout, signup } from '../services/UserService';
 
 /*
 export function xxxAction(data) {

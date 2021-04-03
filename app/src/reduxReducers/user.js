@@ -8,7 +8,7 @@ import {
     CHECK_AUTHENTIFICATION_SUCCESS,
     CHECK_AUTHENTIFICATION_ERROR,
     LOGOUT_SUCCESS_USER
-} from "../reduxActionsTypes";
+} from '../reduxActionsTypes';
 
 const me = (state = null, action) => {
     switch (action.type) {
@@ -48,7 +48,7 @@ const authenticated = (state = 'loading', action) => {
         default:
             return state;
     }
-}
+};
 
 /*
 const all = (state = [], action) => {

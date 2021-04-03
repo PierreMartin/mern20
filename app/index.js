@@ -1,21 +1,21 @@
-require("@babel/register")({
+require('@babel/register')({
     // This will override `node_modules` ignoring - you can alternatively pass
     // an array of strings to be explicitly matched or a regex / glob
     presets: [
-        "@babel/preset-env",
-        "@babel/preset-react"
+        '@babel/preset-env',
+        '@babel/preset-react'
     ],
     plugins: [
         [
-            "css-modules-transform",
+            'css-modules-transform',
             {
                 camelCase: true,
-                extensions: [ ".css", ".less" ]
+                extensions: ['.css', '.less']
             }
         ],
-        "dynamic-import-node"
+        'dynamic-import-node'
     ],
     ignore: [],
 });
 
-require('./src/server');
+require('./src/server.jsx');
