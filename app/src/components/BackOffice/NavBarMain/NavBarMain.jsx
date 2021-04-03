@@ -17,7 +17,7 @@ function NavBarMain({ me, logoutAction }) {
 
     const onLogout = () => {
         logoutAction().then((res) => {
-            if (res && res.payload && !res.payload.authenticated) { history.push("/"); }
+            if (res?.payload?.authenticated === 'false') { history.push('/login'); }
         });
     };
 

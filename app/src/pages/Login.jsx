@@ -72,7 +72,7 @@ function Login({ loginAction, signupAction }) {
     function onSubmitLogin(values) {
         if (values.email && values.password) {
             loginAction(values).then((res) => {
-                if (res && res.payload && res.payload.authenticated) {
+                if (res?.payload?.authenticated === 'true') {
                     // if (res) { history.push("/dashboard"); }
                     history.replace((location.state && location.state.from) || '/dashboard');
                 } else if (res.payload && res.payload.fieldsErrors && res.payload.fieldsErrors.length) {
@@ -85,7 +85,7 @@ function Login({ loginAction, signupAction }) {
     function onSubmitSignup(values) {
         if (values.email && values.password) {
             signupAction(values).then((res) => {
-                if (res && res.payload && res.payload.authenticated) {
+                if (res?.payload?.authenticated === 'true') {
                     // if (res) { history.push("/dashboard"); }
                     history.replace((location.state && location.state.from) || '/dashboard');
                 } else if (res.payload && res.payload.fieldsErrors && res.payload.fieldsErrors.length) {
