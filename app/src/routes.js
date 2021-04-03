@@ -47,10 +47,6 @@ export default [
         component: Login,
         type: 'frontoffice'
     },
-    {
-        component: NotFound,
-        type: 'all'
-    },
 
     // No in main menu:
     {
@@ -58,5 +54,11 @@ export default [
         exact: true,
         component: User,
         type: 'backoffice'
+    },
+
+    // 404 - must be at end:
+    {
+        component: NotFound,
+        type: 'all'
     }
 ];
