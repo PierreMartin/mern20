@@ -13,15 +13,13 @@ const client = new ApolloClient({
 });
 
 const jsx = (
-    <React.StrictMode>
-        <Provider store={store}>
-            <ApolloProvider client={client}>
-                <Router>
-                    <App />
-                </Router>
-            </ApolloProvider>
-        </Provider>
-    </React.StrictMode>
+    <Provider store={store}>
+        <ApolloProvider client={client}>
+            <Router>
+                <App />
+            </Router>
+        </ApolloProvider>
+    </Provider>
 );
 
 const app = document.getElementById('root');

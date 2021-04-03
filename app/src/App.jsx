@@ -30,6 +30,7 @@ function App({ checkAuthenticationAction, authenticated }) {
                 {routes.map((route, index) => {
                     const Component = route.component;
 
+                    // Do redirections:
                     if ((isLoading && route.path === '/login') || (authenticated && route.path === '/login')) {
                         return (
                             <Route
@@ -37,7 +38,7 @@ function App({ checkAuthenticationAction, authenticated }) {
                                 exact={route.exact}
                                 path={route.path}
                                 render={(props) => (
-                                    <Redirect to={{ pathname: "/", state: { from: props.location } }}/>
+                                    <Redirect to={{ pathname: '/', state: { from: props.location } }}/>
                                 )}
                             />
                         );

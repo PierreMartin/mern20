@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import UsersList from './pages/UsersList';
 import User from './pages/User';
+import NotFound from './pages/NotFound';
 
 /* lazy no compatible SSR:
 const Home = lazy(() => import('./pages/Home'));
@@ -45,6 +46,10 @@ export default [
         exact: true,
         component: Login,
         type: 'frontoffice'
+    },
+    {
+        component: NotFound,
+        type: 'all'
     },
 
     // No in main menu:
