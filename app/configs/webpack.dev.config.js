@@ -1,25 +1,14 @@
-const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CURRENT_WORKING_DIR = process.cwd();
+const { merge } = require('webpack-merge');
+const { commonConfig } = require('./webpack.common.config');
 
 module.exports = (env = {}) => {
     const isClientSide = env.client;
     const isServerSide = env.server;
 
-    const configuration = {
+    const configuration = merge(commonConfig, {
         mode: 'development',
-        entry: {
-            app: './src/client.jsx',
-        },
         devtool: 'inline-source-map',
-        output: {
-            filename: '[name].bundle.js',
-            path: path.resolve(CURRENT_WORKING_DIR, 'dist'),
-            publicPath: '/'
-        },
-        resolve: {
-            extensions: ['.ts', '.js', '.jsx', '.tsx']
-        },
         module: {
             rules: [
                 {
@@ -27,19 +16,9 @@ module.exports = (env = {}) => {
                     exclude: /(node_modules|bower_components)/,
                     use: ['babel-loader']
                 },
-                /*
-                {
-                    test: /\.css$/,
-                    use: [
-                        'style-loader',
-                        'css-loader'
-                    ]
-                },
-                */
                 {
                     test: [/\.less$/, /\.css$/],
                     use: [
-                        // { loader : MiniCssExtractPlugin.loader},
                         {
                             loader: 'style-loader'
                         },
@@ -84,7 +63,7 @@ module.exports = (env = {}) => {
                 // inject: 'body'
             })
         ]
-    };
+    });
 
     if (isClientSide) {
         configuration.devServer = {

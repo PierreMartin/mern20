@@ -1,26 +1,15 @@
-const path = require('path');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
-const CURRENT_WORKING_DIR = process.cwd();
+const { merge } = require('webpack-merge');
+const { commonConfig } = require('./webpack.common.config');
 
 module.exports = (env = {}) => {
     const isServerSide = env.server;
 
-    const configuration = {
+    const configuration = merge(commonConfig, {
         mode: 'production',
-        entry: {
-            app: './src/client.jsx',
-        },
-        output: {
-            filename: '[name].bundle.js',
-            path: path.resolve(CURRENT_WORKING_DIR, 'dist'),
-            publicPath: '/'
-        },
         devtool: 'source-map',
-        resolve: {
-            extensions: ['.ts', '.js', '.jsx', '.tsx']
-        },
         module: {
             rules: [
                 {
@@ -47,7 +36,7 @@ module.exports = (env = {}) => {
         plugins: [
             new MiniCssExtractPlugin()
         ]
-    };
+    });
 
     return configuration;
 };
