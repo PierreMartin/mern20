@@ -17,7 +17,7 @@ function App({ checkAuthenticationAction, authenticated }) {
         <div>
             {/*
             TODO
-            - Lint
+            - Lint + ES7
             - Pagination GraphQl
             - Oauth (autorisations)
             */}

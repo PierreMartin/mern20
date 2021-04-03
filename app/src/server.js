@@ -28,7 +28,6 @@ app.get("*", (req, res) => {
             */
 
     Promise.all(dataRequirements).then(() => {
-        // TODO ajouter provider de GraphQl
         const jsx = (
             <ReduxProvider store={store}>
                 <StaticRouter context={context} location={req.url}>
