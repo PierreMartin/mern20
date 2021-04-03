@@ -1,5 +1,4 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CURRENT_WORKING_DIR = process.cwd();
@@ -27,15 +26,6 @@ module.exports = (env = {}) => {
                     exclude: /(node_modules|bower_components)/,
                     use: ['babel-loader']
                 },
-                /*
-                {
-                    test: /\.css$/,
-                    use: [
-                        'style-loader',
-                        'css-loader'
-                    ]
-                },
-                */
 
                 // Css minify:
                 {
@@ -53,12 +43,7 @@ module.exports = (env = {}) => {
             ]
         },
         plugins: [
-            new MiniCssExtractPlugin(),
-            new HtmlWebpackPlugin({
-                template: __dirname + './../public/index.html',
-                filename: './index.html',
-                // inject: 'body'
-            })
+            new MiniCssExtractPlugin()
         ]
     };
 
