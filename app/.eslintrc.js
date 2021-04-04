@@ -39,6 +39,10 @@ module.exports = {
         "jsx-a11y/anchor-is-valid": "off",
         "react/destructuring-assignment": "off",
         "react/prop-types": "off",
+        "prefer-promise-reject-errors": "off",
+        "react/jsx-one-expression-per-line": "off",
+        "jsx-a11y/label-has-associated-control": "off",
+        "react/jsx-wrap-multilines": "off",
         "max-len": ["error", { "code": 180 }]
     }
 };

@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { checkAuthenticationAction, logoutAction } from './reduxActions/user';
-import { LayoutMainFo } from './components/FrontOffice/layouts/LayoutMain/LayoutMainFo';
-import { LayoutMainBo } from './components/BackOffice/layouts/LayoutMain/LayoutMainBo';
+import LayoutMainFo from './components/FrontOffice/layouts/LayoutMain/LayoutMainFo';
+import LayoutMainBo from './components/BackOffice/layouts/LayoutMain/LayoutMainBo';
 import routes from './routes';
 import './css/main.less';
 
@@ -17,8 +17,8 @@ function App({ checkAuthenticationAction, authenticated }) {
         <div>
             {/*
             TODO
-            - Pagination GraphQl
-            - Oauth (autorisations)
+                - Oauth (autorisations)
+                - Pagination GraphQl
             */}
 
             <Switch>

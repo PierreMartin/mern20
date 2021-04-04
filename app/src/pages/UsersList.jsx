@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
-import { Link } from "react-router-dom";
-import { Card, List, Avatar, Space } from "antd";
+import { Link } from 'react-router-dom';
+import { Card, List, Avatar, Space } from 'antd';
 import { MessageOutlined, LikeOutlined, StarOutlined } from '@ant-design/icons';
 import { useQuery, gql } from '@apollo/client';
-import AppPage from "./AppPage";
+import AppPage from './AppPage';
 
 const { Meta } = Card;
 
@@ -42,18 +42,18 @@ function UsersList() {
                 <h2>List of users</h2>
 
                 {
-                    (data && data.users && data.users.length > 0 ) && (
+                    (data?.users?.length > 0) && (
                         <List
                             grid={{
                                 gutter: 16
                             }}
                             pagination={{
-                                onChange: page => {
+                                onChange: (page) => {
                                     console.log(page);
                                 },
                                 pageSize: 10
                             }}
-                            dataSource={data && data.users}
+                            dataSource={data?.users}
                             renderItem={(user) => (
                                 <List.Item>
                                     <Link to={`/user/${user.id}`}>
@@ -87,7 +87,7 @@ function UsersList() {
 
                 {/* Old approach:
                 {
-                    (data && data.users && data.users.length > 0 ) && (
+                    (data?.users?.length > 0 ) && (
                         <table>
                             <thead>
                             <tr>

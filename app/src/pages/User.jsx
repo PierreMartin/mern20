@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { useQuery, gql } from '@apollo/client';
-import { Link, useHistory, useParams } from "react-router-dom";
-import { LikeOutlined, MessageOutlined, StarOutlined, LockOutlined, UnlockOutlined } from "@ant-design/icons";
-import { Avatar, Card, List, PageHeader, Space, Tag, Tooltip } from "antd";
-import AppPage from "./AppPage";
+import { Link, useHistory, useParams } from 'react-router-dom';
+import { LikeOutlined, MessageOutlined, StarOutlined, LockOutlined, UnlockOutlined } from '@ant-design/icons';
+import { Avatar, Card, List, PageHeader, Space, Tag, Tooltip } from 'antd';
+import AppPage from './AppPage';
 import './user.less';
 
 const { Meta } = Card;
@@ -46,10 +46,10 @@ function User() {
     if (loading) return <div className="paddings">Loading...</div>;
     if (error) return <div className="paddings">Error :(</div>;
 
-    const user = data && data.userById;
+    const user = data?.userById;
 
     return (
-        <AppPage title={(user && user.firstname) || 'User'} meta={{ name: '', content: '' }}>
+        <AppPage title={(user?.firstname) || 'User'} meta={{ name: '', content: '' }}>
             <PageHeader
                 onBack={() => history.push('/users')}
                 title="User profil"
@@ -79,13 +79,13 @@ function User() {
 
                 <h2>Associate posts</h2>
                 {
-                    (user && user.posts.length > 0 ) && (
+                    (user?.posts?.length > 0) && (
                         <List
                             grid={{
                                 gutter: 16
                             }}
                             pagination={{
-                                onChange: page => {
+                                onChange: (page) => {
                                     console.log(page);
                                 },
                                 pageSize: 10
@@ -94,7 +94,7 @@ function User() {
                             renderItem={(post) => (
                                 <List.Item>
                                     {
-                                        (post /* (&& !post.isPrivate || me && me._id === user._id) */) && (
+                                        (post /* (&& !post.isPrivate || me?._id === user._id) */) && (
                                             <Link to={`/post/${post.id}`}>
                                                 <Card
                                                     className="card-userpost-container"
@@ -113,7 +113,8 @@ function User() {
                                                         post.isPrivate ? (
                                                             <Tooltip title="This post is private">
                                                                 <Tag icon={<LockOutlined />} color="default" />
-                                                            </Tooltip>) : (
+                                                            </Tooltip>
+                                                        ) : (
                                                             <Tooltip title="This post is public">
                                                                 <Tag icon={<UnlockOutlined />} color="default" />
                                                             </Tooltip>
@@ -156,7 +157,7 @@ function User() {
                 }
 
                 {
-                    (user && user.posts.length > 0 ) && (
+                    (user?.posts?.length > 0 ) && (
                         <table>
                             <thead>
                             <tr>

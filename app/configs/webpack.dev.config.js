@@ -4,7 +4,7 @@ const { commonConfig } = require('./webpack.common.config');
 
 module.exports = (env = {}) => {
     const isClientSide = env.client;
-    const isServerSide = env.server;
+    // const isServerSide = env.server;
 
     const configuration = merge(commonConfig, {
         mode: 'development',
@@ -58,7 +58,7 @@ module.exports = (env = {}) => {
         },
         plugins: [
             new HtmlWebpackPlugin({
-                template: __dirname + './../public/index.html',
+                template: `${__dirname}./../public/index.html`,
                 filename: './index.html',
                 // inject: 'body'
             })

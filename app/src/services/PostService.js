@@ -5,8 +5,8 @@ export function getAllPosts() {
         method: 'GET',
         url: 'getposts/'
     })
-        .then((res) => Promise.resolve(res && res.data))
-        .catch((err) => Promise.reject(err.response && err.response.data));
+        .then((res) => Promise.resolve(res?.data))
+        .catch((err) => Promise.reject(err?.response?.data));
 }
 
 export function addPost(data) {
@@ -15,8 +15,8 @@ export function addPost(data) {
         url: 'addpost/',
         data
     })
-        .then((res) => Promise.resolve(res && res.data))
-        .catch((err) => Promise.reject(err.response && err.response.data));
+        .then((res) => Promise.resolve(res?.data))
+        .catch((err) => Promise.reject(err?.response?.data));
 }
 
 /*

@@ -5,7 +5,7 @@ const { merge } = require('webpack-merge');
 const { commonConfig } = require('./webpack.common.config');
 
 module.exports = (env = {}) => {
-    const isServerSide = env.server;
+    // const isServerSide = env.server;
 
     const configuration = merge(commonConfig, {
         mode: 'production',

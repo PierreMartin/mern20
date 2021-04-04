@@ -14,13 +14,13 @@ const me = (state = null, action) => {
     switch (action.type) {
         case LOGIN_SUCCESS_USER:
         case SIGNUP_SUCCESS_USER:
-            if (action.payload && action.payload.me) { return action.payload.me; }
+            if (action.payload?.me) { return action.payload.me; }
             return state;
         case UPDATE_SUCCESS_USER:
-            if (action.payload && action.payload.me) { return action.payload.me; }
+            if (action.payload?.me) { return action.payload.me; }
             return state;
         case CHECK_AUTHENTIFICATION_SUCCESS:
-            if (action.payload && action.payload.me) { return action.payload.me; }
+            if (action.payload?.me) { return action.payload.me; }
             return state;
         case LOGOUT_SUCCESS_USER:
             if (action.payload) { return action.payload.me; }

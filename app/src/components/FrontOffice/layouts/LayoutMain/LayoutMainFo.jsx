@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import { Layout } from "antd";
-import { ThemeContext } from "../../Theme/ThemeContext";
-import NavBarMain from "../../NavBarMain/NavBarMain";
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import { Layout } from 'antd';
+import { ThemeContext } from '../../Theme/ThemeContext';
+import NavBarMain from '../../NavBarMain/NavBarMain';
 import '../../../../css/mainFo.less';
 import './layoutMainFo.less';
 
 const { Header, Footer, Content } = Layout;
 
-export function LayoutMainFo({ children }) {
+export default function LayoutMainFo({ children }) {
     const [theme, setTheme] = useState('light');
 
     useEffect(() => {
@@ -19,7 +19,7 @@ export function LayoutMainFo({ children }) {
     const onChangeTheme = (theme) => {
         if (typeof document !== 'undefined') { document.body.className = theme; }
         setTheme(theme);
-    }
+    };
 
     return (
         <div id="fo">

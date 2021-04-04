@@ -1,14 +1,14 @@
-import React, { useEffect } from "react";
-import PropTypes from "prop-types";
-import { Layout } from "antd";
-import NavBarMain from "../../NavBarMain/NavBarMain";
-import NavBarSide from "../../NavBarSide/NavBarSide";
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { Layout } from 'antd';
+import NavBarMain from '../../NavBarMain/NavBarMain';
+import NavBarSide from '../../NavBarSide/NavBarSide';
 import '../../../../css/mainBo.less';
 import './layoutMainBo.less';
 
 const { Header, Footer, Sider, Content } = Layout;
 
-export function LayoutMainBo({ children }) {
+export default function LayoutMainBo({ children }) {
     useEffect(() => {
         if (typeof document !== 'undefined') { document.body.className = 'light'; }
     }, []);

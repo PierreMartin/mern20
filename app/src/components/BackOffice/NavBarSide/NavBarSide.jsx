@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 // import PropTypes from "prop-types";
 import { Menu } from 'antd';
 import { PieChartOutlined, TeamOutlined, UserOutlined } from '@ant-design/icons';
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation } from 'react-router-dom';
 import './navBarSide.less';
 
 const { SubMenu } = Menu;

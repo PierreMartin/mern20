@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Link, useHistory, useLocation } from "react-router-dom";
-import { loginAction, signupAction } from "../reduxActions/user";
-import AppPage from "./AppPage";
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import {
     Form,
     Input,
@@ -19,6 +17,8 @@ import {
     UserOutlined,
     LockOutlined
 } from '@ant-design/icons';
+import { loginAction, signupAction } from '../reduxActions/user';
+import AppPage from './AppPage';
 import './login.less';
 
 const { Option } = Select;
@@ -74,8 +74,8 @@ function Login({ loginAction, signupAction }) {
             loginAction(values).then((res) => {
                 if (res?.payload?.authenticated === 'true') {
                     // if (res) { history.push("/dashboard"); }
-                    history.replace((location.state && location.state.from) || '/dashboard');
-                } else if (res.payload && res.payload.fieldsErrors && res.payload.fieldsErrors.length) {
+                    history.replace(location?.state?.from || '/dashboard');
+                } else if (res?.payload?.fieldsErrors?.length) {
                     form.setFields(res.payload.fieldsErrors);
                 }
             });
@@ -87,8 +87,8 @@ function Login({ loginAction, signupAction }) {
             signupAction(values).then((res) => {
                 if (res?.payload?.authenticated === 'true') {
                     // if (res) { history.push("/dashboard"); }
-                    history.replace((location.state && location.state.from) || '/dashboard');
-                } else if (res.payload && res.payload.fieldsErrors && res.payload.fieldsErrors.length) {
+                    history.replace(location?.state?.from || '/dashboard');
+                } else if (res?.payload?.fieldsErrors?.length) {
                     form.setFields(res.payload.fieldsErrors);
                 }
             });
@@ -249,9 +249,8 @@ function Login({ loginAction, signupAction }) {
                                     valuePropName="checked"
                                     rules={[
                                         {
-                                            validator: (_, value) =>
-                                                value ? Promise.resolve() : Promise.reject('Should accept agreement'),
-                                        },
+                                            validator: (_, value) => (value ? Promise.resolve() : Promise.reject('Should accept agreement'))
+                                        }
                                     ]}
                                 >
                                     <Checkbox>
@@ -274,7 +273,11 @@ function Login({ loginAction, signupAction }) {
                         <Button type="primary" htmlType="submit" className="button-submit">
                             {isSignup ? 'Register' : 'Login'}
                         </Button>
-                        Or {!isSignup ? <a href="#" onClick={(e) => { e.preventDefault(); onReset(); setIsSignup(true); }}>register now!</a> : <a href="#" onClick={(e) => { e.preventDefault(); onReset(); setIsSignup(false); }}>Login</a>}
+                        Or {!isSignup ? (
+                            <a href="#" onClick={(e) => { e.preventDefault(); onReset(); setIsSignup(true); }}>register now!</a>
+                        ) : (
+                            <a href="#" onClick={(e) => { e.preventDefault(); onReset(); setIsSignup(false); }}>Login</a>
+                        )}
                     </Form.Item>
                 </Form>
 

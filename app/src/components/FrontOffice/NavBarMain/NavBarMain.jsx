@@ -1,10 +1,10 @@
-import React, { useContext } from "react";
-import PropTypes from "prop-types";
-import { Link, useLocation } from "react-router-dom";
-import { connect } from "react-redux";
-import { Button, Menu } from "antd";
+import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
+import { Link, useLocation } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { Button, Menu } from 'antd';
 import { HighlightOutlined, HighlightFilled } from '@ant-design/icons';
-import { ThemeContext } from "../Theme/ThemeContext";
+import { ThemeContext } from '../Theme/ThemeContext';
 import './navBarMain.less';
 
 function NavBarMain({ authenticated, onChangeTheme }) {

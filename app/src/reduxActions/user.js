@@ -23,7 +23,7 @@ export function signupAction(data) {
     return (dispatch) => {
         return signup(data)
             .then((res) => {
-                if (res && res.data) {
+                if (res?.data) {
                     console.log('authenticated ==> ', res.data.authenticated);
                     return dispatch({
                         type: SIGNUP_SUCCESS_USER,
@@ -41,8 +41,8 @@ export function signupAction(data) {
                     {
                         type: SIGNUP_ERROR_USER,
                         payload: {
-                            message: err && err.message,
-                            fieldsErrors: err && err.fieldsErrors,
+                            message: err?.message,
+                            fieldsErrors: err?.fieldsErrors,
                             authenticated: 'false'
                         }
                     }
@@ -55,7 +55,7 @@ export function loginAction(data) {
     return (dispatch) => {
         return login(data)
             .then((res) => {
-                if (res && res.data) {
+                if (res?.data) {
                     console.log('authenticated ==> ', res.data.authenticated);
                     return dispatch({
                         type: LOGIN_SUCCESS_USER,
@@ -72,8 +72,8 @@ export function loginAction(data) {
                 return dispatch({
                     type: LOGIN_ERROR_USER,
                     payload: {
-                        message: err && err.message,
-                        fieldsErrors: err && err.fieldsErrors,
+                        message: err?.message,
+                        fieldsErrors: err?.fieldsErrors,
                         authenticated: 'false'
                     }
                 });
@@ -85,7 +85,7 @@ export function checkAuthenticationAction() {
     return (dispatch) => {
         return checkAuthentication()
             .then((res) => {
-                if (res && res.data) {
+                if (res?.data) {
                     console.log('authenticated ==> ', res.data.authenticated);
                     dispatch({
                         type: CHECK_AUTHENTIFICATION_SUCCESS,
@@ -102,7 +102,7 @@ export function checkAuthenticationAction() {
                 dispatch({
                     type: CHECK_AUTHENTIFICATION_ERROR,
                     payload: {
-                        message: err && err.message,
+                        message: err?.message,
                         authenticated: 'false'
                     }
                 });
@@ -114,7 +114,7 @@ export function logoutAction() {
     return (dispatch) => {
         return logout()
             .then((res) => {
-                if (res && res.data) {
+                if (res?.data) {
                     console.log('authenticated ==> ', res.data.authenticated);
                     return dispatch({
                         type: LOGOUT_SUCCESS_USER,
@@ -131,7 +131,7 @@ export function logoutAction() {
                 return dispatch({
                     type: LOGOUT_ERROR_USER,
                     payload: {
-                        message: err && err.message,
+                        message: err?.message,
                         authenticated: 'true'
                     }
                 });

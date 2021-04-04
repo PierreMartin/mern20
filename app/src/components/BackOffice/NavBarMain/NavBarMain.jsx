@@ -1,10 +1,10 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Menu } from 'antd';
 import { SettingOutlined, UserOutlined, LogoutOutlined } from '@ant-design/icons';
-import { Link, useHistory, useLocation } from "react-router-dom";
-import { connect } from "react-redux";
-import { logoutAction } from "../../../reduxActions/user";
+import { Link, useHistory, useLocation } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { logoutAction } from '../../../reduxActions/user';
 import './navBarMain.less';
 
 const { SubMenu } = Menu;
@@ -55,11 +55,11 @@ function NavBarMain({ me, logoutAction }) {
 
                 <div className="right">
                     <div>
-                        Welcome {me && me.firstname}
+                        Welcome {me?.firstname}
                         <button
                             onClick={() => {
                                 logoutAction().then((res) => {
-                                    if (res && res.payload && !res.payload.authenticated) { history.push("/"); }
+                                    if (!res?.payload?.authenticated) { history.push("/"); }
                                 });
                             }}
                         >

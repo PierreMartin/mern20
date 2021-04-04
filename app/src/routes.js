@@ -1,4 +1,3 @@
-import React from 'react';
 import Home from './pages/Home';
 import PostAdd from './pages/PostAdd';
 import Login from './pages/Login';

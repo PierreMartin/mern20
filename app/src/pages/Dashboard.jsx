@@ -78,7 +78,7 @@ function Dashboard({ me }) {
     }, []);
 
     useEffect(() => {
-        if (data && data.postsByUserId) {
+        if (data?.postsByUserId) {
             const posts = data.postsByUserId.map((post) => ({ key: post.id, ...post, tags: ['developer', 'cool'] })); // 'tags' just for tests
             setPostsData(posts);
         }
@@ -276,7 +276,7 @@ function Dashboard({ me }) {
                 {/*
                 Old approach:
                 {
-                    (data && data.posts && data.posts.length > 0) && (
+                    (data?.posts?.length > 0) && (
                         <table>
                             <thead>
                             <tr>

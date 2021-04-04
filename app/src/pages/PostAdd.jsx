@@ -1,10 +1,10 @@
 import React from 'react';
 import { gql, useMutation } from '@apollo/client';
 // import { addPost } from "../services/PostService";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { Button, Form, Input, notification, Switch } from "antd";
-import AppPage from "./AppPage";
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Button, Form, Input, notification, Switch } from 'antd';
+import AppPage from './AppPage';
 import './postAdd.less';
 
 const ADD_POST = gql`
@@ -22,7 +22,7 @@ const ADD_POST = gql`
 
 function PostAdd({ me }) {
     // const [fieldsTyping, setFieldsTyping] = useState({});
-    const [addPost, { /*data, */loading: mutationLoading, error: mutationError }] = useMutation(ADD_POST);
+    const [addPost, { /* data, */loading: mutationLoading, error: mutationError }] = useMutation(ADD_POST);
 
     if (mutationLoading) return <div className="paddings">Creating...</div>;
     if (mutationError) return <div className="paddings">Error at creating : {mutationError.message}</div>;
@@ -40,16 +40,16 @@ function PostAdd({ me }) {
     const onSubmitAddPost = (values) => {
         const data = values;
 
-        if (values && values.title) {
-            data.userId = me && me._id; // For entité liée
+        if (values?.title) {
+            data.userId = me?._id; // For entité liée
 
             addPost({
                 variables: {
                     data
                 }
             }).then((res) => {
-                if (res && res.data && res.data.addPost) {
-                    notification['success']({
+                if (res?.data?.addPost) {
+                    notification.success({
                         message: 'Success',
                         description: 'You have created a new post.'
                     });
@@ -58,12 +58,12 @@ function PostAdd({ me }) {
 
             /* No Apollo/GraphQl :
             addPost(fieldsTyping).then((res) => {
-               console.log(res && res.data);
+               console.log(res?.data);
                 setFieldsTyping({});
            });
            */
         }
-    }
+    };
 
     return (
         <AppPage title="Add a post" meta={{ name: '', content: '' }}>

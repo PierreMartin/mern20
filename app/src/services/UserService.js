@@ -7,8 +7,8 @@ export function login(data) {
         withCredentials: true,
         data
     })
-        .then((res) => Promise.resolve(res && res.data))
-        .catch((err) => Promise.reject(err.response && err.response.data));
+        .then((res) => Promise.resolve(res?.data))
+        .catch((err) => Promise.reject(err?.response?.data));
 }
 
 export function signup(data) {
@@ -18,8 +18,8 @@ export function signup(data) {
         withCredentials: true,
         data
     })
-        .then((res) => Promise.resolve(res && res.data))
-        .catch((err) => Promise.reject(err.response && err.response.data));
+        .then((res) => Promise.resolve(res?.data))
+        .catch((err) => Promise.reject(err?.response?.data));
 }
 
 export function logout() {
@@ -28,8 +28,8 @@ export function logout() {
         url: 'logout/',
         withCredentials: true
     })
-        .then((res) => Promise.resolve(res && res.data))
-        .catch((err) => Promise.reject(err.response && err.response.data));
+        .then((res) => Promise.resolve(res?.data))
+        .catch((err) => Promise.reject(err?.response?.data));
 }
 
 export function checkAuthentication() {
@@ -38,6 +38,6 @@ export function checkAuthentication() {
         url: 'checkauthentication/',
         withCredentials: true
     })
-        .then((res) => Promise.resolve(res && res.data))
-        .catch((err) => Promise.reject(err.response && err.response.data));
+        .then((res) => Promise.resolve(res?.data))
+        .catch((err) => Promise.reject(err?.response?.data));
 }
